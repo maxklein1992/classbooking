@@ -1,0 +1,43 @@
+# classbooking — Backend
+
+NestJS 10 + Prisma (PostgreSQL) API for the classbooking app.
+
+## Prerequisites
+
+- Node 22, npm 10
+- A running PostgreSQL instance matching `DATABASE_URL` in `.env`
+
+## Setup
+
+```bash
+npm install
+cp .env.example .env   # already provided; adjust DATABASE_URL if needed
+```
+
+## Database
+
+```bash
+npm run prisma:generate   # generate Prisma client
+npm run prisma:migrate    # create/apply migrations (dev)
+npm run db:seed           # seed demo users + trainings (idempotent)
+```
+
+Seed credentials:
+- Trainer: `trainer@demo.com` / `password123`
+- User: `user@demo.com` / `password123`
+
+## Run
+
+```bash
+npm run dev     # watch mode
+npm run build   # compile to dist/
+npm run start   # run compiled build
+```
+
+## API
+
+- Base URL: `http://localhost:3000/api`
+- Swagger UI: `http://localhost:3000/api/docs`
+
+Auth uses JWT Bearer tokens (`Authorization: Bearer <accessToken>`).
+CORS is enabled for the Vite dev server at `http://localhost:5173`.

@@ -1,0 +1,45 @@
+import { Navigate, Route, Routes } from 'react-router-dom'
+import NavBar from './components/NavBar'
+import ProtectedRoute from './components/ProtectedRoute'
+import HomePage from './pages/HomePage'
+import TrainingDetailPage from './pages/TrainingDetailPage'
+import LoginPage from './pages/LoginPage'
+import RegisterPage from './pages/RegisterPage'
+import MyBookingsPage from './pages/MyBookingsPage'
+import TrainerDashboardPage from './pages/TrainerDashboardPage'
+
+export default function App() {
+  return (
+    <div className="app">
+      <NavBar />
+      <main className="app-main">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/trainingen/:id" element={<TrainingDetailPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route
+            path="/mijn-boekingen"
+            element={
+              <ProtectedRoute>
+                <MyBookingsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/trainer"
+            element={
+              <ProtectedRoute requireTrainer>
+                <TrainerDashboardPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </main>
+      <footer className="app-footer">
+        <span>ClassBooking — sporttrainingen boeken</span>
+      </footer>
+    </div>
+  )
+}
