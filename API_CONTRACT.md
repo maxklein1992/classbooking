@@ -2,8 +2,8 @@
 
 Gedeeld contract tussen backend (NestJS) en frontend (React). **Beide moeten hieraan voldoen.**
 
-Base URL (dev): `http://localhost:3000/api`
-Swagger UI: `http://localhost:3000/api/docs`
+Base URL (dev): `http://localhost:3001/api`
+Swagger UI: `http://localhost:3001/api/docs`
 
 Auth: JWT Bearer token in header `Authorization: Bearer <accessToken>`.
 

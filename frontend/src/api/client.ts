@@ -3,7 +3,7 @@ import i18n from '../i18n'
 import type { ApiError } from './types'
 
 export const API_URL =
-  import.meta.env.VITE_API_URL ?? 'http://localhost:3000/api'
+  import.meta.env.VITE_API_URL ?? 'http://localhost:3001/api'
 
 export const TOKEN_KEY = 'classbooking_token'
 

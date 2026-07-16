@@ -36,8 +36,8 @@ npm run start   # run compiled build
 
 ## API
 
-- Base URL: `http://localhost:3000/api`
-- Swagger UI: `http://localhost:3000/api/docs`
+- Base URL: `http://localhost:3001/api`
+- Swagger UI: `http://localhost:3001/api/docs`
 
 Auth uses JWT Bearer tokens (`Authorization: Bearer <accessToken>`).
-CORS is enabled for the Vite dev server at `http://localhost:5173`.
+CORS is enabled for the frontend dev server at `http://localhost:3000`.

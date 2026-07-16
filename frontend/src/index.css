@@ -1,19 +1,20 @@
 :root {
-  --accent: #6d3bf5;
-  --accent-dark: #5326d6;
-  --accent-soft: #ede8ff;
-  --bg: #f6f7fb;
+  /* DeGiro-geïnspireerd thema: blauw / wit / grijs */
+  --accent: #1c62c4;
+  --accent-dark: #14488f;
+  --accent-soft: #e8f0fb;
+  --bg: #eef1f5;
   --surface: #ffffff;
-  --text: #1c1d2b;
-  --muted: #6b7080;
-  --border: #e6e7ee;
-  --danger: #e23b52;
-  --danger-soft: #fdecef;
-  --success: #17a673;
-  --success-soft: #e5f6ef;
+  --text: #1f2a37;
+  --muted: #667180;
+  --border: #d8dee6;
+  --danger: #d13a4c;
+  --danger-soft: #fbecee;
+  --success: #1f8f6a;
+  --success-soft: #e6f4ef;
   --radius: 14px;
-  --shadow: 0 6px 24px rgba(28, 29, 43, 0.07);
-  --shadow-sm: 0 2px 8px rgba(28, 29, 43, 0.06);
+  --shadow: 0 6px 24px rgba(31, 42, 55, 0.08);
+  --shadow-sm: 0 2px 8px rgba(31, 42, 55, 0.06);
   --maxw: 1120px;
   font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 }
@@ -115,7 +116,7 @@ h3 {
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent), #a06bff);
+  background: linear-gradient(135deg, var(--accent), #4a90e2);
 }
 .nav-links {
   display: flex;
@@ -390,22 +391,22 @@ h3 {
   background: var(--muted);
 }
 .badge-boxing {
-  background: #e2493b;
+  background: #14488f;
 }
 .badge-footvolley {
-  background: #f08a24;
+  background: #1c62c4;
 }
 .badge-yoga {
-  background: #17a673;
-}
-.badge-hiit {
-  background: #d63384;
-}
-.badge-spinning {
   background: #2f80ed;
 }
+.badge-hiit {
+  background: #5a9bd4;
+}
+.badge-spinning {
+  background: #6b7684;
+}
 .badge-other {
-  background: #7a7f8f;
+  background: #8a929e;
 }
 
 /* ---------- Filters / toggle ---------- */

@@ -40,13 +40,13 @@ npm run db:up            # docker compose up -d  (Postgres op :5432)
 npm run prisma:migrate -w backend   # maakt de tabellen aan (eerste keer: naam bv. "init")
 npm run db:seed -w backend          # demo-trainer, demo-user en voorbeeldtrainingen
 
-# 5. Alles draaien (backend :3000 + frontend :5173)
+# 5. Alles draaien (backend :3001 + frontend :3000)
 npm run dev
 ```
 
-- Frontend: http://localhost:5173
-- API: http://localhost:3000/api
-- **Swagger docs: http://localhost:3000/api/docs**
+- Frontend: http://localhost:3000
+- API: http://localhost:3001/api
+- **Swagger docs: http://localhost:3001/api/docs**
 
 ## Demo-accounts (na seed)
 
