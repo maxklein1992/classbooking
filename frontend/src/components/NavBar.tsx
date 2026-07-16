@@ -20,7 +20,20 @@ export default function NavBar() {
     <header className="navbar">
       <div className="navbar-inner">
         <Link to="/" className="brand">
-          <span className="brand-dot" />
+          <svg
+            className="brand-mark"
+            width="26"
+            height="26"
+            viewBox="0 0 24 24"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M12 2C7.6 2 4 5.4 4 9.6c0 5.2 6.3 11.2 7.4 12.2.3.3.9.3 1.2 0C13.7 20.8 20 14.8 20 9.6 20 5.4 16.4 2 12 2z"
+              fill="currentColor"
+            />
+            <circle cx="12" cy="9.5" r="2.9" fill="#fff" />
+          </svg>
           {t('common.brand')}
         </Link>
 
