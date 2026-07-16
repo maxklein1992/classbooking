@@ -1,15 +1,15 @@
 :root {
-  /* DeGiro-thema: blauw / zwart / wit / grijs */
-  --accent: #009fdf; /* DeGiro-blauw */
-  --accent-dark: #007fb3;
-  --accent-soft: #e4f5fc;
-  --ink: #111111; /* DeGiro-zwart (primaire knoppen + tekst) */
+  /* Airbnb-thema: Rausch-rood / wit / grijs */
+  --accent: #ff385c; /* Airbnb Rausch (primair) */
+  --accent-dark: #e31c5f;
+  --accent-soft: #ffe8ec;
+  --ink: #222222; /* Airbnb-zwart (koppen/tekst) */
   --ink-hover: #000000;
-  --bg: #f5f5f5; /* DeGiro-grijs */
+  --bg: #f7f7f7; /* Airbnb-grijs */
   --surface: #ffffff;
-  --text: #111111;
-  --muted: #5f6b7a;
-  --border: #e4e7ea;
+  --text: #222222;
+  --muted: #717171;
+  --border: #dddddd;
   --danger: #d13a4c;
   --danger-soft: #fbecee;
   --success: #1f8f6a;
@@ -277,11 +277,11 @@ h3 {
   cursor: not-allowed;
 }
 .btn-primary {
-  background: var(--ink);
+  background: var(--accent);
   color: #fff;
 }
 .btn-primary:hover {
-  background: var(--ink-hover);
+  background: var(--accent-dark);
   filter: none;
 }
 /* Witte knop (secundair) — wit vlak met rand, DeGiro-stijl */
@@ -404,22 +404,22 @@ h3 {
   background: var(--muted);
 }
 .badge-boxing {
-  background: #14488f;
+  background: #ff385c; /* Rausch */
 }
 .badge-footvolley {
-  background: #1c62c4;
+  background: #00a699; /* Babu */
 }
 .badge-yoga {
-  background: #2f80ed;
+  background: #fc642d; /* Arches */
 }
 .badge-hiit {
-  background: #5a9bd4;
+  background: #484848; /* Hof */
 }
 .badge-spinning {
-  background: #6b7684;
+  background: #767676; /* Foggy */
 }
 .badge-other {
-  background: #8a929e;
+  background: #b0b0b0;
 }
 
 /* ---------- Filters / toggle ---------- */
