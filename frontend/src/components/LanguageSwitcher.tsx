@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { SUPPORTED_LANGUAGES } from '../i18n'
+import Flag from './Flag'
 
 export default function LanguageSwitcher() {
   const { i18n, t } = useTranslation()
@@ -38,7 +39,7 @@ export default function LanguageSwitcher() {
         aria-label={t('nav.language')}
         title={t('nav.language')}
       >
-        <span className="lang-flag">{current.flag}</span>
+        <Flag code={current.code} className="lang-flag" />
         <span className="lang-code">{current.code.toUpperCase()}</span>
         <span className="lang-caret">▾</span>
       </button>
@@ -56,7 +57,7 @@ export default function LanguageSwitcher() {
                 }`}
                 onClick={() => choose(lang.code)}
               >
-                <span className="lang-flag">{lang.flag}</span>
+                <Flag code={lang.code} className="lang-flag" />
                 <span>{lang.label}</span>
               </button>
             </li>
