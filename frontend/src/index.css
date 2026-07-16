@@ -1,13 +1,15 @@
 :root {
-  /* DeGiro-geïnspireerd thema: blauw / wit / grijs */
-  --accent: #1c62c4;
-  --accent-dark: #14488f;
-  --accent-soft: #e8f0fb;
-  --bg: #eef1f5;
+  /* DeGiro-thema: blauw / zwart / wit / grijs */
+  --accent: #009fdf; /* DeGiro-blauw */
+  --accent-dark: #007fb3;
+  --accent-soft: #e4f5fc;
+  --ink: #111111; /* DeGiro-zwart (primaire knoppen + tekst) */
+  --ink-hover: #000000;
+  --bg: #f5f5f5; /* DeGiro-grijs */
   --surface: #ffffff;
-  --text: #1f2a37;
-  --muted: #667180;
-  --border: #d8dee6;
+  --text: #111111;
+  --muted: #5f6b7a;
+  --border: #e4e7ea;
   --danger: #d13a4c;
   --danger-soft: #fbecee;
   --success: #1f8f6a;
@@ -116,7 +118,7 @@ h3 {
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent), #4a90e2);
+  background: linear-gradient(135deg, var(--accent), var(--accent-dark));
 }
 .nav-links {
   display: flex;
@@ -275,20 +277,31 @@ h3 {
   cursor: not-allowed;
 }
 .btn-primary {
-  background: var(--accent);
+  background: var(--ink);
   color: #fff;
 }
 .btn-primary:hover {
-  background: var(--accent-dark);
+  background: var(--ink-hover);
   filter: none;
 }
+/* Witte knop (secundair) — wit vlak met rand, DeGiro-stijl */
 .btn-ghost {
-  background: transparent;
-  border-color: var(--border);
-  color: var(--text);
+  background: #fff;
+  border-color: #d0d5db;
+  color: var(--ink);
 }
 .btn-ghost:hover {
-  background: var(--bg);
+  background: #f5f5f5;
+  border-color: var(--ink);
+}
+/* Blauwe knop wanneer expliciet een accent-CTA nodig is */
+.btn-accent {
+  background: var(--accent);
+  color: #fff;
+}
+.btn-accent:hover {
+  background: var(--accent-dark);
+  filter: none;
 }
 .btn-danger {
   background: var(--danger-soft);
