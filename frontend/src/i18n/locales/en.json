@@ -1,11 +1,11 @@
 {
   "common": {
-    "brand": "ClassBooking",
+    "brand": "Classo",
     "loading": "Loading…",
     "busy": "Please wait…",
     "details": "Details",
     "back": "← Back to overview",
-    "footer": "ClassBooking — book sports trainings"
+    "footer": "Classo — book sports trainings"
   },
   "nav": {
     "trainings": "Trainings",

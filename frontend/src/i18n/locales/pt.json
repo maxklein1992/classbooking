@@ -1,11 +1,11 @@
 {
   "common": {
-    "brand": "ClassBooking",
+    "brand": "Classo",
     "loading": "A carregar…",
     "busy": "Aguarde…",
     "details": "Detalhes",
     "back": "← Voltar ao resumo",
-    "footer": "ClassBooking — reserve treinos desportivos"
+    "footer": "Classo — reserve treinos desportivos"
   },
   "nav": {
     "trainings": "Treinos",

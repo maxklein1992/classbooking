@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 72" role="img" aria-label="Classo">
+  <defs>
+    <linearGradient id="classoGradL" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FF5A5F"/>
+      <stop offset="0.55" stop-color="#FF385C"/>
+      <stop offset="1" stop-color="#E61E4D"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(8,8) scale(0.875)">
+    <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#classoGradL)"/>
+    <circle cx="32" cy="32" r="13.5" fill="none" stroke="#fff" stroke-width="6.5"
+            stroke-linecap="round" stroke-dasharray="74 10.8"/>
+    <circle cx="32" cy="32" r="4.6" fill="#fff"/>
+  </g>
+  <text x="80" y="49" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
+        font-size="40" font-weight="800" letter-spacing="-1.5" fill="#FF385C">Classo</text>
+</svg>
