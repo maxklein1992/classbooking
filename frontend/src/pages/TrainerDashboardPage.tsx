@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import {
   createTraining,
   deleteTraining,
@@ -40,6 +41,7 @@ const emptyForm: FormState = {
 }
 
 export default function TrainerDashboardPage() {
+  const { t } = useTranslation()
   const queryClient = useQueryClient()
   const [form, setForm] = useState<FormState>(emptyForm)
   const [editingId, setEditingId] = useState<string | null>(null)
@@ -61,7 +63,7 @@ export default function TrainerDashboardPage() {
         ? updateTraining(editingId, payload)
         : createTraining(payload),
     onSuccess: () => {
-      setFeedback(editingId ? 'Training bijgewerkt.' : 'Training aangemaakt.')
+      setFeedback(editingId ? t('trainer.updated') : t('trainer.created'))
       resetForm()
       invalidate()
     },
@@ -71,7 +73,7 @@ export default function TrainerDashboardPage() {
   const deleteMutation = useMutation({
     mutationFn: (id: string) => deleteTraining(id),
     onSuccess: () => {
-      setFeedback('Training verwijderd.')
+      setFeedback(t('trainer.deleted'))
       invalidate()
     },
     onError: (err) => setError(getErrorMessage(err)),
@@ -86,18 +88,18 @@ export default function TrainerDashboardPage() {
     setEditingId(null)
   }
 
-  function startEdit(t: Training) {
-    setEditingId(t.id)
+  function startEdit(training: Training) {
+    setEditingId(training.id)
     setError(null)
     setForm({
-      title: t.title,
-      description: t.description,
-      sport: t.sport,
-      startTime: toDatetimeLocalValue(t.startTime),
-      endTime: toDatetimeLocalValue(t.endTime),
-      location: t.location,
-      capacity: String(t.capacity),
-      price: String(t.price),
+      title: training.title,
+      description: training.description,
+      sport: training.sport,
+      startTime: toDatetimeLocalValue(training.startTime),
+      endTime: toDatetimeLocalValue(training.endTime),
+      location: training.location,
+      capacity: String(training.capacity),
+      price: String(training.price),
     })
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
@@ -109,16 +111,16 @@ export default function TrainerDashboardPage() {
     const start = new Date(form.startTime)
     const end = new Date(form.endTime)
     if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime())) {
-      setError('Vul een geldige start- en eindtijd in.')
+      setError(t('trainer.invalidTimes'))
       return
     }
     if (end <= start) {
-      setError('De eindtijd moet na de starttijd liggen.')
+      setError(t('trainer.endAfterStart'))
       return
     }
     const capacity = Number(form.capacity)
     if (!Number.isFinite(capacity) || capacity < 1) {
-      setError('Capaciteit moet minimaal 1 zijn.')
+      setError(t('trainer.capacityMin'))
       return
     }
 
@@ -142,7 +144,7 @@ export default function TrainerDashboardPage() {
   return (
     <div className="page">
       <div className="page-header">
-        <h1>Trainer dashboard</h1>
+        <h1>{t('trainer.title')}</h1>
       </div>
 
       {feedback && (
@@ -156,11 +158,13 @@ export default function TrainerDashboardPage() {
 
       <div className="dashboard-layout">
         <section className="card form-card">
-          <h2>{editingId ? 'Training bewerken' : 'Nieuwe training'}</h2>
+          <h2>
+            {editingId ? t('trainer.editTraining') : t('trainer.newTraining')}
+          </h2>
           {error && <div className="alert alert-error">{error}</div>}
           <form onSubmit={handleSubmit} className="form">
             <label className="field">
-              <span>Titel</span>
+              <span>{t('trainer.fieldTitle')}</span>
               <input
                 type="text"
                 value={form.title}
@@ -169,7 +173,7 @@ export default function TrainerDashboardPage() {
               />
             </label>
             <label className="field">
-              <span>Beschrijving</span>
+              <span>{t('trainer.fieldDescription')}</span>
               <textarea
                 value={form.description}
                 onChange={(e) => set('description', e.target.value)}
@@ -177,21 +181,21 @@ export default function TrainerDashboardPage() {
               />
             </label>
             <label className="field">
-              <span>Sport</span>
+              <span>{t('trainer.fieldSport')}</span>
               <select
                 value={form.sport}
                 onChange={(e) => set('sport', e.target.value as Sport)}
               >
                 {SPORTS.map((s) => (
                   <option key={s} value={s}>
-                    {sportLabel(s)}
+                    {sportLabel(s, t)}
                   </option>
                 ))}
               </select>
             </label>
             <div className="field-row">
               <label className="field">
-                <span>Starttijd</span>
+                <span>{t('trainer.fieldStart')}</span>
                 <input
                   type="datetime-local"
                   value={form.startTime}
@@ -200,7 +204,7 @@ export default function TrainerDashboardPage() {
                 />
               </label>
               <label className="field">
-                <span>Eindtijd</span>
+                <span>{t('trainer.fieldEnd')}</span>
                 <input
                   type="datetime-local"
                   value={form.endTime}
@@ -210,7 +214,7 @@ export default function TrainerDashboardPage() {
               </label>
             </div>
             <label className="field">
-              <span>Locatie</span>
+              <span>{t('trainer.fieldLocation')}</span>
               <input
                 type="text"
                 value={form.location}
@@ -220,7 +224,7 @@ export default function TrainerDashboardPage() {
             </label>
             <div className="field-row">
               <label className="field">
-                <span>Capaciteit</span>
+                <span>{t('trainer.fieldCapacity')}</span>
                 <input
                   type="number"
                   min={1}
@@ -230,7 +234,7 @@ export default function TrainerDashboardPage() {
                 />
               </label>
               <label className="field">
-                <span>Prijs (€)</span>
+                <span>{t('trainer.fieldPrice')}</span>
                 <input
                   type="number"
                   min={0}
@@ -248,10 +252,10 @@ export default function TrainerDashboardPage() {
                 disabled={saveMutation.isPending}
               >
                 {saveMutation.isPending
-                  ? 'Opslaan…'
+                  ? t('trainer.saving')
                   : editingId
-                    ? 'Wijzigingen opslaan'
-                    : 'Training aanmaken'}
+                    ? t('trainer.saveChanges')
+                    : t('trainer.create')}
               </button>
               {editingId && (
                 <button
@@ -259,7 +263,7 @@ export default function TrainerDashboardPage() {
                   className="btn btn-ghost"
                   onClick={resetForm}
                 >
-                  Annuleren
+                  {t('trainer.cancel')}
                 </button>
               )}
             </div>
@@ -267,55 +271,57 @@ export default function TrainerDashboardPage() {
         </section>
 
         <section className="dashboard-list">
-          <h2>Mijn trainingen</h2>
-          {isLoading && <p className="muted">Laden…</p>}
-          {isError && <p className="text-danger">Kon trainingen niet laden.</p>}
+          <h2>{t('trainer.myTrainings')}</h2>
+          {isLoading && <p className="muted">{t('trainer.loading')}</p>}
+          {isError && <p className="text-danger">{t('trainer.loadError')}</p>}
           {!isLoading && trainings && trainings.length === 0 && (
             <div className="empty-state card">
-              <p className="muted">
-                Je hebt nog geen trainingen aangemaakt. Gebruik het formulier.
-              </p>
+              <p className="muted">{t('trainer.emptyBody')}</p>
             </div>
           )}
           {trainings && trainings.length > 0 && (
             <div className="booking-list">
-              {trainings.map((t) => (
-                <article key={t.id} className="card booking-row">
+              {trainings.map((tr) => (
+                <article key={tr.id} className="card booking-row">
                   <div className="booking-main">
                     <div className="booking-head">
-                      <SportBadge sport={t.sport} />
-                      <span className="booking-title">{t.title}</span>
+                      <SportBadge sport={tr.sport} />
+                      <span className="booking-title">{tr.title}</span>
                     </div>
                     <ul className="meta-list compact">
-                      <li>🕒 {formatDateTime(t.startTime)}</li>
-                      <li>📍 {t.location}</li>
+                      <li>🕒 {formatDateTime(tr.startTime)}</li>
+                      <li>📍 {tr.location}</li>
                       <li>
-                        👥 {t.bookingsCount}/{t.capacity} geboekt
+                        👥{' '}
+                        {t('trainer.bookedCount', {
+                          booked: tr.bookingsCount,
+                          capacity: tr.capacity,
+                        })}
                       </li>
-                      <li>💶 {formatPrice(t.price)}</li>
+                      <li>💶 {formatPrice(tr.price)}</li>
                     </ul>
                   </div>
                   <div className="booking-actions">
                     <button
                       className="btn btn-ghost"
-                      onClick={() => startEdit(t)}
+                      onClick={() => startEdit(tr)}
                     >
-                      Bewerken
+                      {t('trainer.edit')}
                     </button>
                     <button
                       className="btn btn-danger"
                       onClick={() => {
                         if (
                           window.confirm(
-                            `Weet je zeker dat je "${t.title}" wilt verwijderen?`,
+                            t('trainer.confirmDelete', { title: tr.title }),
                           )
                         ) {
-                          deleteMutation.mutate(t.id)
+                          deleteMutation.mutate(tr.id)
                         }
                       }}
                       disabled={deleteMutation.isPending}
                     >
-                      Verwijderen
+                      {t('trainer.delete')}
                     </button>
                   </div>
                 </article>

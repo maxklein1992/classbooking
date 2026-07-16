@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import { getTraining } from '../api/trainings'
 import { createBooking, deleteBooking } from '../api/bookings'
 import { getErrorMessage } from '../api/client'
@@ -11,6 +12,7 @@ import { useMyBookings } from '../hooks/useMyBookings'
 import SportBadge from '../components/SportBadge'
 
 export default function TrainingDetailPage() {
+  const { t } = useTranslation()
   const { id = '' } = useParams()
   const { isAuthenticated } = useAuth()
   const queryClient = useQueryClient()
@@ -34,7 +36,7 @@ export default function TrainingDetailPage() {
   const bookMutation = useMutation({
     mutationFn: () => createBooking({ trainingId: id }),
     onSuccess: () => {
-      setFeedback('Je boeking is bevestigd!')
+      setFeedback(t('home.bookingConfirmed'))
       invalidate()
     },
     onError: (err) => setFeedback(getErrorMessage(err)),
@@ -43,7 +45,7 @@ export default function TrainingDetailPage() {
   const cancelMutation = useMutation({
     mutationFn: (bookingId: string) => deleteBooking(bookingId),
     onSuccess: () => {
-      setFeedback('Je boeking is geannuleerd.')
+      setFeedback(t('training.bookingCancelled'))
       invalidate()
     },
     onError: (err) => setFeedback(getErrorMessage(err)),
@@ -55,13 +57,14 @@ export default function TrainingDetailPage() {
     queryClient.invalidateQueries({ queryKey: ['bookings'] })
   }
 
-  if (isLoading) return <div className="page muted">Training laden…</div>
+  if (isLoading)
+    return <div className="page muted">{t('home.loadingTrainings')}</div>
   if (isError || !training)
     return (
       <div className="page">
-        <p className="text-danger">Training niet gevonden.</p>
+        <p className="text-danger">{t('training.notFound')}</p>
         <Link to="/" className="btn btn-ghost">
-          ← Terug naar overzicht
+          {t('common.back')}
         </Link>
       </div>
     )
@@ -72,7 +75,7 @@ export default function TrainingDetailPage() {
   return (
     <div className="page detail-page">
       <Link to="/" className="back-link">
-        ← Terug naar overzicht
+        {t('common.back')}
       </Link>
 
       <div className="card detail-card">
@@ -86,28 +89,31 @@ export default function TrainingDetailPage() {
 
         <div className="detail-grid">
           <div className="detail-item">
-            <span className="detail-label">Datum</span>
+            <span className="detail-label">{t('training.date')}</span>
             <span>{formatDateTime(training.startTime)}</span>
           </div>
           <div className="detail-item">
-            <span className="detail-label">Tijd</span>
+            <span className="detail-label">{t('training.time')}</span>
             <span>{formatTimeRange(training.startTime, training.endTime)}</span>
           </div>
           <div className="detail-item">
-            <span className="detail-label">Locatie</span>
+            <span className="detail-label">{t('training.location')}</span>
             <span>{training.location}</span>
           </div>
           <div className="detail-item">
-            <span className="detail-label">Trainer</span>
-            <span>{training.trainer?.name ?? 'Onbekend'}</span>
+            <span className="detail-label">{t('training.trainer')}</span>
+            <span>{training.trainer?.name ?? t('training.unknownTrainer')}</span>
           </div>
           <div className="detail-item">
-            <span className="detail-label">Beschikbaarheid</span>
+            <span className="detail-label">{t('training.availability')}</span>
             <span>
               {isFull ? (
-                <span className="text-danger">Vol</span>
+                <span className="text-danger">{t('training.full')}</span>
               ) : (
-                `${training.availableSpots} van ${training.capacity} plekken vrij`
+                t('training.spotsFree', {
+                  spots: training.availableSpots,
+                  capacity: training.capacity,
+                })
               )}
             </span>
           </div>
@@ -131,7 +137,7 @@ export default function TrainingDetailPage() {
     if (!isAuthenticated) {
       return (
         <Link to="/login" className="btn btn-primary btn-lg">
-          Inloggen om te boeken
+          {t('training.loginToBook')}
         </Link>
       )
     }
@@ -142,21 +148,23 @@ export default function TrainingDetailPage() {
           onClick={() => cancelMutation.mutate(activeBooking.id)}
           disabled={cancelMutation.isPending}
         >
-          {cancelMutation.isPending ? 'Bezig…' : 'Boeking annuleren'}
+          {cancelMutation.isPending
+            ? t('common.busy')
+            : t('training.cancelBooking')}
         </button>
       )
     }
     if (isPast) {
       return (
         <button className="btn btn-lg" disabled>
-          Deze training is verlopen
+          {t('training.expiredLong')}
         </button>
       )
     }
     if (isFull) {
       return (
         <button className="btn btn-lg" disabled>
-          Vol
+          {t('training.full')}
         </button>
       )
     }
@@ -166,7 +174,7 @@ export default function TrainingDetailPage() {
         onClick={() => bookMutation.mutate()}
         disabled={bookMutation.isPending}
       >
-        {bookMutation.isPending ? 'Bezig…' : 'Boek deze training'}
+        {bookMutation.isPending ? t('common.busy') : t('training.bookThis')}
       </button>
     )
   }

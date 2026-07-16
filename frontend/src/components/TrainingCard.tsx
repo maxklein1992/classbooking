@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import type { Training } from '../api/types'
 import { formatDateTime, formatPrice } from '../lib/dates'
 import SportBadge from './SportBadge'
@@ -18,6 +19,7 @@ export default function TrainingCard({
   onBook,
   booking,
 }: Props) {
+  const { t } = useTranslation()
   const isFull = training.availableSpots <= 0
   const isPast = new Date(training.startTime).getTime() < Date.now()
 
@@ -43,15 +45,18 @@ export default function TrainingCard({
         </li>
         <li>
           <span className="meta-icon">🧑‍🏫</span>
-          {training.trainer?.name ?? 'Onbekend'}
+          {training.trainer?.name ?? t('training.unknownTrainer')}
         </li>
         <li>
           <span className="meta-icon">👥</span>
           {isFull ? (
-            <span className="text-danger">Vol</span>
+            <span className="text-danger">{t('training.full')}</span>
           ) : (
             <>
-              {training.availableSpots} van {training.capacity} plekken vrij
+              {t('training.spotsFree', {
+                spots: training.availableSpots,
+                capacity: training.capacity,
+              })}
             </>
           )}
         </li>
@@ -60,7 +65,7 @@ export default function TrainingCard({
       <div className="card-actions">
         {renderButton()}
         <Link to={`/trainingen/${training.id}`} className="btn btn-ghost">
-          Details
+          {t('common.details')}
         </Link>
       </div>
     </article>
@@ -70,28 +75,28 @@ export default function TrainingCard({
     if (isBooked) {
       return (
         <button className="btn btn-success" disabled>
-          Geboekt
+          {t('training.booked')}
         </button>
       )
     }
     if (isPast) {
       return (
         <button className="btn" disabled>
-          Verlopen
+          {t('training.expired')}
         </button>
       )
     }
     if (isFull) {
       return (
         <button className="btn" disabled>
-          Vol
+          {t('training.full')}
         </button>
       )
     }
     if (!isAuthenticated) {
       return (
         <Link to="/login" className="btn btn-primary">
-          Inloggen om te boeken
+          {t('training.loginToBook')}
         </Link>
       )
     }
@@ -101,7 +106,7 @@ export default function TrainingCard({
         onClick={() => onBook?.(training)}
         disabled={booking}
       >
-        {booking ? 'Bezig…' : 'Boek'}
+        {booking ? t('common.busy') : t('training.book')}
       </button>
     )
   }

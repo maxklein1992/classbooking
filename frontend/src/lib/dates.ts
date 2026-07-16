@@ -1,20 +1,40 @@
-import { format } from 'date-fns'
-import { nl } from 'date-fns/locale'
+import { format, type Locale } from 'date-fns'
+import { enUS, es, pt } from 'date-fns/locale'
+import i18n from '../i18n'
+
+// Pick the date-fns locale for the active i18next language.
+// Portuguese uses European Portuguese (pt), not Brazilian (ptBR).
+export function currentLocale(): Locale {
+  const lng = i18n.language || 'pt'
+  if (lng.startsWith('es')) return es
+  if (lng.startsWith('en')) return enUS
+  return pt
+}
+
+// Locale string for Intl-based number/currency formatting.
+function currentIntlLocale(): string {
+  const lng = i18n.language || 'pt'
+  if (lng.startsWith('es')) return 'es-ES'
+  if (lng.startsWith('en')) return 'en-GB'
+  return 'pt-PT'
+}
 
 export function formatDateTime(iso: string): string {
-  return format(new Date(iso), "EEEE d MMMM yyyy 'om' HH:mm", { locale: nl })
+  return format(new Date(iso), 'EEEE d MMMM yyyy, HH:mm', {
+    locale: currentLocale(),
+  })
 }
 
 export function formatDate(iso: string): string {
-  return format(new Date(iso), 'EEEE d MMMM yyyy', { locale: nl })
+  return format(new Date(iso), 'EEEE d MMMM yyyy', { locale: currentLocale() })
 }
 
 export function formatDayShort(date: Date): string {
-  return format(date, 'EEE d MMM', { locale: nl })
+  return format(date, 'EEE d MMM', { locale: currentLocale() })
 }
 
 export function formatTime(iso: string): string {
-  return format(new Date(iso), 'HH:mm', { locale: nl })
+  return format(new Date(iso), 'HH:mm', { locale: currentLocale() })
 }
 
 export function formatTimeRange(startIso: string, endIso: string): string {
@@ -22,7 +42,7 @@ export function formatTimeRange(startIso: string, endIso: string): string {
 }
 
 export function formatPrice(price: number): string {
-  return new Intl.NumberFormat('nl-NL', {
+  return new Intl.NumberFormat(currentIntlLocale(), {
     style: 'currency',
     currency: 'EUR',
   }).format(price)

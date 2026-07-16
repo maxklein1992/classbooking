@@ -1,4 +1,5 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import NavBar from './components/NavBar'
 import ProtectedRoute from './components/ProtectedRoute'
 import HomePage from './pages/HomePage'
@@ -9,6 +10,7 @@ import MyBookingsPage from './pages/MyBookingsPage'
 import TrainerDashboardPage from './pages/TrainerDashboardPage'
 
 export default function App() {
+  const { t } = useTranslation()
   return (
     <div className="app">
       <NavBar />
@@ -38,7 +40,7 @@ export default function App() {
         </Routes>
       </main>
       <footer className="app-footer">
-        <span>ClassBooking — sporttrainingen boeken</span>
+        <span>{t('common.footer')}</span>
       </footer>
     </div>
   )

@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import type { Sport } from '../api/types'
 import { sportLabel } from '../lib/sports'
 
@@ -11,9 +12,10 @@ const SPORT_CLASS: Record<Sport, string> = {
 }
 
 export default function SportBadge({ sport }: { sport: Sport }) {
+  const { t } = useTranslation()
   return (
     <span className={`badge ${SPORT_CLASS[sport] ?? 'badge-other'}`}>
-      {sportLabel(sport)}
+      {sportLabel(sport, t)}
     </span>
   )
 }

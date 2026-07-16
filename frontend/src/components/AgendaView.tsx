@@ -8,10 +8,10 @@ import {
   endOfDay,
   startOfDay,
 } from 'date-fns'
-import { nl } from 'date-fns/locale'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import type { Training } from '../api/types'
-import { formatTimeRange } from '../lib/dates'
+import { currentLocale, formatTimeRange } from '../lib/dates'
 import SportBadge from './SportBadge'
 
 interface Props {
@@ -21,7 +21,12 @@ interface Props {
 // A dependency-light weekly agenda. Groups trainings per day (Mon-Sun) and
 // lets the user page between weeks.
 export default function AgendaView({ trainings }: Props) {
+  const { t } = useTranslation()
   const [weekOffset, setWeekOffset] = useState(0)
+
+  // useTranslation re-renders this component on language change, so reading the
+  // active date-fns locale here keeps day/month names in the current language.
+  const locale = currentLocale()
 
   const weekStart = useMemo(() => {
     const base = startOfWeek(new Date(), { weekStartsOn: 1 })
@@ -38,14 +43,14 @@ export default function AgendaView({ trainings }: Props) {
   const byDay = useMemo(() => {
     const map = new Map<string, Training[]>()
     for (const day of days) map.set(day.toDateString(), [])
-    for (const t of trainings) {
-      const start = new Date(t.startTime)
+    for (const tr of trainings) {
+      const start = new Date(tr.startTime)
       if (
         isWithinInterval(start, { start: startOfDay(weekStart), end: weekEnd })
       ) {
         const key = start.toDateString()
         const list = map.get(key)
-        if (list) list.push(t)
+        if (list) list.push(tr)
       }
     }
     for (const list of map.values()) {
@@ -57,28 +62,34 @@ export default function AgendaView({ trainings }: Props) {
     return map
   }, [days, trainings, weekStart, weekEnd])
 
-  const rangeLabel = `${format(weekStart, 'd MMM', { locale: nl })} – ${format(
+  const rangeLabel = `${format(weekStart, 'd MMM', { locale })} – ${format(
     addDays(weekStart, 6),
     'd MMM yyyy',
-    { locale: nl },
+    { locale },
   )}`
 
   return (
     <div className="agenda">
       <div className="agenda-toolbar">
-        <button className="btn btn-ghost" onClick={() => setWeekOffset((v) => v - 1)}>
-          ← Vorige week
+        <button
+          className="btn btn-ghost"
+          onClick={() => setWeekOffset((v) => v - 1)}
+        >
+          {t('agenda.prevWeek')}
         </button>
         <div className="agenda-range">
           <strong>{rangeLabel}</strong>
           {weekOffset !== 0 && (
             <button className="link-btn" onClick={() => setWeekOffset(0)}>
-              Deze week
+              {t('agenda.thisWeek')}
             </button>
           )}
         </div>
-        <button className="btn btn-ghost" onClick={() => setWeekOffset((v) => v + 1)}>
-          Volgende week →
+        <button
+          className="btn btn-ghost"
+          onClick={() => setWeekOffset((v) => v + 1)}
+        >
+          {t('agenda.nextWeek')}
         </button>
       </div>
 
@@ -87,34 +98,37 @@ export default function AgendaView({ trainings }: Props) {
           const items = byDay.get(day.toDateString()) ?? []
           const today = isSameDay(day, new Date())
           return (
-            <div key={day.toISOString()} className={`agenda-col${today ? ' is-today' : ''}`}>
+            <div
+              key={day.toISOString()}
+              className={`agenda-col${today ? ' is-today' : ''}`}
+            >
               <div className="agenda-day-head">
                 <span className="agenda-dow">
-                  {format(day, 'EEEE', { locale: nl })}
+                  {format(day, 'EEEE', { locale })}
                 </span>
                 <span className="agenda-date">
-                  {format(day, 'd MMM', { locale: nl })}
+                  {format(day, 'd MMM', { locale })}
                 </span>
               </div>
               <div className="agenda-items">
                 {items.length === 0 ? (
                   <p className="agenda-empty">—</p>
                 ) : (
-                  items.map((t) => (
+                  items.map((tr) => (
                     <Link
-                      to={`/trainingen/${t.id}`}
-                      key={t.id}
+                      to={`/trainingen/${tr.id}`}
+                      key={tr.id}
                       className="agenda-item"
                     >
                       <span className="agenda-time">
-                        {formatTimeRange(t.startTime, t.endTime)}
+                        {formatTimeRange(tr.startTime, tr.endTime)}
                       </span>
-                      <span className="agenda-item-title">{t.title}</span>
-                      <SportBadge sport={t.sport} />
+                      <span className="agenda-item-title">{tr.title}</span>
+                      <SportBadge sport={tr.sport} />
                       <span className="agenda-spots">
-                        {t.availableSpots > 0
-                          ? `${t.availableSpots} vrij`
-                          : 'Vol'}
+                        {tr.availableSpots > 0
+                          ? t('training.freeShort', { spots: tr.availableSpots })
+                          : t('training.full')}
                       </span>
                     </Link>
                   ))

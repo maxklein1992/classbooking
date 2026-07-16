@@ -1,4 +1,5 @@
 import axios, { AxiosError } from 'axios'
+import i18n from '../i18n'
 import type { ApiError } from './types'
 
 export const API_URL =
@@ -48,26 +49,28 @@ export function getErrorMessage(error: unknown): string {
     const status = err.response?.status
     const data = err.response?.data
 
-    // Prefer specific known cases
+    // Prefer specific known cases. Messages are translated into the active
+    // language via the i18next singleton (works outside React components).
+    const t = i18n.t.bind(i18n)
     if (status === 409) {
       const msg = normalizeMessage(data?.message)
-      if (msg && /vol|full|capacity/i.test(msg)) return 'Deze training is vol.'
-      return 'Je hebt deze training al geboekt.'
+      if (msg && /vol|full|cheio|complet|capacity|capacidade/i.test(msg))
+        return t('errors.full')
+      return t('errors.alreadyBooked')
     }
     if (status === 400) {
       const msg = normalizeMessage(data?.message)
-      if (msg && /verleden|past/i.test(msg))
-        return 'Deze training ligt in het verleden.'
-      return msg ?? 'Ongeldige aanvraag. Controleer je gegevens.'
+      if (msg && /verleden|past|passado|pasado/i.test(msg))
+        return t('errors.past')
+      return t('errors.badRequest')
     }
-    if (status === 401) return 'Je bent niet ingelogd of je sessie is verlopen.'
-    if (status === 403) return 'Je hebt geen toestemming voor deze actie.'
-    if (status === 404) return 'Niet gevonden.'
+    if (status === 401) return t('errors.unauthorized')
+    if (status === 403) return t('errors.forbidden')
+    if (status === 404) return t('errors.notFound')
 
-    const generic = normalizeMessage(data?.message)
-    if (generic) return generic
+    return t('errors.generic')
   }
-  return 'Er is iets misgegaan. Probeer het opnieuw.'
+  return i18n.t('errors.generic')
 }
 
 function normalizeMessage(message?: string | string[]): string | undefined {

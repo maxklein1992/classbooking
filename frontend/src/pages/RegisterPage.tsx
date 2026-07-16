@@ -1,10 +1,12 @@
 import { useState, type FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { useAuth } from '../auth/AuthContext'
 import { getErrorMessage } from '../api/client'
 import type { Role } from '../api/types'
 
 export default function RegisterPage() {
+  const { t } = useTranslation()
   const { register } = useAuth()
   const navigate = useNavigate()
 
@@ -19,7 +21,7 @@ export default function RegisterPage() {
     e.preventDefault()
     setError(null)
     if (password.length < 6) {
-      setError('Wachtwoord moet minimaal 6 tekens bevatten.')
+      setError(t('auth.passwordTooShort'))
       return
     }
     setSubmitting(true)
@@ -36,14 +38,14 @@ export default function RegisterPage() {
   return (
     <div className="page auth-page">
       <div className="card auth-card">
-        <h1>Account aanmaken</h1>
-        <p className="muted">Maak een account om te boeken of les te geven.</p>
+        <h1>{t('auth.registerTitle')}</h1>
+        <p className="muted">{t('auth.registerSubtitle')}</p>
 
         {error && <div className="alert alert-error">{error}</div>}
 
         <form onSubmit={handleSubmit} className="form">
           <label className="field">
-            <span>Naam</span>
+            <span>{t('auth.name')}</span>
             <input
               type="text"
               value={name}
@@ -53,7 +55,7 @@ export default function RegisterPage() {
             />
           </label>
           <label className="field">
-            <span>E-mailadres</span>
+            <span>{t('auth.email')}</span>
             <input
               type="email"
               value={email}
@@ -63,7 +65,7 @@ export default function RegisterPage() {
             />
           </label>
           <label className="field">
-            <span>Wachtwoord</span>
+            <span>{t('auth.password')}</span>
             <input
               type="password"
               value={password}
@@ -72,11 +74,11 @@ export default function RegisterPage() {
               minLength={6}
               autoComplete="new-password"
             />
-            <small className="muted">Minimaal 6 tekens.</small>
+            <small className="muted">{t('auth.passwordHint')}</small>
           </label>
 
           <fieldset className="role-choice">
-            <legend>Wat wil je doen?</legend>
+            <legend>{t('auth.roleLegend')}</legend>
             <label
               className={`role-option${role === 'USER' ? ' selected' : ''}`}
             >
@@ -87,8 +89,8 @@ export default function RegisterPage() {
                 checked={role === 'USER'}
                 onChange={() => setRole('USER')}
               />
-              <span className="role-title">Ik wil boeken</span>
-              <span className="role-sub muted">Deelnemer / sporter</span>
+              <span className="role-title">{t('auth.roleUser')}</span>
+              <span className="role-sub muted">{t('auth.roleUserSub')}</span>
             </label>
             <label
               className={`role-option${role === 'TRAINER' ? ' selected' : ''}`}
@@ -100,8 +102,8 @@ export default function RegisterPage() {
                 checked={role === 'TRAINER'}
                 onChange={() => setRole('TRAINER')}
               />
-              <span className="role-title">Ik ben trainer</span>
-              <span className="role-sub muted">Trainingen aanbieden</span>
+              <span className="role-title">{t('auth.roleTrainer')}</span>
+              <span className="role-sub muted">{t('auth.roleTrainerSub')}</span>
             </label>
           </fieldset>
 
@@ -110,12 +112,12 @@ export default function RegisterPage() {
             className="btn btn-primary btn-block"
             disabled={submitting}
           >
-            {submitting ? 'Bezig…' : 'Registreren'}
+            {submitting ? t('common.busy') : t('auth.registerSubmit')}
           </button>
         </form>
 
         <p className="auth-alt">
-          Heb je al een account? <Link to="/login">Log hier in</Link>
+          {t('auth.haveAccount')} <Link to="/login">{t('auth.loginHere')}</Link>
         </p>
       </div>
     </div>

@@ -1,13 +1,5 @@
+import type { TFunction } from 'i18next'
 import type { Sport } from '../api/types'
-
-export const SPORT_LABELS: Record<Sport, string> = {
-  BOXING: 'Boksen',
-  FOOTVOLLEY: 'Footvolley',
-  YOGA: 'Yoga',
-  HIIT: 'HIIT',
-  SPINNING: 'Spinning',
-  OTHER: 'Overig',
-}
 
 export const SPORTS: Sport[] = [
   'BOXING',
@@ -18,6 +10,8 @@ export const SPORTS: Sport[] = [
   'OTHER',
 ]
 
-export function sportLabel(sport: Sport): string {
-  return SPORT_LABELS[sport] ?? sport
+// Localized display name for a sport. Pass the `t` from useTranslation so the
+// label re-renders when the active language changes.
+export function sportLabel(sport: Sport, t: TFunction): string {
+  return t(`sports.${sport}`)
 }

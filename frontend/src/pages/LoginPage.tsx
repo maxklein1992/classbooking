@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { useAuth } from '../auth/AuthContext'
 import { getErrorMessage } from '../api/client'
 
@@ -8,6 +9,7 @@ interface LocationState {
 }
 
 export default function LoginPage() {
+  const { t } = useTranslation()
   const { login } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
@@ -35,14 +37,14 @@ export default function LoginPage() {
   return (
     <div className="page auth-page">
       <div className="card auth-card">
-        <h1>Inloggen</h1>
-        <p className="muted">Welkom terug! Log in om te boeken.</p>
+        <h1>{t('auth.loginTitle')}</h1>
+        <p className="muted">{t('auth.loginSubtitle')}</p>
 
         {error && <div className="alert alert-error">{error}</div>}
 
         <form onSubmit={handleSubmit} className="form">
           <label className="field">
-            <span>E-mailadres</span>
+            <span>{t('auth.email')}</span>
             <input
               type="email"
               value={email}
@@ -52,7 +54,7 @@ export default function LoginPage() {
             />
           </label>
           <label className="field">
-            <span>Wachtwoord</span>
+            <span>{t('auth.password')}</span>
             <input
               type="password"
               value={password}
@@ -66,12 +68,13 @@ export default function LoginPage() {
             className="btn btn-primary btn-block"
             disabled={submitting}
           >
-            {submitting ? 'Bezig…' : 'Inloggen'}
+            {submitting ? t('common.busy') : t('auth.loginSubmit')}
           </button>
         </form>
 
         <p className="auth-alt">
-          Nog geen account? <Link to="/register">Registreer hier</Link>
+          {t('auth.noAccount')}{' '}
+          <Link to="/register">{t('auth.registerHere')}</Link>
         </p>
       </div>
     </div>

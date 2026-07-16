@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import { deleteBooking } from '../api/bookings'
 import { getErrorMessage } from '../api/client'
 import { useMyBookings } from '../hooks/useMyBookings'
@@ -8,6 +9,7 @@ import { formatDateTime, formatPrice } from '../lib/dates'
 import SportBadge from '../components/SportBadge'
 
 export default function MyBookingsPage() {
+  const { t } = useTranslation()
   const queryClient = useQueryClient()
   const { data: bookings, isLoading, isError } = useMyBookings()
   const [feedback, setFeedback] = useState<string | null>(null)
@@ -15,7 +17,7 @@ export default function MyBookingsPage() {
   const cancelMutation = useMutation({
     mutationFn: (bookingId: string) => deleteBooking(bookingId),
     onSuccess: () => {
-      setFeedback('Boeking geannuleerd.')
+      setFeedback(t('booking.cancelled'))
       queryClient.invalidateQueries({ queryKey: ['bookings'] })
       queryClient.invalidateQueries({ queryKey: ['trainings'] })
     },
@@ -28,7 +30,7 @@ export default function MyBookingsPage() {
   return (
     <div className="page">
       <div className="page-header">
-        <h1>Mijn boekingen</h1>
+        <h1>{t('booking.title')}</h1>
       </div>
 
       {feedback && (
@@ -40,15 +42,15 @@ export default function MyBookingsPage() {
         </div>
       )}
 
-      {isLoading && <p className="muted">Boekingen laden…</p>}
-      {isError && <p className="text-danger">Kon boekingen niet laden.</p>}
+      {isLoading && <p className="muted">{t('booking.loading')}</p>}
+      {isError && <p className="text-danger">{t('booking.loadError')}</p>}
 
       {!isLoading && !isError && confirmed.length === 0 && (
         <div className="empty-state card">
-          <h3>Nog geen boekingen</h3>
+          <h3>{t('booking.emptyTitle')}</h3>
           <p className="muted">
-            Je hebt nog geen actieve boekingen.{' '}
-            <Link to="/">Bekijk trainingen</Link>.
+            {t('booking.emptyBody')}{' '}
+            <Link to="/">{t('booking.viewTrainings')}</Link>.
           </p>
         </div>
       )}
@@ -76,7 +78,9 @@ export default function MyBookingsPage() {
                     </ul>
                   </>
                 ) : (
-                  <span className="muted">Training #{b.trainingId}</span>
+                  <span className="muted">
+                    {t('booking.trainingRef', { id: b.trainingId })}
+                  </span>
                 )}
               </div>
               <div className="booking-actions">
@@ -85,7 +89,7 @@ export default function MyBookingsPage() {
                   onClick={() => cancelMutation.mutate(b.id)}
                   disabled={cancelMutation.isPending}
                 >
-                  Annuleren
+                  {t('booking.cancel')}
                 </button>
               </div>
             </article>
@@ -95,7 +99,9 @@ export default function MyBookingsPage() {
 
       {cancelled.length > 0 && (
         <>
-          <h2 className="section-title muted">Geannuleerd</h2>
+          <h2 className="section-title muted">
+            {t('booking.cancelledSection')}
+          </h2>
           <div className="booking-list">
             {cancelled.map((b) => (
               <article key={b.id} className="card booking-row is-cancelled">
@@ -111,10 +117,14 @@ export default function MyBookingsPage() {
                       </ul>
                     </>
                   ) : (
-                    <span className="muted">Training #{b.trainingId}</span>
+                    <span className="muted">
+                      {t('booking.trainingRef', { id: b.trainingId })}
+                    </span>
                   )}
                 </div>
-                <span className="status-chip cancelled">Geannuleerd</span>
+                <span className="status-chip cancelled">
+                  {t('booking.cancelledChip')}
+                </span>
               </article>
             ))}
           </div>
