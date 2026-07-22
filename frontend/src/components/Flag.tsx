@@ -52,6 +52,14 @@ export default function Flag({ code, className, size = 22 }: FlagProps) {
           <rect y="120" width="640" height="240" fill="#FABD00" />
         </svg>
       )
+    case 'nl':
+      return (
+        <svg {...common}>
+          <rect width="640" height="480" fill="#fff" />
+          <rect width="640" height="160" fill="#AE1C28" />
+          <rect y="320" width="640" height="160" fill="#21468B" />
+        </svg>
+      )
     default:
       return null
   }
