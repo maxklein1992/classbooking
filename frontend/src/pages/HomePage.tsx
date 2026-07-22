@@ -51,6 +51,11 @@ export default function HomePage() {
     body: string
   }>
 
+  const faqItems = t('home.faq.items', { returnObjects: true }) as Array<{
+    q: string
+    a: string
+  }>
+
   return (
     <div className="page">
       <section className="hero">
@@ -112,6 +117,19 @@ export default function HomePage() {
               </li>
             ))}
         </ol>
+      </section>
+
+      <section className="faq" aria-label={t('home.faq.title')}>
+        <h2>{t('home.faq.title')}</h2>
+        <div className="faq-list">
+          {Array.isArray(faqItems) &&
+            faqItems.map((item, i) => (
+              <details key={i} className="faq-item">
+                <summary className="faq-question">{item.q}</summary>
+                <p className="faq-answer">{item.a}</p>
+              </details>
+            ))}
+        </div>
       </section>
 
       <TrainingBrowser place={detectedPlace} />

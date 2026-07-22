@@ -7,6 +7,12 @@
     "back": "← Volver al resumen",
     "footer": "Classo — reserva entrenamientos deportivos"
   },
+  "footer": {
+    "tagline": "Descubre y reserva clases de deporte cerca de ti.",
+    "linksTitle": "Navegación",
+    "contactTitle": "Contacto",
+    "copyright": "© {{year}} Classo. Todos los derechos reservados."
+  },
   "nav": {
     "home": "Inicio",
     "trainings": "Entrenamientos",
@@ -64,6 +70,31 @@
         {
           "title": "Ven y entrena",
           "body": "Preséntate a la hora acordada y disfruta de tu entrenamiento."
+        }
+      ]
+    },
+    "faq": {
+      "title": "Preguntas frecuentes",
+      "items": [
+        {
+          "q": "¿Cómo reservo un entrenamiento?",
+          "a": "Busca un entrenamiento que te guste, abre su página de detalle y haz clic en \"Reservar\". Debes haber iniciado sesión para reservar."
+        },
+        {
+          "q": "¿Puedo cancelar o cambiar una reserva?",
+          "a": "Sí. Ve a \"Mis reservas\" para cancelar una reserva. Para cambiarla, cancela la actual y vuelve a reservar el entrenamiento que quieras."
+        },
+        {
+          "q": "¿Cómo pago un entrenamiento?",
+          "a": "El precio se indica en cada entrenamiento. El pago se gestiona con el entrenador según las condiciones indicadas."
+        },
+        {
+          "q": "¿Qué pasa si un entrenamiento está completo?",
+          "a": "Un entrenamiento completo ya no se puede reservar; lo verás con la etiqueta \"Completo\". Vigila la página, ya que puede quedar una plaza libre tras una cancelación."
+        },
+        {
+          "q": "¿Recibo una confirmación tras reservar?",
+          "a": "Sí, tras una reserva correcta verás una confirmación al instante y el entrenamiento aparecerá en \"Mis reservas\"."
         }
       ]
     }

@@ -81,11 +81,70 @@ h3 {
 .app-main {
   flex: 1;
 }
-.app-footer {
-  text-align: center;
-  padding: 1.5rem;
+/* ---------- Site footer ---------- */
+.site-footer {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  margin-top: 2rem;
+}
+.site-footer-inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 2.25rem 1.25rem 1.75rem;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1.2fr;
+  gap: 2rem;
+}
+.footer-logo {
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: var(--accent);
+}
+.footer-brand p {
+  margin: 0.4rem 0 0;
+  font-size: 0.9rem;
+}
+.footer-title {
+  font-size: 0.95rem;
+  margin: 0 0 0.75rem;
+}
+.footer-col ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+.footer-col a {
+  color: var(--text);
+}
+.footer-col a:hover {
+  color: var(--accent);
+}
+.footer-contact li {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
   color: var(--muted);
-  font-size: 0.85rem;
+}
+.footer-contact-icon {
+  width: 1.1rem;
+  text-align: center;
+}
+.site-footer-bottom {
+  border-top: 1px solid var(--border);
+  text-align: center;
+  padding: 1rem 1.25rem;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+@media (max-width: 720px) {
+  .site-footer-inner {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
 }
 
 .muted {
@@ -1237,6 +1296,61 @@ textarea:focus {
   .steps {
     grid-template-columns: 1fr;
   }
+}
+
+/* FAQ-accordion op de homepagina */
+.faq {
+  margin: 1.5rem 0 2.25rem;
+}
+.faq > h2 {
+  margin-bottom: 1.1rem;
+}
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.faq-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0 1.25rem;
+  box-shadow: var(--shadow-sm);
+}
+.faq-question {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  cursor: pointer;
+  font-weight: 700;
+  padding: 1rem 0;
+  list-style: none;
+}
+.faq-question::-webkit-details-marker {
+  display: none;
+}
+.faq-question::after {
+  content: '+';
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: var(--accent);
+  line-height: 1;
+  transition: transform 0.18s ease;
+}
+.faq-item[open] .faq-question::after {
+  transform: rotate(45deg);
+}
+.faq-question:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+.faq-answer {
+  margin: 0;
+  padding: 0 0 1.1rem;
+  color: var(--muted);
+  line-height: 1.6;
 }
 
 /* About & Contact pages */
