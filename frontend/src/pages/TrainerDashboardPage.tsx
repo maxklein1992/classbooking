@@ -11,7 +11,8 @@ import { getErrorMessage } from '../api/client'
 import type { CreateTrainingPayload, Sport, Training } from '../api/types'
 import { SPORTS, sportLabel } from '../lib/sports'
 import {
-  formatDateTime,
+  formatDate,
+  formatTimeRange,
   formatPrice,
   fromDatetimeLocalValue,
   toDatetimeLocalValue,
@@ -341,7 +342,10 @@ export default function TrainerDashboardPage() {
                       <span className="booking-title">{tr.title}</span>
                     </div>
                     <ul className="meta-list compact">
-                      <li>🕒 {formatDateTime(tr.startTime)}</li>
+                      <li>
+                        🕒 {formatDate(tr.startTime)},{' '}
+                        {formatTimeRange(tr.startTime, tr.endTime)}
+                      </li>
                       <li>
                         📍{' '}
                         {[tr.location, tr.neighborhood, tr.city]
