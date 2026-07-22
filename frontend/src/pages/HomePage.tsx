@@ -2,6 +2,7 @@ import { useEffect, useState, type FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import TrainingBrowser from '../components/TrainingBrowser'
+import type { Training } from '../api/types'
 
 export default function HomePage() {
   const { t, i18n } = useTranslation()
@@ -50,6 +51,21 @@ export default function HomePage() {
     q: string
     a: string
   }>
+
+  // "In de buurt": een training telt als nabij wanneer de gedetecteerde plaats
+  // overeenkomt met de stad/buurt/locatie van de training (in beide richtingen,
+  // hoofdletterongevoelig). Zo tonen we geen Portugese lessen aan iemand in NL.
+  const nearPredicate = detectedPlace
+    ? (tr: Training) => {
+        const needle = detectedPlace.toLowerCase()
+        return [tr.city, tr.neighborhood, tr.location]
+          .filter(Boolean)
+          .some((v) => {
+            const s = (v as string).toLowerCase()
+            return s.includes(needle) || needle.includes(s)
+          })
+      }
+    : undefined
 
   return (
     <div className="page">
@@ -111,7 +127,18 @@ export default function HomePage() {
         </div>
       </section>
 
-      <TrainingBrowser place={detectedPlace} />
+      {detectedPlace ? (
+        // Locatie bekend: toon alleen nabije lessen; verberg de sectie als er
+        // geen zijn (geen misleidende "bij jou in de buurt" met verre lessen).
+        <TrainingBrowser
+          place={detectedPlace}
+          filterPredicate={nearPredicate}
+          hideWhenEmpty
+        />
+      ) : (
+        // Locatie onbekend: neutrale kop i.p.v. "bij jou in de buurt".
+        <TrainingBrowser heading={t('home.upcomingHeading')} />
+      )}
     </div>
   )
 }

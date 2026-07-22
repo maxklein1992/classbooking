@@ -21,6 +21,12 @@ interface Props {
   heading?: string
   /** Optional client-side filter applied to the fetched trainings. */
   filterPredicate?: (training: Training) => boolean
+  /**
+   * When true, the whole block (heading + content) is hidden if there are no
+   * matching trainings — instead of showing an empty-state. Used for the
+   * "near you" section on the homepage.
+   */
+  hideWhenEmpty?: boolean
 }
 
 export default function TrainingBrowser({
@@ -28,6 +34,7 @@ export default function TrainingBrowser({
   place,
   heading,
   filterPredicate,
+  hideWhenEmpty,
 }: Props) {
   const { t } = useTranslation()
   const { isAuthenticated } = useAuth()
@@ -58,6 +65,19 @@ export default function TrainingBrowser({
     },
     onError: (err) => setFeedback(getErrorMessage(err)),
   })
+
+  // Verberg de hele sectie (kop + inhoud) als er geen resultaten zijn en de
+  // aanroeper daarom vraagt (bijv. de "bij jou in de buurt"-sectie). Staat na
+  // alle hooks zodat de Rules of Hooks niet worden geschonden.
+  if (
+    hideWhenEmpty &&
+    !isLoading &&
+    !isError &&
+    trainings &&
+    trainings.length === 0
+  ) {
+    return null
+  }
 
   return (
     <>
