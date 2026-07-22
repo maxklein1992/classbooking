@@ -48,6 +48,23 @@ npm run dev
 - API: http://localhost:3001/api
 - **Swagger docs: http://localhost:3001/api/docs**
 
+### Backend via Docker
+
+De backend kan ook in een container draaien (i.p.v. `npm run dev:backend`), met hot-reload via een gemounte volume:
+
+```bash
+docker compose up -d              # start db + backend (backend/Dockerfile wordt gebuild)
+
+# Eenmalig / na schemawijzigingen: migraties + seed in de container uitvoeren
+docker compose exec backend npx prisma migrate dev
+docker compose exec backend npm run db:seed
+
+docker compose logs -f backend    # logs volgen
+docker compose down               # stoppen
+```
+
+De frontend blijft je lokaal starten met `npm run dev:frontend` (of `npm run dev` voor beide, dan draait de backend dubbel — gebruik in dat geval `npm run dev:frontend` samen met `docker compose up -d backend`).
+
 ## Demo-accounts (na seed)
 
 | Rol | E-mail | Wachtwoord |

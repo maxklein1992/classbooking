@@ -12,5 +12,22 @@ services:
     volumes:
       - classbooking-db-data:/var/lib/postgresql/data
 
+  backend:
+    build:
+      context: ./backend
+    container_name: classbooking-backend
+    restart: unless-stopped
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: "postgresql://classbooking:classbooking@db:5432/classbooking?schema=public"
+      JWT_SECRET: "change-me-in-production"
+      PORT: 3001
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+
 volumes:
   classbooking-db-data:
