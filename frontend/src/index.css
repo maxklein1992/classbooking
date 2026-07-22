@@ -870,6 +870,100 @@ textarea:focus {
 .detail-card h1 {
   margin-top: 0.5rem;
 }
+
+/* Fotogalerij bovenaan de detailpagina */
+.detail-gallery {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-auto-rows: 110px;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.detail-gallery img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.detail-gallery .gallery-main {
+  grid-row: span 2;
+  grid-column: 1;
+}
+@media (max-width: 560px) {
+  .detail-gallery {
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: 90px;
+  }
+  .detail-gallery .gallery-main {
+    grid-column: span 2;
+  }
+}
+
+/* Tabs op de detailpagina */
+.tabs {
+  margin-top: 1.25rem;
+}
+.tablist {
+  display: flex;
+  gap: 0.25rem;
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+}
+.tab {
+  border: none;
+  background: transparent;
+  padding: 0.7rem 1rem;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--muted);
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+}
+.tab:hover {
+  color: var(--text);
+}
+.tab.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+.tab:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+  border-radius: 6px;
+}
+.tabpanel {
+  margin-top: 1rem;
+}
+
+/* Team-tab */
+.team-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+.team-member {
+  display: flex;
+  gap: 0.9rem;
+  align-items: flex-start;
+}
+.team-name {
+  font-weight: 700;
+}
+.team-role {
+  color: var(--accent);
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+.team-member p {
+  margin: 0;
+}
 .detail-desc {
   color: var(--muted);
   margin: 0.5rem 0 1.25rem;

@@ -1,8 +1,8 @@
-import { useState } from 'react'
+import { useRef, useState, type KeyboardEvent } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
-import { getTraining } from '../api/trainings'
+import { getTraining, getTrainings } from '../api/trainings'
 import { createBooking, deleteBooking } from '../api/bookings'
 import { getErrorMessage } from '../api/client'
 import type { Booking, Training } from '../api/types'
@@ -12,6 +12,10 @@ import { useMyBookings } from '../hooks/useMyBookings'
 import SportBadge from '../components/SportBadge'
 import StarRating from '../components/StarRating'
 import Avatar from '../components/Avatar'
+import AgendaView from '../components/AgendaView'
+
+const TABS = ['overview', 'groups', 'team', 'reviews'] as const
+type Tab = (typeof TABS)[number]
 
 export default function TrainingDetailPage() {
   const { t } = useTranslation()
@@ -19,6 +23,8 @@ export default function TrainingDetailPage() {
   const { isAuthenticated } = useAuth()
   const queryClient = useQueryClient()
   const [feedback, setFeedback] = useState<string | null>(null)
+  const [tab, setTab] = useState<Tab>('overview')
+  const tabRefs = useRef<Array<HTMLButtonElement | null>>([])
 
   const {
     data: training,
@@ -28,6 +34,13 @@ export default function TrainingDetailPage() {
     queryKey: ['training', id],
     queryFn: () => getTraining(id),
     enabled: !!id,
+  })
+
+  // Alle trainingen — gebruikt om de groepslessen (zelfde sport) in de agenda
+  // te tonen op de "Groepslessen"-tab.
+  const { data: allTrainings } = useQuery<Training[]>({
+    queryKey: ['trainings', {}],
+    queryFn: () => getTrainings({}),
   })
 
   const { data: myBookings } = useMyBookings()
@@ -59,6 +72,19 @@ export default function TrainingDetailPage() {
     queryClient.invalidateQueries({ queryKey: ['bookings'] })
   }
 
+  // Toetsenbordbediening voor de tabs (pijltjes + Home/End).
+  function onTabKeyDown(e: KeyboardEvent<HTMLButtonElement>, index: number) {
+    let next = index
+    if (e.key === 'ArrowRight') next = (index + 1) % TABS.length
+    else if (e.key === 'ArrowLeft') next = (index - 1 + TABS.length) % TABS.length
+    else if (e.key === 'Home') next = 0
+    else if (e.key === 'End') next = TABS.length - 1
+    else return
+    e.preventDefault()
+    setTab(TABS[next])
+    tabRefs.current[next]?.focus()
+  }
+
   if (isLoading)
     return <div className="page muted">{t('home.loadingTrainings')}</div>
   if (isError || !training)
@@ -73,12 +99,30 @@ export default function TrainingDetailPage() {
 
   const isFull = training.availableSpots <= 0
   const isPast = new Date(training.startTime).getTime() < Date.now()
+  const gallery = training.gallery ?? []
+  const team = training.team ?? []
+  const groupClasses =
+    allTrainings?.filter((x) => x.sport === training.sport) ?? []
 
   return (
     <div className="page detail-page">
       <Link to="/" className="back-link">
         {t('common.back')}
       </Link>
+
+      {gallery.length > 0 && (
+        <div className="detail-gallery" aria-label={t('detail.galleryLabel')}>
+          {gallery.slice(0, 5).map((img, i) => (
+            <img
+              key={i}
+              src={img.src}
+              alt={img.alt}
+              loading="lazy"
+              className={i === 0 ? 'gallery-main' : 'gallery-thumb'}
+            />
+          ))}
+        </div>
+      )}
 
       <div className="card detail-card">
         <div className="card-head">
@@ -97,49 +141,6 @@ export default function TrainingDetailPage() {
             />
           </div>
         )}
-        <p className="detail-desc">{training.description}</p>
-
-        <div className="detail-grid">
-          <div className="detail-item">
-            <span className="detail-label">{t('training.date')}</span>
-            <span>{formatDateTime(training.startTime)}</span>
-          </div>
-          <div className="detail-item">
-            <span className="detail-label">{t('training.time')}</span>
-            <span>{formatTimeRange(training.startTime, training.endTime)}</span>
-          </div>
-          <div className="detail-item">
-            <span className="detail-label">{t('training.location')}</span>
-            <span>
-              {[
-                training.location,
-                training.neighborhood,
-                [training.postalCode, training.city]
-                  .filter(Boolean)
-                  .join(' '),
-              ]
-                .filter(Boolean)
-                .join(', ')}
-            </span>
-          </div>
-          <div className="detail-item">
-            <span className="detail-label">{t('training.trainer')}</span>
-            <span>{training.trainer?.name ?? t('training.unknownTrainer')}</span>
-          </div>
-          <div className="detail-item">
-            <span className="detail-label">{t('training.availability')}</span>
-            <span>
-              {isFull ? (
-                <span className="text-danger">{t('training.full')}</span>
-              ) : (
-                t('training.spotsFree', {
-                  spots: training.availableSpots,
-                  capacity: training.capacity,
-                })
-              )}
-            </span>
-          </div>
-        </div>
 
         {feedback && (
           <div className="alert" role="status">
@@ -153,54 +154,172 @@ export default function TrainingDetailPage() {
         <div className="detail-actions">{renderAction()}</div>
       </div>
 
-      {training.trainer?.bio && (
-        <section className="card trainer-card">
-          <h2>{t('training.aboutTrainer')}</h2>
-          <div className="trainer-profile">
-            <Avatar
-              src={training.trainer.avatarUrl}
-              name={training.trainer.name}
-              size={72}
-            />
-            <div>
-              <div className="trainer-profile-name">{training.trainer.name}</div>
-              <p className="muted">{training.trainer.bio}</p>
-            </div>
-          </div>
-        </section>
-      )}
-
-      <section className="card reviews-card">
-        <div className="reviews-head">
-          <h2>{t('training.reviews')}</h2>
-          {training.reviewsCount ? (
-            <StarRating
-              rating={training.rating ?? 0}
-              count={training.reviewsCount}
-              showValue
-            />
-          ) : null}
+      <div className="tabs">
+        <div className="tablist" role="tablist" aria-label={t('detail.tabsLabel')}>
+          {TABS.map((tb, i) => (
+            <button
+              key={tb}
+              ref={(el) => (tabRefs.current[i] = el)}
+              role="tab"
+              id={`tab-${tb}`}
+              aria-selected={tab === tb}
+              aria-controls={`panel-${tb}`}
+              tabIndex={tab === tb ? 0 : -1}
+              className={tab === tb ? 'tab active' : 'tab'}
+              onClick={() => setTab(tb)}
+              onKeyDown={(e) => onTabKeyDown(e, i)}
+            >
+              {t(`detail.tabs.${tb}`)}
+            </button>
+          ))}
         </div>
-        {training.reviews && training.reviews.length > 0 ? (
-          <ul className="review-list">
-            {training.reviews.map((r) => (
-              <li key={r.id} className="review">
-                <Avatar src={r.avatarUrl} name={r.author} size={44} />
-                <div className="review-body">
-                  <div className="review-top">
-                    <span className="review-author">{r.author}</span>
-                    <span className="review-date">{formatDate(r.date)}</span>
+
+        {tab === 'overview' && (
+          <section
+            id="panel-overview"
+            role="tabpanel"
+            aria-labelledby="tab-overview"
+            className="tabpanel card"
+          >
+            <p className="detail-desc">{training.description}</p>
+            <div className="detail-grid">
+              <div className="detail-item">
+                <span className="detail-label">{t('training.date')}</span>
+                <span>{formatDateTime(training.startTime)}</span>
+              </div>
+              <div className="detail-item">
+                <span className="detail-label">{t('training.time')}</span>
+                <span>
+                  {formatTimeRange(training.startTime, training.endTime)}
+                </span>
+              </div>
+              <div className="detail-item">
+                <span className="detail-label">{t('training.location')}</span>
+                <span>
+                  {[
+                    training.location,
+                    training.neighborhood,
+                    [training.postalCode, training.city]
+                      .filter(Boolean)
+                      .join(' '),
+                  ]
+                    .filter(Boolean)
+                    .join(', ')}
+                </span>
+              </div>
+              <div className="detail-item">
+                <span className="detail-label">{t('training.availability')}</span>
+                <span>
+                  {isFull ? (
+                    <span className="text-danger">{t('training.full')}</span>
+                  ) : (
+                    t('training.spotsFree', {
+                      spots: training.availableSpots,
+                      capacity: training.capacity,
+                    })
+                  )}
+                </span>
+              </div>
+            </div>
+
+            {training.trainer?.bio && (
+              <div className="trainer-profile">
+                <Avatar
+                  src={training.trainer.avatarUrl}
+                  name={training.trainer.name}
+                  size={64}
+                />
+                <div>
+                  <div className="trainer-profile-name">
+                    {training.trainer.name}
                   </div>
-                  <StarRating rating={r.rating} size={13} />
-                  <p className="review-comment">{r.comment}</p>
+                  <p className="muted">{training.trainer.bio}</p>
                 </div>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p className="muted">{t('training.noReviews')}</p>
+              </div>
+            )}
+          </section>
         )}
-      </section>
+
+        {tab === 'groups' && (
+          <section
+            id="panel-groups"
+            role="tabpanel"
+            aria-labelledby="tab-groups"
+            className="tabpanel"
+          >
+            {groupClasses.length > 0 ? (
+              <AgendaView trainings={groupClasses} />
+            ) : (
+              <p className="muted">{t('detail.noGroups')}</p>
+            )}
+          </section>
+        )}
+
+        {tab === 'team' && (
+          <section
+            id="panel-team"
+            role="tabpanel"
+            aria-labelledby="tab-team"
+            className="tabpanel card"
+          >
+            {team.length > 0 ? (
+              <ul className="team-list">
+                {team.map((m) => (
+                  <li key={m.id} className="team-member">
+                    <Avatar src={m.avatarUrl} name={m.name} size={56} />
+                    <div>
+                      <div className="team-name">{m.name}</div>
+                      {m.role && <div className="team-role">{m.role}</div>}
+                      {m.bio && <p className="muted">{m.bio}</p>}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="muted">{t('detail.noTeam')}</p>
+            )}
+          </section>
+        )}
+
+        {tab === 'reviews' && (
+          <section
+            id="panel-reviews"
+            role="tabpanel"
+            aria-labelledby="tab-reviews"
+            className="tabpanel card"
+          >
+            <div className="reviews-head">
+              <h2>{t('training.reviews')}</h2>
+              {training.reviewsCount ? (
+                <StarRating
+                  rating={training.rating ?? 0}
+                  count={training.reviewsCount}
+                  showValue
+                />
+              ) : null}
+            </div>
+            {training.reviews && training.reviews.length > 0 ? (
+              <ul className="review-list">
+                {training.reviews.map((r) => (
+                  <li key={r.id} className="review">
+                    <Avatar src={r.avatarUrl} name={r.author} size={44} />
+                    <div className="review-body">
+                      <div className="review-top">
+                        <span className="review-author">{r.author}</span>
+                        <span className="review-date">{formatDate(r.date)}</span>
+                      </div>
+                      <StarRating rating={r.rating} size={13} />
+                      <p className="review-comment">{r.comment}</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="muted">{t('training.noReviews')}</p>
+            )}
+          </section>
+        )}
+      </div>
     </div>
   )
 

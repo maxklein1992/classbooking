@@ -172,6 +172,18 @@
     "errorType": "Tipo de ficheiro inválido. Usa JPG, PNG ou WebP.",
     "errorSize": "A imagem é demasiado grande (máx. 1 MB)."
   },
+  "detail": {
+    "galleryLabel": "Fotos da aula",
+    "tabsLabel": "Informação do treino",
+    "tabs": {
+      "overview": "Resumo",
+      "groups": "Aulas em grupo",
+      "team": "Equipa",
+      "reviews": "Avaliações"
+    },
+    "noGroups": "De momento não há aulas em grupo agendadas.",
+    "noTeam": "Ainda não há informação da equipa."
+  },
   "training": {
     "spotsFree": "{{spots}} de {{capacity}} lugares livres",
     "freeShort": "{{spots}} livres",

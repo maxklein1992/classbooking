@@ -172,6 +172,18 @@
     "errorType": "Invalid file type. Use JPG, PNG or WebP.",
     "errorSize": "The image is too large (max. 1 MB)."
   },
+  "detail": {
+    "galleryLabel": "Class photos",
+    "tabsLabel": "Training information",
+    "tabs": {
+      "overview": "Overview",
+      "groups": "Group classes",
+      "team": "Team",
+      "reviews": "Reviews"
+    },
+    "noGroups": "There are no group classes scheduled right now.",
+    "noTeam": "No team information available yet."
+  },
   "training": {
     "spotsFree": "{{spots}} of {{capacity}} spots available",
     "freeShort": "{{spots}} free",
