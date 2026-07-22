@@ -173,6 +173,18 @@
     "errorType": "Ongeldig bestandstype. Gebruik JPG, PNG of WebP.",
     "errorSize": "De afbeelding is te groot (max. 1 MB)."
   },
+  "detail": {
+    "galleryLabel": "Foto's van de les",
+    "tabsLabel": "Trainingsinformatie",
+    "tabs": {
+      "overview": "Overzicht",
+      "groups": "Groepslessen",
+      "team": "Team",
+      "reviews": "Reviews"
+    },
+    "noGroups": "Er zijn momenteel geen groepslessen gepland.",
+    "noTeam": "Er is nog geen teaminformatie beschikbaar."
+  },
   "training": {
     "spotsFree": "{{spots}} van {{capacity}} plekken beschikbaar",
     "freeShort": "{{spots}} vrij",

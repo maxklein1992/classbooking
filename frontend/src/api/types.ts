@@ -26,6 +26,12 @@ export interface TrainerRef {
   name: string
   avatarUrl?: string
   bio?: string
+  role?: string
+}
+
+export interface GalleryImage {
+  src: string
+  alt: string
 }
 
 export interface Review {
@@ -59,6 +65,8 @@ export interface Training {
   rating?: number // gemiddelde 1..5
   reviewsCount?: number
   reviews?: Review[]
+  gallery?: GalleryImage[]
+  team?: TrainerRef[]
 }
 
 export interface Booking {
