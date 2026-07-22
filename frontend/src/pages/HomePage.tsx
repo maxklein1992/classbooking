@@ -137,19 +137,6 @@ export default function HomePage() {
         </ol>
       </section>
 
-      <section className="faq" aria-label={t('home.faq.title')}>
-        <h2>{t('home.faq.title')}</h2>
-        <div className="faq-list">
-          {Array.isArray(faqItems) &&
-            faqItems.map((item, i) => (
-              <details key={i} className="faq-item">
-                <summary className="faq-question">{item.q}</summary>
-                <p className="faq-answer">{item.a}</p>
-              </details>
-            ))}
-        </div>
-      </section>
-
       {detectedPlace ? (
         // Locatie bekend: toon alleen nabije lessen; verberg de sectie als er
         // geen zijn (geen misleidende "bij jou in de buurt" met verre lessen).
@@ -162,6 +149,20 @@ export default function HomePage() {
         // Locatie onbekend: neutrale kop i.p.v. "bij jou in de buurt".
         <TrainingBrowser heading={t('home.upcomingHeading')} />
       )}
+
+      {/* FAQ onder de "Aankomende trainingen"-sectie. */}
+      <section className="faq" aria-label={t('home.faq.title')}>
+        <h2>{t('home.faq.title')}</h2>
+        <div className="faq-list">
+          {Array.isArray(faqItems) &&
+            faqItems.map((item, i) => (
+              <details key={i} className="faq-item">
+                <summary className="faq-question">{item.q}</summary>
+                <p className="faq-answer">{item.a}</p>
+              </details>
+            ))}
+        </div>
+      </section>
     </div>
   )
 }
