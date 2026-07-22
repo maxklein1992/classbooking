@@ -9,8 +9,9 @@ import { useAuth } from '../auth/AuthContext'
 import { useBookedTrainingIds } from '../hooks/useMyBookings'
 import TrainingCard from './TrainingCard'
 import AgendaView from './AgendaView'
+import MapView from './MapView'
 
-type ViewMode = 'list' | 'agenda'
+type ViewMode = 'list' | 'agenda' | 'map'
 
 interface Props {
   /** Query passed to the trainings API. */
@@ -98,6 +99,12 @@ export default function TrainingBrowser({
           >
             {t('home.viewAgenda')}
           </button>
+          <button
+            className={view === 'map' ? 'toggle active' : 'toggle'}
+            onClick={() => setView('map')}
+          >
+            {t('home.viewMap')}
+          </button>
         </div>
       </div>
 
@@ -124,6 +131,8 @@ export default function TrainingBrowser({
         <>
           {view === 'agenda' ? (
             <AgendaView trainings={trainings} />
+          ) : view === 'map' ? (
+            <MapView trainings={trainings} />
           ) : (
             <div className="card-grid">
               {trainings.map((tr) => (

@@ -54,6 +54,8 @@ export interface Training {
   city: string
   neighborhood?: string | null
   postalCode?: string | null
+  lat?: number | null
+  lng?: number | null
   capacity: number
   price: number
   freeTrialAvailable?: boolean

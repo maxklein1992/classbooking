@@ -674,6 +674,51 @@ textarea:focus {
   color: #fff;
 }
 
+/* ---------- Kaart-weergave (Leaflet) ---------- */
+.map-view {
+  margin-top: 0.5rem;
+}
+.map-note {
+  margin: 0 0 0.6rem;
+  font-size: 0.85rem;
+}
+.map-container {
+  height: 460px;
+  width: 100%;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  z-index: 0;
+}
+.map-pin-dot {
+  display: block;
+  width: 18px;
+  height: 18px;
+  border-radius: 50% 50% 50% 0;
+  background: var(--accent);
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  transform: rotate(-45deg);
+}
+.map-popup strong {
+  display: block;
+  margin-bottom: 0.15rem;
+}
+.map-popup-meta {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin-bottom: 0.4rem;
+}
+.map-popup-link {
+  font-weight: 700;
+  color: var(--accent);
+}
+@media (max-width: 560px) {
+  .map-container {
+    height: 360px;
+  }
+}
+
 /* ---------- Trainings filter bar ---------- */
 .filter-bar {
   display: flex;
