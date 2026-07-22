@@ -10,6 +10,7 @@
   "nav": {
     "home": "Início",
     "trainings": "Treinos",
+    "blog": "Blog",
     "about": "Sobre",
     "contact": "Contacto",
     "myBookings": "As minhas reservas",
@@ -55,6 +56,17 @@
     "prevWeek": "← Semana anterior",
     "nextWeek": "Semana seguinte →",
     "thisWeek": "Esta semana"
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Dicas, ideias e inspiração para tirar o máximo partido dos teus treinos.",
+    "metaDescription": "Lê o blog da Classo: dicas práticas e inspiração sobre treinar, escolher o treino certo e manter a motivação.",
+    "readingTime": "{{minutes}} min de leitura",
+    "readMore": "Ler mais",
+    "byAuthor": "Por {{author}}",
+    "backToOverview": "← Voltar ao blog",
+    "notFound": "Este artigo do blog não existe (já).",
+    "notFoundTitle": "Artigo não encontrado"
   },
   "about": {
     "title": "Sobre a Classo",

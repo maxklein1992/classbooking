@@ -10,6 +10,7 @@
   "nav": {
     "home": "Home",
     "trainings": "Trainings",
+    "blog": "Blog",
     "about": "About",
     "contact": "Contact",
     "myBookings": "My bookings",
@@ -55,6 +56,17 @@
     "prevWeek": "← Previous week",
     "nextWeek": "Next week →",
     "thisWeek": "This week"
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Tips, insights and inspiration to get the most out of your training.",
+    "metaDescription": "Read the Classo blog: practical tips and inspiration about working out, choosing the right training and staying motivated.",
+    "readingTime": "{{minutes}} min read",
+    "readMore": "Read more",
+    "byAuthor": "By {{author}}",
+    "backToOverview": "← Back to the blog",
+    "notFound": "This blog article does not exist (anymore).",
+    "notFoundTitle": "Article not found"
   },
   "about": {
     "title": "About Classo",

@@ -12,6 +12,8 @@ import TrainerDashboardPage from './pages/TrainerDashboardPage'
 import AboutPage from './pages/AboutPage'
 import ContactPage from './pages/ContactPage'
 import SearchResultsPage from './pages/SearchResultsPage'
+import BlogPage from './pages/BlogPage'
+import BlogPostPage from './pages/BlogPostPage'
 
 export default function App() {
   const { t } = useTranslation()
@@ -23,6 +25,8 @@ export default function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/trainingen" element={<TrainingsPage />} />
           <Route path="/zoeken" element={<SearchResultsPage />} />
+          <Route path="/blog" element={<BlogPage />} />
+          <Route path="/blog/:slug" element={<BlogPostPage />} />
           <Route path="/over-ons" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/trainingen/:id" element={<TrainingDetailPage />} />
