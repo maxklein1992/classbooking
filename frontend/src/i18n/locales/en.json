@@ -9,6 +9,8 @@
   },
   "nav": {
     "trainings": "Trainings",
+    "about": "About",
+    "contact": "Contact",
     "myBookings": "My bookings",
     "trainerDashboard": "Trainer dashboard",
     "login": "Log in",
@@ -18,12 +20,20 @@
     "language": "Language"
   },
   "home": {
-    "title": "Discover trainings",
+    "title": "Book your class",
     "subtitle": "Book your next sports session — from boxing to yoga.",
     "viewList": "List",
     "viewAgenda": "Agenda",
     "sport": "Sport",
     "allSports": "All sports",
+    "nearHeading": "Classes near {{place}}",
+    "nearYou": "Classes near you",
+    "whatTitle": "What is Classo?",
+    "whatBody": "Classo is the easiest way to discover and book sports classes near you. Browse trainings from independent trainers — boxing, yoga, HIIT, footvolley and more — filter by location, and reserve your spot in seconds. Whether you're just starting out or training for years, there's a class around the corner for you.",
+    "location": "Location",
+    "locationPlaceholder": "Address, city…",
+    "searchButton": "Search",
+    "clearFilters": "Clear filters",
     "bookingConfirmed": "Your booking is confirmed!",
     "loadingTrainings": "Loading trainings…",
     "loadError": "Could not load trainings. Is the server reachable?",
@@ -34,6 +44,39 @@
     "prevWeek": "← Previous week",
     "nextWeek": "Next week →",
     "thisWeek": "This week"
+  },
+  "about": {
+    "title": "About Classo",
+    "subtitle": "The easiest way to find and book sports classes near you.",
+    "intro": "Classo connects people who want to move with the trainers and coaches who make it happen. From boxing and yoga to footvolley on the beach, you discover classes in your neighbourhood and book a spot in just a few clicks.",
+    "mission": "Our mission is to make sport accessible and social. We give independent trainers a simple platform to fill their classes, and give participants a clear overview of what's happening around them.",
+    "values": [
+      {
+        "title": "Local first",
+        "body": "Search by address or city and find classes right around the corner."
+      },
+      {
+        "title": "For every level",
+        "body": "From first-timers to seasoned athletes — there's a class for everyone."
+      },
+      {
+        "title": "Fair to trainers",
+        "body": "Trainers keep control of their schedule, capacity and pricing."
+      }
+    ],
+    "ctaTitle": "Ready to get moving?",
+    "ctaBody": "Browse the available classes or get in touch with any questions.",
+    "ctaTrainings": "View classes",
+    "ctaContact": "Contact us"
+  },
+  "contact": {
+    "title": "Contact",
+    "subtitle": "Questions, feedback or a partnership idea? Send us a message.",
+    "success": "Thanks for your message! We'll get back to you soon.",
+    "fieldName": "Name",
+    "fieldEmail": "Email address",
+    "fieldMessage": "Message",
+    "submit": "Send message"
   },
   "training": {
     "spotsFree": "{{spots}} of {{capacity}} spots available",
@@ -53,7 +96,11 @@
     "trainer": "Trainer",
     "availability": "Availability",
     "unknownTrainer": "Unknown",
-    "notFound": "Training not found."
+    "notFound": "Training not found.",
+    "withTrainer": "With {{name}}",
+    "aboutTrainer": "About the trainer",
+    "reviews": "Reviews",
+    "noReviews": "No reviews yet."
   },
   "auth": {
     "loginTitle": "Log in",
@@ -102,7 +149,10 @@
     "fieldSport": "Sport",
     "fieldStart": "Start time",
     "fieldEnd": "End time",
-    "fieldLocation": "Location",
+    "fieldLocation": "Location / venue",
+    "fieldCity": "City",
+    "fieldNeighborhood": "Neighborhood (optional)",
+    "fieldPostalCode": "Postal code (optional)",
     "fieldCapacity": "Capacity",
     "fieldPrice": "Price (€)",
     "create": "Create training",

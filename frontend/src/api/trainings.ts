@@ -1,4 +1,5 @@
-import { api } from './client'
+import { api, USE_MOCKS } from './client'
+import { mock } from '../mocks/data'
 import type {
   CreateTrainingPayload,
   Training,
@@ -9,20 +10,24 @@ import type {
 export async function getTrainings(
   query: TrainingsQuery = {},
 ): Promise<Training[]> {
+  if (USE_MOCKS) return mock.getTrainings(query)
   const params: Record<string, string> = {}
   if (query.sport) params.sport = query.sport
   if (query.from) params.from = query.from
   if (query.to) params.to = query.to
+  if (query.q) params.q = query.q
   const { data } = await api.get<Training[]>('/trainings', { params })
   return data
 }
 
 export async function getMyTrainings(): Promise<Training[]> {
+  if (USE_MOCKS) return mock.getMyTrainings()
   const { data } = await api.get<Training[]>('/trainings/mine')
   return data
 }
 
 export async function getTraining(id: string): Promise<Training> {
+  if (USE_MOCKS) return mock.getTraining(id)
   const { data } = await api.get<Training>(`/trainings/${id}`)
   return data
 }

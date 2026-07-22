@@ -36,6 +36,14 @@ export default function NavBar() {
             {t('nav.trainings')}
           </NavLink>
 
+          <NavLink to="/over-ons" className={linkClass}>
+            {t('nav.about')}
+          </NavLink>
+
+          <NavLink to="/contact" className={linkClass}>
+            {t('nav.contact')}
+          </NavLink>
+
           {isAuthenticated && (
             <NavLink to="/mijn-boekingen" className={linkClass}>
               {t('nav.myBookings')}

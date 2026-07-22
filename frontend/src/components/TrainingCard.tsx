@@ -1,8 +1,11 @@
-import { Link } from 'react-router-dom'
+import type { MouseEvent } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import type { Training } from '../api/types'
 import { formatDateTime, formatPrice } from '../lib/dates'
 import SportBadge from './SportBadge'
+import StarRating from './StarRating'
+import Avatar from './Avatar'
 
 interface Props {
   training: Training
@@ -20,11 +23,19 @@ export default function TrainingCard({
   booking,
 }: Props) {
   const { t } = useTranslation()
+  const navigate = useNavigate()
   const isFull = training.availableSpots <= 0
   const isPast = new Date(training.startTime).getTime() < Date.now()
 
+  // Navigate to the detail page when the card is clicked, unless the click
+  // originated from an interactive control (button or link) inside the card.
+  function handleCardClick(e: MouseEvent<HTMLElement>) {
+    if ((e.target as HTMLElement).closest('button, a')) return
+    navigate(`/trainingen/${training.id}`)
+  }
+
   return (
-    <article className="card training-card">
+    <article className="card training-card" onClick={handleCardClick}>
       <div className="card-head">
         <SportBadge sport={training.sport} />
         <span className="price">{formatPrice(training.price)}</span>
@@ -34,6 +45,16 @@ export default function TrainingCard({
         <Link to={`/trainingen/${training.id}`}>{training.title}</Link>
       </h3>
 
+      {typeof training.rating === 'number' && training.rating > 0 && (
+        <div className="card-rating">
+          <StarRating
+            rating={training.rating}
+            count={training.reviewsCount}
+            showValue
+          />
+        </div>
+      )}
+
       <ul className="meta-list">
         <li>
           <span className="meta-icon">🕒</span>
@@ -41,11 +62,9 @@ export default function TrainingCard({
         </li>
         <li>
           <span className="meta-icon">📍</span>
-          {training.location}
-        </li>
-        <li>
-          <span className="meta-icon">🧑‍🏫</span>
-          {training.trainer?.name ?? t('training.unknownTrainer')}
+          {[training.location, training.neighborhood, training.city]
+            .filter(Boolean)
+            .join(', ')}
         </li>
         <li>
           <span className="meta-icon">👥</span>
@@ -61,6 +80,15 @@ export default function TrainingCard({
           )}
         </li>
       </ul>
+
+      <div className="trainer-row">
+        <Avatar src={training.trainer?.avatarUrl} name={training.trainer?.name ?? '?'} size={36} />
+        <span className="trainer-name">
+          {t('training.withTrainer', {
+            name: training.trainer?.name ?? t('training.unknownTrainer'),
+          })}
+        </span>
+      </div>
 
       <div className="card-actions">
         {renderButton()}

@@ -9,6 +9,8 @@
   },
   "nav": {
     "trainings": "Entrenamientos",
+    "about": "Sobre nosotros",
+    "contact": "Contacto",
     "myBookings": "Mis reservas",
     "trainerDashboard": "Panel del entrenador",
     "login": "Iniciar sesión",
@@ -18,12 +20,20 @@
     "language": "Idioma"
   },
   "home": {
-    "title": "Descubre entrenamientos",
+    "title": "Reserva tu clase",
     "subtitle": "Reserva tu próxima sesión de deporte — del boxeo al yoga.",
     "viewList": "Lista",
     "viewAgenda": "Agenda",
     "sport": "Deporte",
     "allSports": "Todos los deportes",
+    "nearHeading": "Clases cerca de {{place}}",
+    "nearYou": "Clases cerca de ti",
+    "whatTitle": "¿Qué es Classo?",
+    "whatBody": "Classo es la forma más fácil de descubrir y reservar clases de deporte cerca de ti. Explora entrenamientos de entrenadores independientes — boxeo, yoga, HIIT, fútvoley y mucho más —, filtra por ubicación y reserva tu plaza en segundos. Tanto si empiezas ahora como si llevas años entrenando, hay una clase a la vuelta de la esquina para ti.",
+    "location": "Ubicación",
+    "locationPlaceholder": "Dirección, ciudad…",
+    "searchButton": "Buscar",
+    "clearFilters": "Borrar filtros",
     "bookingConfirmed": "¡Tu reserva está confirmada!",
     "loadingTrainings": "Cargando entrenamientos…",
     "loadError": "No se pudieron cargar los entrenamientos. ¿El servidor está accesible?",
@@ -34,6 +44,39 @@
     "prevWeek": "← Semana anterior",
     "nextWeek": "Semana siguiente →",
     "thisWeek": "Esta semana"
+  },
+  "about": {
+    "title": "Sobre Classo",
+    "subtitle": "La forma más fácil de encontrar y reservar clases de deporte cerca de ti.",
+    "intro": "Classo conecta a las personas que quieren moverse con los entrenadores que lo hacen posible. Del boxeo al yoga, pasando por el fútvoley en la playa, descubres clases en tu barrio y reservas una plaza en pocos clics.",
+    "mission": "Nuestra misión es hacer el deporte accesible y social. Ofrecemos a los entrenadores independientes una plataforma sencilla para llenar sus clases y a los participantes una visión clara de lo que ocurre a su alrededor.",
+    "values": [
+      {
+        "title": "Lo local primero",
+        "body": "Busca por dirección o ciudad y encuentra clases a la vuelta de la esquina."
+      },
+      {
+        "title": "Para todos los niveles",
+        "body": "De principiantes a atletas experimentados — hay una clase para cada uno."
+      },
+      {
+        "title": "Justo con los entrenadores",
+        "body": "Los entrenadores mantienen el control de su horario, aforo y precio."
+      }
+    ],
+    "ctaTitle": "¿List@ para moverte?",
+    "ctaBody": "Explora las clases disponibles o ponte en contacto con cualquier duda.",
+    "ctaTrainings": "Ver clases",
+    "ctaContact": "Contáctanos"
+  },
+  "contact": {
+    "title": "Contacto",
+    "subtitle": "¿Preguntas, sugerencias o una idea de colaboración? Envíanos un mensaje.",
+    "success": "¡Gracias por tu mensaje! Te responderemos pronto.",
+    "fieldName": "Nombre",
+    "fieldEmail": "Correo electrónico",
+    "fieldMessage": "Mensaje",
+    "submit": "Enviar mensaje"
   },
   "training": {
     "spotsFree": "{{spots}} de {{capacity}} plazas disponibles",
@@ -53,7 +96,11 @@
     "trainer": "Entrenador",
     "availability": "Disponibilidad",
     "unknownTrainer": "Desconocido",
-    "notFound": "Entrenamiento no encontrado."
+    "notFound": "Entrenamiento no encontrado.",
+    "withTrainer": "Con {{name}}",
+    "aboutTrainer": "Sobre el entrenador",
+    "reviews": "Reseñas",
+    "noReviews": "Aún sin reseñas."
   },
   "auth": {
     "loginTitle": "Iniciar sesión",
@@ -102,7 +149,10 @@
     "fieldSport": "Deporte",
     "fieldStart": "Hora de inicio",
     "fieldEnd": "Hora de fin",
-    "fieldLocation": "Ubicación",
+    "fieldLocation": "Ubicación / recinto",
+    "fieldCity": "Ciudad",
+    "fieldNeighborhood": "Barrio (opcional)",
+    "fieldPostalCode": "Código postal (opcional)",
     "fieldCapacity": "Capacidad",
     "fieldPrice": "Precio (€)",
     "create": "Crear entrenamiento",

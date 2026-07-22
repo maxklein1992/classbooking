@@ -6,10 +6,12 @@ import { getTraining } from '../api/trainings'
 import { createBooking, deleteBooking } from '../api/bookings'
 import { getErrorMessage } from '../api/client'
 import type { Booking, Training } from '../api/types'
-import { formatDateTime, formatPrice, formatTimeRange } from '../lib/dates'
+import { formatDate, formatDateTime, formatPrice, formatTimeRange } from '../lib/dates'
 import { useAuth } from '../auth/AuthContext'
 import { useMyBookings } from '../hooks/useMyBookings'
 import SportBadge from '../components/SportBadge'
+import StarRating from '../components/StarRating'
+import Avatar from '../components/Avatar'
 
 export default function TrainingDetailPage() {
   const { t } = useTranslation()
@@ -85,6 +87,16 @@ export default function TrainingDetailPage() {
         </div>
 
         <h1>{training.title}</h1>
+        {typeof training.rating === 'number' && training.rating > 0 && (
+          <div className="detail-rating">
+            <StarRating
+              rating={training.rating}
+              count={training.reviewsCount}
+              size={18}
+              showValue
+            />
+          </div>
+        )}
         <p className="detail-desc">{training.description}</p>
 
         <div className="detail-grid">
@@ -98,7 +110,17 @@ export default function TrainingDetailPage() {
           </div>
           <div className="detail-item">
             <span className="detail-label">{t('training.location')}</span>
-            <span>{training.location}</span>
+            <span>
+              {[
+                training.location,
+                training.neighborhood,
+                [training.postalCode, training.city]
+                  .filter(Boolean)
+                  .join(' '),
+              ]
+                .filter(Boolean)
+                .join(', ')}
+            </span>
           </div>
           <div className="detail-item">
             <span className="detail-label">{t('training.trainer')}</span>
@@ -130,6 +152,55 @@ export default function TrainingDetailPage() {
 
         <div className="detail-actions">{renderAction()}</div>
       </div>
+
+      {training.trainer?.bio && (
+        <section className="card trainer-card">
+          <h2>{t('training.aboutTrainer')}</h2>
+          <div className="trainer-profile">
+            <Avatar
+              src={training.trainer.avatarUrl}
+              name={training.trainer.name}
+              size={72}
+            />
+            <div>
+              <div className="trainer-profile-name">{training.trainer.name}</div>
+              <p className="muted">{training.trainer.bio}</p>
+            </div>
+          </div>
+        </section>
+      )}
+
+      <section className="card reviews-card">
+        <div className="reviews-head">
+          <h2>{t('training.reviews')}</h2>
+          {training.reviewsCount ? (
+            <StarRating
+              rating={training.rating ?? 0}
+              count={training.reviewsCount}
+              showValue
+            />
+          ) : null}
+        </div>
+        {training.reviews && training.reviews.length > 0 ? (
+          <ul className="review-list">
+            {training.reviews.map((r) => (
+              <li key={r.id} className="review">
+                <Avatar src={r.avatarUrl} name={r.author} size={44} />
+                <div className="review-body">
+                  <div className="review-top">
+                    <span className="review-author">{r.author}</span>
+                    <span className="review-date">{formatDate(r.date)}</span>
+                  </div>
+                  <StarRating rating={r.rating} size={13} />
+                  <p className="review-comment">{r.comment}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="muted">{t('training.noReviews')}</p>
+        )}
+      </section>
     </div>
   )
 

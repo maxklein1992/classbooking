@@ -9,6 +9,8 @@
   },
   "nav": {
     "trainings": "Treinos",
+    "about": "Sobre",
+    "contact": "Contacto",
     "myBookings": "As minhas reservas",
     "trainerDashboard": "Painel do treinador",
     "login": "Entrar",
@@ -18,12 +20,20 @@
     "language": "Idioma"
   },
   "home": {
-    "title": "Descubra treinos",
+    "title": "Reserve a sua aula",
     "subtitle": "Reserve a sua próxima sessão de desporto — do boxe ao ioga.",
     "viewList": "Lista",
     "viewAgenda": "Agenda",
     "sport": "Modalidade",
     "allSports": "Todas as modalidades",
+    "nearHeading": "Aulas perto de {{place}}",
+    "nearYou": "Aulas perto de si",
+    "whatTitle": "O que é a Classo?",
+    "whatBody": "A Classo é a forma mais fácil de descobrir e reservar aulas de desporto perto de si. Explore treinos de treinadores independentes — boxe, ioga, HIIT, futevólei e muito mais —, filtre por localização e reserve o seu lugar em segundos. Quer esteja a começar ou a treinar há anos, há uma aula ao virar da esquina para si.",
+    "location": "Localização",
+    "locationPlaceholder": "Morada, cidade…",
+    "searchButton": "Pesquisar",
+    "clearFilters": "Limpar filtros",
     "bookingConfirmed": "A sua reserva foi confirmada!",
     "loadingTrainings": "A carregar treinos…",
     "loadError": "Não foi possível carregar os treinos. O servidor está acessível?",
@@ -34,6 +44,39 @@
     "prevWeek": "← Semana anterior",
     "nextWeek": "Semana seguinte →",
     "thisWeek": "Esta semana"
+  },
+  "about": {
+    "title": "Sobre a Classo",
+    "subtitle": "A forma mais fácil de encontrar e reservar aulas de desporto perto de si.",
+    "intro": "A Classo liga as pessoas que querem mexer-se aos treinadores que tornam isso possível. Do boxe ao ioga, passando pelo futevólei na praia, descobre aulas no teu bairro e reservas um lugar em poucos cliques.",
+    "mission": "A nossa missão é tornar o desporto acessível e social. Damos aos treinadores independentes uma plataforma simples para preencher as suas aulas e aos participantes uma visão clara do que acontece à sua volta.",
+    "values": [
+      {
+        "title": "Primeiro o local",
+        "body": "Pesquisa por morada ou cidade e encontra aulas mesmo ao virar da esquina."
+      },
+      {
+        "title": "Para todos os níveis",
+        "body": "De principiantes a atletas experientes — há uma aula para todos."
+      },
+      {
+        "title": "Justo para os treinadores",
+        "body": "Os treinadores mantêm o controlo do horário, da lotação e do preço."
+      }
+    ],
+    "ctaTitle": "Pronto para começar?",
+    "ctaBody": "Vê as aulas disponíveis ou entra em contacto com qualquer dúvida.",
+    "ctaTrainings": "Ver aulas",
+    "ctaContact": "Contacte-nos"
+  },
+  "contact": {
+    "title": "Contacto",
+    "subtitle": "Dúvidas, sugestões ou uma ideia de parceria? Envie-nos uma mensagem.",
+    "success": "Obrigado pela sua mensagem! Entraremos em contacto em breve.",
+    "fieldName": "Nome",
+    "fieldEmail": "Endereço de email",
+    "fieldMessage": "Mensagem",
+    "submit": "Enviar mensagem"
   },
   "training": {
     "spotsFree": "{{spots}} de {{capacity}} lugares livres",
@@ -53,7 +96,11 @@
     "trainer": "Treinador",
     "availability": "Disponibilidade",
     "unknownTrainer": "Desconhecido",
-    "notFound": "Treino não encontrado."
+    "notFound": "Treino não encontrado.",
+    "withTrainer": "Com {{name}}",
+    "aboutTrainer": "Sobre o treinador",
+    "reviews": "Avaliações",
+    "noReviews": "Ainda sem avaliações."
   },
   "auth": {
     "loginTitle": "Entrar",
@@ -102,7 +149,10 @@
     "fieldSport": "Modalidade",
     "fieldStart": "Hora de início",
     "fieldEnd": "Hora de fim",
-    "fieldLocation": "Local",
+    "fieldLocation": "Local / recinto",
+    "fieldCity": "Cidade",
+    "fieldNeighborhood": "Bairro (opcional)",
+    "fieldPostalCode": "Código postal (opcional)",
     "fieldCapacity": "Capacidade",
     "fieldPrice": "Preço (€)",
     "create": "Criar treino",

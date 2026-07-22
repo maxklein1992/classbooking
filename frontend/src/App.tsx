@@ -8,6 +8,9 @@ import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import MyBookingsPage from './pages/MyBookingsPage'
 import TrainerDashboardPage from './pages/TrainerDashboardPage'
+import AboutPage from './pages/AboutPage'
+import ContactPage from './pages/ContactPage'
+import SearchResultsPage from './pages/SearchResultsPage'
 
 export default function App() {
   const { t } = useTranslation()
@@ -17,6 +20,9 @@ export default function App() {
       <main className="app-main">
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/zoeken" element={<SearchResultsPage />} />
+          <Route path="/over-ons" element={<AboutPage />} />
+          <Route path="/contact" element={<ContactPage />} />
           <Route path="/trainingen/:id" element={<TrainingDetailPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />

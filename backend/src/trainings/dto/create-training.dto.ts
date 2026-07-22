@@ -1,10 +1,11 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsDateString,
   IsEnum,
   IsInt,
   IsNotEmpty,
   IsNumber,
+  IsOptional,
   IsString,
   Min,
 } from 'class-validator';
@@ -37,6 +38,21 @@ export class CreateTrainingDto {
   @IsString()
   @IsNotEmpty()
   location: string;
+
+  @ApiProperty({ example: 'Amsterdam' })
+  @IsString()
+  @IsNotEmpty()
+  city: string;
+
+  @ApiPropertyOptional({ example: 'Noord' })
+  @IsOptional()
+  @IsString()
+  neighborhood?: string;
+
+  @ApiPropertyOptional({ example: '1031 KN' })
+  @IsOptional()
+  @IsString()
+  postalCode?: string;
 
   @ApiProperty({ example: 12, minimum: 1 })
   @IsInt()

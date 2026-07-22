@@ -35,6 +35,9 @@ export class TrainingsService {
       startTime: training.startTime,
       endTime: training.endTime,
       location: training.location,
+      city: training.city,
+      neighborhood: training.neighborhood,
+      postalCode: training.postalCode,
       capacity: training.capacity,
       price: training.price,
       trainerId: training.trainerId,
@@ -50,6 +53,16 @@ export class TrainingsService {
 
     if (query.sport) {
       where.sport = query.sport;
+    }
+
+    if (query.q) {
+      const contains = { contains: query.q, mode: 'insensitive' } as const;
+      where.OR = [
+        { location: contains },
+        { city: contains },
+        { neighborhood: contains },
+        { postalCode: contains },
+      ];
     }
 
     if (query.from || query.to) {
@@ -113,6 +126,9 @@ export class TrainingsService {
         startTime: start,
         endTime: end,
         location: dto.location,
+        city: dto.city,
+        neighborhood: dto.neighborhood,
+        postalCode: dto.postalCode,
         capacity: dto.capacity,
         price: dto.price,
         trainerId,
@@ -146,6 +162,9 @@ export class TrainingsService {
         startTime: dto.startTime ? start : undefined,
         endTime: dto.endTime ? end : undefined,
         location: dto.location,
+        city: dto.city,
+        neighborhood: dto.neighborhood,
+        postalCode: dto.postalCode,
         capacity: dto.capacity,
         price: dto.price,
       },

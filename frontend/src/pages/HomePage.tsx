@@ -1,131 +1,89 @@
-import { useState } from 'react'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useEffect, useState, type FormEvent } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { getTrainings } from '../api/trainings'
-import { createBooking } from '../api/bookings'
-import { getErrorMessage } from '../api/client'
-import type { Sport, Training } from '../api/types'
-import { SPORTS, sportLabel } from '../lib/sports'
-import { useAuth } from '../auth/AuthContext'
-import { useBookedTrainingIds } from '../hooks/useMyBookings'
-import TrainingCard from '../components/TrainingCard'
-import AgendaView from '../components/AgendaView'
-
-type ViewMode = 'list' | 'agenda'
+import TrainingBrowser from '../components/TrainingBrowser'
 
 export default function HomePage() {
-  const { t } = useTranslation()
-  const { isAuthenticated } = useAuth()
-  const queryClient = useQueryClient()
-  const [sport, setSport] = useState<Sport | ''>('')
-  const [view, setView] = useState<ViewMode>('list')
-  const [feedback, setFeedback] = useState<string | null>(null)
+  const { t, i18n } = useTranslation()
+  const navigate = useNavigate()
+  const [search, setSearch] = useState('')
 
-  const bookedIds = useBookedTrainingIds()
+  // Detect the visitor's own location (browser geolocation + reverse geocoding)
+  // so the heading can say "Classes near <their city>".
+  const [detectedPlace, setDetectedPlace] = useState<string | null>(null)
+  useEffect(() => {
+    if (!('geolocation' in navigator)) return
+    let cancelled = false
+    navigator.geolocation.getCurrentPosition(
+      async (pos) => {
+        try {
+          const { latitude, longitude } = pos.coords
+          const lang = i18n.language?.split('-')[0] || 'en'
+          const res = await fetch(
+            `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=${lang}`,
+          )
+          const data = await res.json()
+          const place =
+            data.city || data.locality || data.principalSubdivision || null
+          if (!cancelled && place) setDetectedPlace(place)
+        } catch {
+          // ignore — heading falls back to "near you"
+        }
+      },
+      () => {
+        // permission denied or unavailable — heading falls back to "near you"
+      },
+      { timeout: 8000 },
+    )
+    return () => {
+      cancelled = true
+    }
+  }, [i18n.language])
 
-  const {
-    data: trainings,
-    isLoading,
-    isError,
-  } = useQuery<Training[]>({
-    queryKey: ['trainings', { sport }],
-    queryFn: () => getTrainings(sport ? { sport } : {}),
-  })
-
-  const bookMutation = useMutation({
-    mutationFn: (training: Training) =>
-      createBooking({ trainingId: training.id }),
-    onSuccess: () => {
-      setFeedback(t('home.bookingConfirmed'))
-      queryClient.invalidateQueries({ queryKey: ['trainings'] })
-      queryClient.invalidateQueries({ queryKey: ['bookings'] })
-    },
-    onError: (err) => setFeedback(getErrorMessage(err)),
-  })
+  function handleSearch(e: FormEvent) {
+    e.preventDefault()
+    const q = search.trim()
+    navigate(q ? `/zoeken?q=${encodeURIComponent(q)}` : '/zoeken')
+  }
 
   return (
     <div className="page">
-      <div className="page-header">
-        <div>
+      <section className="hero">
+        <div className="hero-content">
           <h1>{t('home.title')}</h1>
-          <p className="muted">{t('home.subtitle')}</p>
+          <p>{t('home.subtitle')}</p>
+          <form className="hero-search" onSubmit={handleSearch} role="search">
+            <span className="hero-search-icon" aria-hidden="true">
+              🔍
+            </span>
+            <input
+              type="search"
+              value={search}
+              aria-label={t('home.location')}
+              placeholder={t('home.locationPlaceholder')}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <button type="submit" className="btn btn-primary hero-search-btn">
+              {t('home.searchButton')}
+            </button>
+          </form>
         </div>
-        <div className="view-toggle">
-          <button
-            className={view === 'list' ? 'toggle active' : 'toggle'}
-            onClick={() => setView('list')}
-          >
-            {t('home.viewList')}
-          </button>
-          <button
-            className={view === 'agenda' ? 'toggle active' : 'toggle'}
-            onClick={() => setView('agenda')}
-          >
-            {t('home.viewAgenda')}
-          </button>
+      </section>
+
+      <section className="what-is">
+        <div className="what-is-media">
+          <img
+            src="https://images.unsplash.com/photo-1684266370915-382b2329278c?auto=format&fit=crop&w=900&q=80"
+            alt=""
+          />
         </div>
-      </div>
-
-      <div className="filters">
-        <label htmlFor="sport-filter" className="filter-label">
-          {t('home.sport')}
-        </label>
-        <select
-          id="sport-filter"
-          value={sport}
-          onChange={(e) => setSport(e.target.value as Sport | '')}
-        >
-          <option value="">{t('home.allSports')}</option>
-          {SPORTS.map((s) => (
-            <option key={s} value={s}>
-              {sportLabel(s, t)}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      {feedback && (
-        <div className="alert" role="status">
-          {feedback}
-          <button className="alert-close" onClick={() => setFeedback(null)}>
-            ×
-          </button>
+        <div className="what-is-content">
+          <h2>{t('home.whatTitle')}</h2>
+          <p>{t('home.whatBody')}</p>
         </div>
-      )}
+      </section>
 
-      {isLoading && <p className="muted">{t('home.loadingTrainings')}</p>}
-      {isError && <p className="text-danger">{t('home.loadError')}</p>}
-
-      {!isLoading && !isError && trainings && trainings.length === 0 && (
-        <div className="empty-state card">
-          <h3>{t('home.emptyTitle')}</h3>
-          <p className="muted">{t('home.emptyBody')}</p>
-        </div>
-      )}
-
-      {!isLoading && !isError && trainings && trainings.length > 0 && (
-        <>
-          {view === 'agenda' ? (
-            <AgendaView trainings={trainings} />
-          ) : (
-            <div className="card-grid">
-              {trainings.map((t) => (
-                <TrainingCard
-                  key={t.id}
-                  training={t}
-                  isAuthenticated={isAuthenticated}
-                  isBooked={bookedIds.has(t.id)}
-                  onBook={(tr) => bookMutation.mutate(tr)}
-                  booking={
-                    bookMutation.isPending &&
-                    bookMutation.variables?.id === t.id
-                  }
-                />
-              ))}
-            </div>
-          )}
-        </>
-      )}
+      <TrainingBrowser place={detectedPlace} />
     </div>
   )
 }

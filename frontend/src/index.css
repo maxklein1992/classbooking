@@ -262,6 +262,10 @@ h3 {
   margin-bottom: 1.25rem;
   flex-wrap: wrap;
 }
+.list-heading {
+  margin: 0;
+  font-size: 1.4rem;
+}
 
 /* ---------- Buttons ---------- */
 .btn {
@@ -379,10 +383,10 @@ h3 {
 .training-card {
   display: flex;
   flex-direction: column;
-  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  cursor: pointer;
+  transition: box-shadow 0.18s ease;
 }
 .training-card:hover {
-  transform: translateY(-3px);
   box-shadow: var(--shadow);
 }
 .card-actions {
@@ -446,15 +450,101 @@ h3 {
 }
 
 /* ---------- Filters / toggle ---------- */
-.filters {
+/* ---------- Hero + search ---------- */
+.hero {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: 1.75rem;
+  padding: clamp(2.75rem, 7vw, 5rem) clamp(1.25rem, 4vw, 3rem);
+  color: #fff;
+  background-color: #1b6f8b; /* fallback als de foto niet laadt */
+  background-image: linear-gradient(
+      100deg,
+      rgba(20, 40, 55, 0.72) 0%,
+      rgba(20, 40, 55, 0.35) 55%,
+      rgba(20, 40, 55, 0.1) 100%
+    ),
+    url('https://images.unsplash.com/photo-1521138054413-5a47d349b7af?auto=format&fit=crop&w=1600&q=80');
+  background-size: cover;
+  background-position: center;
+}
+.hero-content {
+  position: relative;
+  max-width: 640px;
+}
+.hero h1 {
+  color: #fff;
+  margin: 0 0 0.5rem;
+  font-size: clamp(1.9rem, 4vw, 2.75rem);
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+}
+.hero p {
+  margin: 0 0 1.5rem;
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+}
+.hero-search {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  margin-bottom: 1.25rem;
+  background: var(--surface);
+  border-radius: 999px;
+  box-shadow: var(--shadow);
+  padding: 0.35rem 0.35rem 0.35rem 1rem;
+  max-width: 520px;
 }
-.filter-label {
-  font-weight: 600;
-  font-size: 0.9rem;
+.hero-search-icon {
+  font-size: 1.05rem;
+  line-height: 1;
+  margin-right: 0.5rem;
+  opacity: 0.7;
+}
+.hero-search input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 0.7rem 0.4rem;
+  font-size: 1rem;
+  color: var(--text);
+}
+.hero-search input:focus {
+  outline: none;
+}
+.hero-search-btn {
+  flex-shrink: 0;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+/* Refine search bar on the results page */
+.search-refine {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.35rem 0.35rem 0.35rem 1rem;
+  max-width: 560px;
+  margin-bottom: 1.5rem;
+}
+.search-refine input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 0.6rem 0.2rem;
+  font-size: 1rem;
+  color: var(--text);
+}
+.search-refine input:focus {
+  outline: none;
+}
+.search-refine .btn {
+  flex-shrink: 0;
+  border-radius: 999px;
+  white-space: nowrap;
 }
 select,
 input,
@@ -800,4 +890,200 @@ textarea:focus {
   .page-header {
     align-items: flex-start;
   }
+}
+
+/* ---------- Avatar ---------- */
+.avatar {
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  flex-shrink: 0;
+  background: #eee;
+}
+.avatar-fallback {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent-soft);
+  color: var(--accent-dark);
+  font-weight: 700;
+  border-radius: 50%;
+}
+
+/* ---------- Sterren ---------- */
+.stars-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+.stars {
+  position: relative;
+  display: inline-block;
+  line-height: 1;
+  font-family: Arial, sans-serif;
+  letter-spacing: 1px;
+}
+.stars-empty {
+  color: #e0e0e0;
+}
+.stars-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  color: var(--accent);
+}
+.stars-value {
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+.stars-count {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+/* ---------- Kaart: rating + trainer ---------- */
+.card-rating {
+  margin: -0.1rem 0 0.6rem;
+}
+.trainer-row {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-top: 0.8rem;
+  font-size: 0.9rem;
+}
+.trainer-name {
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* ---------- Detail: rating, trainer, reviews ---------- */
+.detail-rating {
+  margin: 0.25rem 0 0.75rem;
+}
+.trainer-card,
+.reviews-card {
+  margin-top: 1.25rem;
+}
+.trainer-profile {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+.trainer-profile-name {
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+.reviews-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+.review-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+.review {
+  display: flex;
+  gap: 0.8rem;
+}
+.review:not(:last-child) {
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1.1rem;
+}
+.review-body {
+  flex: 1;
+}
+.review-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  align-items: baseline;
+}
+.review-author {
+  font-weight: 700;
+}
+.review-date {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+.review-comment {
+  margin: 0.35rem 0 0;
+  color: var(--text);
+}
+
+/* "What is Classo" section on the home page */
+.what-is {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.75rem;
+  align-items: center;
+  margin: 1.5rem 0 2.25rem;
+}
+.what-is-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-height: 340px;
+  object-fit: cover;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+.what-is-content h2 {
+  margin-top: 0;
+  margin-bottom: 0.6rem;
+}
+.what-is-content p {
+  margin: 0;
+  line-height: 1.65;
+  color: var(--text);
+}
+@media (max-width: 720px) {
+  .what-is {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+/* About & Contact pages */
+.about-card p {
+  margin: 0 0 0.9rem;
+  line-height: 1.65;
+}
+.about-card p:last-child {
+  margin-bottom: 0;
+}
+.about-values {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1rem;
+  margin: 1.25rem 0;
+}
+.about-value h3 {
+  margin: 0 0 0.4rem;
+}
+.about-cta {
+  text-align: center;
+}
+.about-cta h2 {
+  margin-top: 0;
+}
+.about-cta-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+.contact-card {
+  max-width: 40rem;
 }

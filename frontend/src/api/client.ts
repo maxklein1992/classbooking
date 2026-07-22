@@ -5,6 +5,10 @@ import type { ApiError } from './types'
 export const API_URL =
   import.meta.env.VITE_API_URL ?? 'http://localhost:3001/api'
 
+// Dummy-data modus: standaard AAN zodat de app werkt zonder backend.
+// Zet VITE_USE_MOCKS=false om de echte NestJS-API te gebruiken.
+export const USE_MOCKS = (import.meta.env.VITE_USE_MOCKS ?? 'true') !== 'false'
+
 export const TOKEN_KEY = 'classbooking_token'
 
 export const getToken = (): string | null => localStorage.getItem(TOKEN_KEY)

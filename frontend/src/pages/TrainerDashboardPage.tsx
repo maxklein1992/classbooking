@@ -25,6 +25,9 @@ interface FormState {
   startTime: string // datetime-local value
   endTime: string // datetime-local value
   location: string
+  city: string
+  neighborhood: string
+  postalCode: string
   capacity: string
   price: string
 }
@@ -36,6 +39,9 @@ const emptyForm: FormState = {
   startTime: '',
   endTime: '',
   location: '',
+  city: '',
+  neighborhood: '',
+  postalCode: '',
   capacity: '10',
   price: '0',
 }
@@ -98,6 +104,9 @@ export default function TrainerDashboardPage() {
       startTime: toDatetimeLocalValue(training.startTime),
       endTime: toDatetimeLocalValue(training.endTime),
       location: training.location,
+      city: training.city,
+      neighborhood: training.neighborhood ?? '',
+      postalCode: training.postalCode ?? '',
       capacity: String(training.capacity),
       price: String(training.price),
     })
@@ -131,6 +140,9 @@ export default function TrainerDashboardPage() {
       startTime: fromDatetimeLocalValue(form.startTime),
       endTime: fromDatetimeLocalValue(form.endTime),
       location: form.location.trim(),
+      city: form.city.trim(),
+      neighborhood: form.neighborhood.trim() || undefined,
+      postalCode: form.postalCode.trim() || undefined,
       capacity,
       price: Number(form.price) || 0,
     }
@@ -224,6 +236,33 @@ export default function TrainerDashboardPage() {
             </label>
             <div className="field-row">
               <label className="field">
+                <span>{t('trainer.fieldCity')}</span>
+                <input
+                  type="text"
+                  value={form.city}
+                  onChange={(e) => set('city', e.target.value)}
+                  required
+                />
+              </label>
+              <label className="field">
+                <span>{t('trainer.fieldNeighborhood')}</span>
+                <input
+                  type="text"
+                  value={form.neighborhood}
+                  onChange={(e) => set('neighborhood', e.target.value)}
+                />
+              </label>
+            </div>
+            <label className="field">
+              <span>{t('trainer.fieldPostalCode')}</span>
+              <input
+                type="text"
+                value={form.postalCode}
+                onChange={(e) => set('postalCode', e.target.value)}
+              />
+            </label>
+            <div className="field-row">
+              <label className="field">
                 <span>{t('trainer.fieldCapacity')}</span>
                 <input
                   type="number"
@@ -290,7 +329,12 @@ export default function TrainerDashboardPage() {
                     </div>
                     <ul className="meta-list compact">
                       <li>🕒 {formatDateTime(tr.startTime)}</li>
-                      <li>📍 {tr.location}</li>
+                      <li>
+                        📍{' '}
+                        {[tr.location, tr.neighborhood, tr.city]
+                          .filter(Boolean)
+                          .join(', ')}
+                      </li>
                       <li>
                         👥{' '}
                         {t('trainer.bookedCount', {

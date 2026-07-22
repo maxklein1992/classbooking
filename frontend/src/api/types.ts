@@ -23,6 +23,17 @@ export interface User {
 export interface TrainerRef {
   id: string
   name: string
+  avatarUrl?: string
+  bio?: string
+}
+
+export interface Review {
+  id: string
+  author: string
+  avatarUrl?: string
+  rating: number // 1..5
+  comment: string
+  date: string // ISO
 }
 
 export interface Training {
@@ -33,6 +44,9 @@ export interface Training {
   startTime: string
   endTime: string
   location: string
+  city: string
+  neighborhood?: string | null
+  postalCode?: string | null
   capacity: number
   price: number
   trainerId: string
@@ -40,6 +54,9 @@ export interface Training {
   bookingsCount: number
   availableSpots: number
   createdAt: string
+  rating?: number // gemiddelde 1..5
+  reviewsCount?: number
+  reviews?: Review[]
 }
 
 export interface Booking {
@@ -77,6 +94,9 @@ export interface CreateTrainingPayload {
   startTime: string
   endTime: string
   location: string
+  city: string
+  neighborhood?: string
+  postalCode?: string
   capacity: number
   price: number
 }
@@ -87,6 +107,7 @@ export interface TrainingsQuery {
   sport?: Sport
   from?: string
   to?: string
+  q?: string
 }
 
 // Bookings

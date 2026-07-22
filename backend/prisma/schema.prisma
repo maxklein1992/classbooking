@@ -43,10 +43,13 @@ model Training {
   title       String
   description String
   sport       Sport
-  startTime   DateTime
-  endTime     DateTime
-  location    String
-  capacity    Int
+  startTime    DateTime
+  endTime      DateTime
+  location     String
+  city         String
+  neighborhood String?
+  postalCode   String?
+  capacity     Int
   price       Float     @default(0)
   trainer     User      @relation("TrainerTrainings", fields: [trainerId], references: [id], onDelete: Cascade)
   trainerId   String
@@ -56,6 +59,7 @@ model Training {
 
   @@index([startTime])
   @@index([sport])
+  @@index([city])
 }
 
 model Booking {

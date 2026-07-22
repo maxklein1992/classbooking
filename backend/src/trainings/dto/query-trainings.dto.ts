@@ -1,5 +1,5 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IsDateString, IsEnum, IsOptional } from 'class-validator';
+import { IsDateString, IsEnum, IsOptional, IsString } from 'class-validator';
 import { Sport } from '@prisma/client';
 
 export class QueryTrainingsDto {
@@ -7,6 +7,14 @@ export class QueryTrainingsDto {
   @IsOptional()
   @IsEnum(Sport)
   sport?: Sport;
+
+  @ApiPropertyOptional({
+    example: 'Amsterdam',
+    description: 'Free-text location search across address, city, neighborhood and postal code',
+  })
+  @IsOptional()
+  @IsString()
+  q?: string;
 
   @ApiPropertyOptional({ example: '2026-08-01T00:00:00.000Z' })
   @IsOptional()
