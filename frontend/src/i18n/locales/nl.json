@@ -40,7 +40,12 @@
     "loadingTrainings": "Trainingen laden…",
     "loadError": "Kon de trainingen niet laden. Is de server bereikbaar?",
     "emptyTitle": "Geen trainingen gevonden",
-    "emptyBody": "Er zijn nog geen aankomende trainingen voor dit filter."
+    "emptyBody": "Er zijn nog geen aankomende trainingen voor dit filter.",
+    "trainerCta": {
+      "title": "Ben je een trainer en wil je lessen geven?",
+      "body": "Sluit je bij ons aan en vul je lessen met sporters uit de buurt.",
+      "button": "Word trainer"
+    }
   },
   "trainings": {
     "heading": "Alle trainingen",
