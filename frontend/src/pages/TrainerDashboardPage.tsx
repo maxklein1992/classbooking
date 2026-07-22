@@ -131,6 +131,12 @@ export default function TrainerDashboardPage() {
       setError(t('trainer.endAfterStart'))
       return
     }
+    // Alleen bij het aanmaken (niet bewerken) moet de starttijd in de
+    // toekomst liggen, net als de backend-check in trainings.service.ts.
+    if (!editingId && start <= new Date()) {
+      setError(t('trainer.startInFuture'))
+      return
+    }
     const capacity = Number(form.capacity)
     if (!Number.isFinite(capacity) || capacity < 1) {
       setError(t('trainer.capacityMin'))

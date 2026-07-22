@@ -283,6 +283,7 @@
     "confirmDelete": "¿Seguro que quieres eliminar \"{{title}}\"?",
     "invalidTimes": "Introduce una hora de inicio y de fin válidas.",
     "endAfterStart": "La hora de fin debe ser posterior a la de inicio.",
+    "startInFuture": "La hora de inicio debe estar en el futuro.",
     "capacityMin": "La capacidad debe ser de al menos 1."
   },
   "errors": {

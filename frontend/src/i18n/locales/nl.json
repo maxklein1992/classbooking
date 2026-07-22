@@ -283,12 +283,14 @@
     "confirmDelete": "Weet je zeker dat je \"{{title}}\" wilt verwijderen?",
     "invalidTimes": "Voer een geldige start- en eindtijd in.",
     "endAfterStart": "De eindtijd moet na de starttijd liggen.",
+    "startInFuture": "De starttijd moet in de toekomst liggen.",
     "capacityMin": "Capaciteit moet minimaal 1 zijn."
   },
   "errors": {
     "full": "Deze training is vol.",
     "alreadyBooked": "Je hebt deze training al geboekt.",
     "past": "Deze training is in het verleden.",
+    "startInFuture": "De starttijd moet in de toekomst liggen.",
     "badRequest": "Ongeldig verzoek. Controleer je gegevens.",
     "unauthorized": "Je bent niet ingelogd of je sessie is verlopen.",
     "forbidden": "Je hebt geen toestemming voor deze actie.",

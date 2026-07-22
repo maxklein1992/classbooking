@@ -283,12 +283,14 @@
     "confirmDelete": "Are you sure you want to delete \"{{title}}\"?",
     "invalidTimes": "Enter a valid start and end time.",
     "endAfterStart": "The end time must be after the start time.",
+    "startInFuture": "The start time must be in the future.",
     "capacityMin": "Capacity must be at least 1."
   },
   "errors": {
     "full": "This training is full.",
     "alreadyBooked": "You have already booked this training.",
     "past": "This training is in the past.",
+    "startInFuture": "The start time must be in the future.",
     "badRequest": "Invalid request. Please check your details.",
     "unauthorized": "You are not logged in or your session has expired.",
     "forbidden": "You do not have permission for this action.",
