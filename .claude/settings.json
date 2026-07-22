@@ -1,0 +1,45 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gh issue list*)",
+      "Bash(gh issue view*)",
+      "Bash(gh issue comment*)",
+      "Bash(gh pr list*)",
+      "Bash(gh pr view*)",
+      "Bash(gh pr create*)",
+      "Bash(gh pr diff*)",
+      "Bash(gh pr checks*)",
+      "Bash(gh repo view*)",
+      "Bash(git status*)",
+      "Bash(git diff*)",
+      "Bash(git log*)",
+      "Bash(git add*)",
+      "Bash(git commit*)",
+      "Bash(git push origin*)",
+      "Bash(git checkout -b*)",
+      "Bash(git checkout main)",
+      "Bash(git fetch*)",
+      "Bash(git pull*)",
+      "Bash(git branch)",
+      "Bash(git branch --show-current)",
+      "Bash(npm *)",
+      "Bash(npx *)",
+      "Bash(node *)",
+      "Bash(npx prisma*)",
+      "Read",
+      "Edit",
+      "Write"
+    ],
+    "ask": [
+      "Bash(git push * --force*)",
+      "Bash(git push * -f*)",
+      "Bash(git reset --hard*)",
+      "Bash(git branch -D*)",
+      "Bash(git clean*)",
+      "Bash(gh pr merge*)",
+      "Bash(gh repo delete*)",
+      "Bash(gh issue delete*)",
+      "Bash(gh repo edit*)"
+    ]
+  }
+}
