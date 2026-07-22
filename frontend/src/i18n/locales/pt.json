@@ -8,6 +8,7 @@
     "footer": "Classo — reserve treinos desportivos"
   },
   "nav": {
+    "home": "Início",
     "trainings": "Treinos",
     "about": "Sobre",
     "contact": "Contacto",
@@ -39,6 +40,16 @@
     "loadError": "Não foi possível carregar os treinos. O servidor está acessível?",
     "emptyTitle": "Nenhum treino encontrado",
     "emptyBody": "Ainda não há treinos futuros para este filtro."
+  },
+  "trainings": {
+    "heading": "Todos os treinos",
+    "searchLabel": "Pesquisar treinos",
+    "searchPlaceholder": "Pesquise por título, treinador ou localização…",
+    "availability": "Disponibilidade",
+    "availabilityAll": "Todos",
+    "availabilityAvailable": "Apenas disponíveis",
+    "resultCount_one": "{{count}} treino encontrado",
+    "resultCount_other": "{{count}} treinos encontrados"
   },
   "agenda": {
     "prevWeek": "← Semana anterior",

@@ -8,6 +8,7 @@
     "footer": "Classo — reserva entrenamientos deportivos"
   },
   "nav": {
+    "home": "Inicio",
     "trainings": "Entrenamientos",
     "about": "Sobre nosotros",
     "contact": "Contacto",
@@ -39,6 +40,16 @@
     "loadError": "No se pudieron cargar los entrenamientos. ¿El servidor está accesible?",
     "emptyTitle": "No se encontraron entrenamientos",
     "emptyBody": "Aún no hay entrenamientos próximos para este filtro."
+  },
+  "trainings": {
+    "heading": "Todos los entrenamientos",
+    "searchLabel": "Buscar entrenamientos",
+    "searchPlaceholder": "Busca por título, entrenador o ubicación…",
+    "availability": "Disponibilidad",
+    "availabilityAll": "Todos",
+    "availabilityAvailable": "Solo disponibles",
+    "resultCount_one": "{{count}} entrenamiento encontrado",
+    "resultCount_other": "{{count}} entrenamientos encontrados"
   },
   "agenda": {
     "prevWeek": "← Semana anterior",

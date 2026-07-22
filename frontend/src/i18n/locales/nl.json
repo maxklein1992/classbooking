@@ -8,6 +8,7 @@
     "footer": "Classo — boek sporttrainingen"
   },
   "nav": {
+    "home": "Home",
     "trainings": "Trainingen",
     "about": "Over ons",
     "contact": "Contact",
@@ -39,6 +40,16 @@
     "loadError": "Kon de trainingen niet laden. Is de server bereikbaar?",
     "emptyTitle": "Geen trainingen gevonden",
     "emptyBody": "Er zijn nog geen aankomende trainingen voor dit filter."
+  },
+  "trainings": {
+    "heading": "Alle trainingen",
+    "searchLabel": "Zoek trainingen",
+    "searchPlaceholder": "Zoek op titel, trainer of locatie…",
+    "availability": "Beschikbaarheid",
+    "availabilityAll": "Alle",
+    "availabilityAvailable": "Alleen beschikbaar",
+    "resultCount_one": "{{count}} training gevonden",
+    "resultCount_other": "{{count}} trainingen gevonden"
   },
   "agenda": {
     "prevWeek": "← Vorige week",

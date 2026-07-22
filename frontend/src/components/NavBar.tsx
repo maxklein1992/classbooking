@@ -33,6 +33,10 @@ export default function NavBar() {
 
         <nav className="nav-links">
           <NavLink to="/" className={linkClass} end>
+            {t('nav.home')}
+          </NavLink>
+
+          <NavLink to="/trainingen" className={linkClass}>
             {t('nav.trainings')}
           </NavLink>
 

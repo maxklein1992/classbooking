@@ -8,6 +8,7 @@
     "footer": "Classo — book sports trainings"
   },
   "nav": {
+    "home": "Home",
     "trainings": "Trainings",
     "about": "About",
     "contact": "Contact",
@@ -39,6 +40,16 @@
     "loadError": "Could not load trainings. Is the server reachable?",
     "emptyTitle": "No trainings found",
     "emptyBody": "There are no upcoming trainings for this filter yet."
+  },
+  "trainings": {
+    "heading": "All trainings",
+    "searchLabel": "Search trainings",
+    "searchPlaceholder": "Search by title, trainer or location…",
+    "availability": "Availability",
+    "availabilityAll": "All",
+    "availabilityAvailable": "Available only",
+    "resultCount_one": "{{count}} training found",
+    "resultCount_other": "{{count}} trainings found"
   },
   "agenda": {
     "prevWeek": "← Previous week",

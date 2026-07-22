@@ -17,9 +17,18 @@ interface Props {
   query?: TrainingsQuery
   /** Place shown in the heading ("Classes near <place>"); falls back to "near you". */
   place?: string | null
+  /** Overrides the heading text; takes precedence over `place`. */
+  heading?: string
+  /** Optional client-side filter applied to the fetched trainings. */
+  filterPredicate?: (training: Training) => boolean
 }
 
-export default function TrainingBrowser({ query = {}, place }: Props) {
+export default function TrainingBrowser({
+  query = {},
+  place,
+  heading,
+  filterPredicate,
+}: Props) {
   const { t } = useTranslation()
   const { isAuthenticated } = useAuth()
   const queryClient = useQueryClient()
@@ -29,13 +38,15 @@ export default function TrainingBrowser({ query = {}, place }: Props) {
   const bookedIds = useBookedTrainingIds()
 
   const {
-    data: trainings,
+    data,
     isLoading,
     isError,
   } = useQuery<Training[]>({
     queryKey: ['trainings', query],
     queryFn: () => getTrainings(query),
   })
+
+  const trainings = filterPredicate ? data?.filter(filterPredicate) : data
 
   const bookMutation = useMutation({
     mutationFn: (training: Training) =>
@@ -52,7 +63,7 @@ export default function TrainingBrowser({ query = {}, place }: Props) {
     <>
       <div className="page-header">
         <h2 className="list-heading">
-          {place ? t('home.nearHeading', { place }) : t('home.nearYou')}
+          {heading ?? (place ? t('home.nearHeading', { place }) : t('home.nearYou'))}
         </h2>
         <div className="view-toggle">
           <button
