@@ -33,9 +33,12 @@ export default function NavBar() {
         </Link>
 
         <nav className="nav-links">
-          <NavLink to="/" className={linkClass} end>
-            {t('nav.home')}
-          </NavLink>
+          {/* Home: verborgen voor ingelogde trainers. */}
+          {!isTrainer && (
+            <NavLink to="/" className={linkClass} end>
+              {t('nav.home')}
+            </NavLink>
+          )}
 
           {!isTrainer && (
             <NavLink to="/trainingen" className={linkClass}>
@@ -43,17 +46,22 @@ export default function NavBar() {
             </NavLink>
           )}
 
-          <NavLink to="/blog" className={linkClass}>
-            {t('nav.blog')}
-          </NavLink>
+          {/* Blog, Over ons en Contact: alleen voor niet-ingelogde bezoekers. */}
+          {!isAuthenticated && (
+            <>
+              <NavLink to="/blog" className={linkClass}>
+                {t('nav.blog')}
+              </NavLink>
 
-          <NavLink to="/over-ons" className={linkClass}>
-            {t('nav.about')}
-          </NavLink>
+              <NavLink to="/over-ons" className={linkClass}>
+                {t('nav.about')}
+              </NavLink>
 
-          <NavLink to="/contact" className={linkClass}>
-            {t('nav.contact')}
-          </NavLink>
+              <NavLink to="/contact" className={linkClass}>
+                {t('nav.contact')}
+              </NavLink>
+            </>
+          )}
 
           {isAuthenticated && !isTrainer && (
             <NavLink to="/mijn-boekingen" className={linkClass}>
