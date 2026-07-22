@@ -1,5 +1,5 @@
 import { format, type Locale } from 'date-fns'
-import { enUS, es, pt } from 'date-fns/locale'
+import { enUS, es, nl, pt } from 'date-fns/locale'
 import i18n from '../i18n'
 
 // Pick the date-fns locale for the active i18next language.
@@ -8,6 +8,7 @@ export function currentLocale(): Locale {
   const lng = i18n.language || 'pt'
   if (lng.startsWith('es')) return es
   if (lng.startsWith('en')) return enUS
+  if (lng.startsWith('nl')) return nl
   return pt
 }
 
@@ -16,6 +17,7 @@ function currentIntlLocale(): string {
   const lng = i18n.language || 'pt'
   if (lng.startsWith('es')) return 'es-ES'
   if (lng.startsWith('en')) return 'en-GB'
+  if (lng.startsWith('nl')) return 'nl-NL'
   return 'pt-PT'
 }
 
