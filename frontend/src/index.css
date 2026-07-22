@@ -520,6 +520,13 @@ h3 {
 }
 .hero-search input:focus {
   outline: none;
+  box-shadow: none;
+  border-color: transparent;
+}
+/* Nette, bij de stijl passende focus-indicatie op de hele zoekbalk i.p.v.
+   de standaard grijze outline/ring rond het invoerveld. */
+.hero-search:focus-within {
+  box-shadow: var(--shadow), 0 0 0 3px var(--accent-soft);
 }
 .hero-search-btn {
   flex-shrink: 0;
@@ -549,6 +556,14 @@ h3 {
 }
 .search-refine input:focus {
   outline: none;
+  box-shadow: none;
+  border-color: transparent;
+}
+/* Focus zichtbaar op de zoekbalk zelf (accent-ring) i.p.v. de grijze
+   standaard-outline rond het losse invoerveld. */
+.search-refine:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
 }
 .search-refine .btn {
   flex-shrink: 0;
