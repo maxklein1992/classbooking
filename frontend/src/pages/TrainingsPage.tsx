@@ -53,67 +53,77 @@ export default function TrainingsPage() {
   }
 
   return (
-    <div className="page">
-      <div className="filter-bar">
-        <div className="search-refine filter-search" role="search">
-          <span className="hero-search-icon" aria-hidden="true">
-            🔍
-          </span>
-          <input
-            type="search"
-            value={search}
-            aria-label={t('trainings.searchLabel')}
-            placeholder={t('trainings.searchPlaceholder')}
-            onChange={(e) => setSearch(e.target.value)}
+    <div className="page trainings-page">
+      <div className="trainings-layout">
+        <aside className="filters-card card" aria-label={t('trainings.filtersTitle')}>
+          <h2 className="filters-title">{t('trainings.filtersTitle')}</h2>
+
+          <div className="search-refine filter-search" role="search">
+            <span className="hero-search-icon" aria-hidden="true">
+              🔍
+            </span>
+            <input
+              type="search"
+              value={search}
+              aria-label={t('trainings.searchLabel')}
+              placeholder={t('trainings.searchPlaceholder')}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
+
+          <label className="filter-field">
+            <span>{t('home.sport')}</span>
+            <select
+              value={sport}
+              onChange={(e) => setSport(e.target.value as Sport | '')}
+            >
+              <option value="">{t('home.allSports')}</option>
+              {SPORTS.map((s) => (
+                <option key={s} value={s}>
+                  {sportLabel(s, t)}
+                </option>
+              ))}
+            </select>
+          </label>
+
+          <label className="filter-field">
+            <span>{t('trainings.availability')}</span>
+            <select
+              value={availability}
+              onChange={(e) => setAvailability(e.target.value as Availability)}
+            >
+              <option value="all">{t('trainings.availabilityAll')}</option>
+              <option value="available">
+                {t('trainings.availabilityAvailable')}
+              </option>
+            </select>
+          </label>
+
+          {hasFilters && (
+            <button
+              type="button"
+              className="btn btn-ghost btn-block"
+              onClick={clearFilters}
+            >
+              {t('home.clearFilters')}
+            </button>
+          )}
+        </aside>
+
+        <div className="trainings-results">
+          {resultCount !== null && (
+            <p className="muted result-count">
+              {t('trainings.resultCount', { count: resultCount })}
+            </p>
+          )}
+
+          <TrainingBrowser
+            query={{}}
+            heading={t('trainings.heading')}
+            filterPredicate={predicate}
           />
         </div>
-
-        <label className="filter-field">
-          <span>{t('home.sport')}</span>
-          <select
-            value={sport}
-            onChange={(e) => setSport(e.target.value as Sport | '')}
-          >
-            <option value="">{t('home.allSports')}</option>
-            {SPORTS.map((s) => (
-              <option key={s} value={s}>
-                {sportLabel(s, t)}
-              </option>
-            ))}
-          </select>
-        </label>
-
-        <label className="filter-field">
-          <span>{t('trainings.availability')}</span>
-          <select
-            value={availability}
-            onChange={(e) => setAvailability(e.target.value as Availability)}
-          >
-            <option value="all">{t('trainings.availabilityAll')}</option>
-            <option value="available">
-              {t('trainings.availabilityAvailable')}
-            </option>
-          </select>
-        </label>
-
-        {hasFilters && (
-          <button type="button" className="btn btn-ghost" onClick={clearFilters}>
-            {t('home.clearFilters')}
-          </button>
-        )}
       </div>
-
-      {resultCount !== null && (
-        <p className="muted result-count">
-          {t('trainings.resultCount', { count: resultCount })}
-        </p>
-      )}
-
-      <TrainingBrowser
-        query={{}}
-        heading={t('trainings.heading')}
-        filterPredicate={predicate}
-      />
     </div>
   )
 }
