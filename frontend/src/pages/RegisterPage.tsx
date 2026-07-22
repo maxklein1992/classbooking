@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '../auth/AuthContext'
 import { getErrorMessage } from '../api/client'
@@ -9,11 +9,16 @@ export default function RegisterPage() {
   const { t } = useTranslation()
   const { register } = useAuth()
   const navigate = useNavigate()
+  const [params] = useSearchParams()
 
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [role, setRole] = useState<Role>('USER')
+  // Vooraf "Trainer" selecteren bij doorklik vanuit de trainer-CTA
+  // (/register?role=trainer); anders blijft "USER" de standaard.
+  const [role, setRole] = useState<Role>(
+    params.get('role') === 'trainer' ? 'TRAINER' : 'USER',
+  )
   const [error, setError] = useState<string | null>(null)
   const [submitting, setSubmitting] = useState(false)
 
