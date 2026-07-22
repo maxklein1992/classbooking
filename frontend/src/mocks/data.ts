@@ -8,6 +8,7 @@ import type {
   LoginPayload,
   RegisterPayload,
   Review,
+  Role,
   Sport,
   TrainerRef,
   Training,
@@ -320,6 +321,16 @@ function confirmedCount(trainingId: string): number {
   ).length
 }
 
+/**
+ * Rol afleiden van het e-mailadres in mock-modus, passend bij de backend-seed:
+ * trainer@demo.com (of elk adres waarvan het deel vóór de @ met "trainer"
+ * begint) is TRAINER; al het overige is USER.
+ */
+function roleForEmail(email: string): Role {
+  const local = email.trim().toLowerCase().split('@')[0]
+  return local.startsWith('trainer') ? 'TRAINER' : 'USER'
+}
+
 /** Training met beschikbare plaatsen bijgewerkt op basis van mock-boekingen. */
 function withSpots(t: Training): Training {
   const mine = confirmedCount(t.id)
@@ -421,7 +432,9 @@ export const mock = {
       id: 'demo-user',
       email: payload.email,
       name: payload.email.split('@')[0] || 'Demo',
-      role: 'USER',
+      // Leid de rol af van het account, passend bij de backend-seed:
+      // trainer@demo.com (of een e-mail die met "trainer" begint) is TRAINER.
+      role: roleForEmail(payload.email),
       createdAt: new Date().toISOString(),
     }
     localStorage.setItem(USER_KEY, JSON.stringify(user))
