@@ -46,6 +46,11 @@ export default function HomePage() {
     navigate(q ? `/trainingen?q=${encodeURIComponent(q)}` : '/trainingen')
   }
 
+  const steps = t('home.howItWorks.steps', { returnObjects: true }) as Array<{
+    title: string
+    body: string
+  }>
+
   const faqItems = t('home.faq.items', { returnObjects: true }) as Array<{
     q: string
     a: string
@@ -96,6 +101,22 @@ export default function HomePage() {
           <h2>{t('home.whatTitle')}</h2>
           <p>{t('home.whatBody')}</p>
         </div>
+      </section>
+
+      <section className="how-it-works" aria-label={t('home.howItWorks.title')}>
+        <h2>{t('home.howItWorks.title')}</h2>
+        <ol className="steps">
+          {Array.isArray(steps) &&
+            steps.map((step, i) => (
+              <li key={i} className="step">
+                <span className="step-number" aria-hidden="true">
+                  {i + 1}
+                </span>
+                <h3 className="step-title">{step.title}</h3>
+                <p className="step-body">{step.body}</p>
+              </li>
+            ))}
+        </ol>
       </section>
 
       <section className="faq" aria-label={t('home.faq.title')}>

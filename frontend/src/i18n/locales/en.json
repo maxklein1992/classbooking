@@ -52,6 +52,27 @@
       "body": "Join us and fill your classes with athletes from your area.",
       "button": "Become a trainer"
     },
+    "howItWorks": {
+      "title": "How does it work?",
+      "steps": [
+        {
+          "title": "Find a training",
+          "body": "Find the training that suits you through search and filters."
+        },
+        {
+          "title": "Pick a moment",
+          "body": "Select a date and time that works for you."
+        },
+        {
+          "title": "Book & pay",
+          "body": "Complete your booking and receive a confirmation."
+        },
+        {
+          "title": "Show up & train",
+          "body": "Turn up at the agreed time and enjoy your training."
+        }
+      ]
+    },
     "faq": {
       "title": "Frequently asked questions",
       "items": [

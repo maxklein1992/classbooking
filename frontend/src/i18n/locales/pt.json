@@ -52,6 +52,27 @@
       "body": "Junta-te a nós e enche as tuas aulas com praticantes da tua zona.",
       "button": "Torna-te treinador"
     },
+    "howItWorks": {
+      "title": "Como funciona?",
+      "steps": [
+        {
+          "title": "Procura um treino",
+          "body": "Encontra o treino ideal para ti através da pesquisa e dos filtros."
+        },
+        {
+          "title": "Escolhe um horário",
+          "body": "Seleciona a data e a hora que te derem jeito."
+        },
+        {
+          "title": "Reserva e paga",
+          "body": "Conclui a tua reserva e recebe uma confirmação."
+        },
+        {
+          "title": "Aparece e treina",
+          "body": "Comparece à hora combinada e aproveita o teu treino."
+        }
+      ]
+    },
     "faq": {
       "title": "Perguntas frequentes",
       "items": [

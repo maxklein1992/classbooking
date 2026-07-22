@@ -52,6 +52,27 @@
       "body": "Sluit je bij ons aan en vul je lessen met sporters uit de buurt.",
       "button": "Word trainer"
     },
+    "howItWorks": {
+      "title": "Hoe werkt het?",
+      "steps": [
+        {
+          "title": "Zoek een training",
+          "body": "Vind de training die bij je past via zoeken en filters."
+        },
+        {
+          "title": "Kies een moment",
+          "body": "Selecteer een datum en tijd die jou uitkomt."
+        },
+        {
+          "title": "Boek & betaal",
+          "body": "Rond je boeking af en ontvang een bevestiging."
+        },
+        {
+          "title": "Kom langs & train",
+          "body": "Verschijn op de afgesproken tijd en geniet van je training."
+        }
+      ]
+    },
     "faq": {
       "title": "Veelgestelde vragen",
       "items": [
