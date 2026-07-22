@@ -7,6 +7,12 @@
     "back": "← Voltar ao resumo",
     "footer": "Classo — reserve treinos desportivos"
   },
+  "footer": {
+    "tagline": "Descobre e reserva aulas de desporto perto de ti.",
+    "linksTitle": "Navegação",
+    "contactTitle": "Contacto",
+    "copyright": "© {{year}} Classo. Todos os direitos reservados."
+  },
   "nav": {
     "home": "Início",
     "trainings": "Treinos",
