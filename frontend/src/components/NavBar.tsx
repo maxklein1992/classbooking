@@ -37,9 +37,11 @@ export default function NavBar() {
             {t('nav.home')}
           </NavLink>
 
-          <NavLink to="/trainingen" className={linkClass}>
-            {t('nav.trainings')}
-          </NavLink>
+          {!isTrainer && (
+            <NavLink to="/trainingen" className={linkClass}>
+              {t('nav.trainings')}
+            </NavLink>
+          )}
 
           <NavLink to="/blog" className={linkClass}>
             {t('nav.blog')}
@@ -53,7 +55,7 @@ export default function NavBar() {
             {t('nav.contact')}
           </NavLink>
 
-          {isAuthenticated && (
+          {isAuthenticated && !isTrainer && (
             <NavLink to="/mijn-boekingen" className={linkClass}>
               {t('nav.myBookings')}
             </NavLink>
