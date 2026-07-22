@@ -11,7 +11,6 @@ import MyBookingsPage from './pages/MyBookingsPage'
 import TrainerDashboardPage from './pages/TrainerDashboardPage'
 import AboutPage from './pages/AboutPage'
 import ContactPage from './pages/ContactPage'
-import SearchResultsPage from './pages/SearchResultsPage'
 import BlogPage from './pages/BlogPage'
 import BlogPostPage from './pages/BlogPostPage'
 
@@ -24,7 +23,6 @@ export default function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/trainingen" element={<TrainingsPage />} />
-          <Route path="/zoeken" element={<SearchResultsPage />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/blog/:slug" element={<BlogPostPage />} />
           <Route path="/over-ons" element={<AboutPage />} />

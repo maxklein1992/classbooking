@@ -1,5 +1,6 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
+import { useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { getTrainings } from '../api/trainings'
 import type { Sport, Training } from '../api/types'
@@ -10,9 +11,18 @@ type Availability = 'all' | 'available'
 
 export default function TrainingsPage() {
   const { t } = useTranslation()
-  const [search, setSearch] = useState('')
+  // Zoekterm kan uit de URL komen (bijv. na zoeken op de homepagina:
+  // /trainingen?q=...). De zoekbalk wordt daarmee voorgevuld.
+  const [params] = useSearchParams()
+  const queryParam = params.get('q')?.trim() ?? ''
+  const [search, setSearch] = useState(queryParam)
   const [sport, setSport] = useState<Sport | ''>('')
   const [availability, setAvailability] = useState<Availability>('all')
+
+  // Volg wijzigingen van de URL-zoekterm (bijv. opnieuw zoeken vanaf de home).
+  useEffect(() => {
+    setSearch(queryParam)
+  }, [queryParam])
 
   // Combined filter + search, applied client-side so both work together and
   // update instantly. The same query cache entry as TrainingBrowser is reused.
