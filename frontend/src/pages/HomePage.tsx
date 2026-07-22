@@ -101,7 +101,10 @@ export default function HomePage() {
               <strong>{t('home.trainerCta.title')}</strong>
               <span>{t('home.trainerCta.body')}</span>
             </div>
-            <Link to="/register" className="btn btn-ghost hero-cta-btn">
+            <Link
+              to="/register?role=trainer"
+              className="btn btn-ghost hero-cta-btn"
+            >
               {t('home.trainerCta.button')}
             </Link>
           </div>
