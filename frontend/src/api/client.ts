@@ -81,3 +81,13 @@ function normalizeMessage(message?: string | string[]): string | undefined {
   if (!message) return undefined
   return Array.isArray(message) ? message.join(' ') : message
 }
+
+// Raw backend validation message for a 400 response (e.g. class-validator
+// output), for callers that want to show more specific feedback than the
+// generic translated text from getErrorMessage.
+export function getValidationDetail(error: unknown): string | undefined {
+  if (!axios.isAxiosError(error)) return undefined
+  const err = error as AxiosError<ApiError>
+  if (err.response?.status !== 400) return undefined
+  return normalizeMessage(err.response?.data?.message)
+}
