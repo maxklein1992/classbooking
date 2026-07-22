@@ -1268,7 +1268,6 @@ textarea:focus {
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  flex-wrap: wrap;
   max-width: 520px;
   margin-top: 1rem;
   padding: 0.85rem 1.1rem;
@@ -1282,6 +1281,7 @@ textarea:focus {
   display: flex;
   flex-direction: column;
   gap: 0.1rem;
+  min-width: 0; /* laat de tekst krimpen zodat de knop niet wrapt */
 }
 .hero-cta-text strong {
   font-size: 0.98rem;
