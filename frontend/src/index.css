@@ -1212,32 +1212,45 @@ textarea:focus {
   }
 }
 
-/* Trainer call-to-action box (onder de zoekbalk op de homepagina) */
-.trainer-cta {
+/* Trainer call-to-action binnen de hero, direct onder de zoekbalk. Deelt
+   dezelfde hero-achtergrond; een lichte translucente laag houdt de tekst
+   leesbaar op de foto. */
+.hero-cta {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1.25rem;
+  gap: 1rem;
   flex-wrap: wrap;
-  background: var(--accent-soft);
-  border: 1px solid var(--accent-soft);
-  border-radius: var(--radius);
-  padding: 1.25rem 1.5rem;
-  margin: 1.5rem 0 0.5rem;
+  max-width: 520px;
+  margin-top: 1rem;
+  padding: 0.85rem 1.1rem;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(2px);
+  color: #fff;
 }
-.trainer-cta-text h2 {
-  margin: 0 0 0.25rem;
-  font-size: 1.2rem;
+.hero-cta-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
 }
-.trainer-cta-text p {
-  margin: 0;
-  color: var(--text);
+.hero-cta-text strong {
+  font-size: 0.98rem;
 }
-.trainer-cta .btn {
+.hero-cta-text span {
+  font-size: 0.85rem;
+  opacity: 0.9;
+}
+.hero-cta-btn {
   flex-shrink: 0;
 }
 @media (max-width: 560px) {
-  .trainer-cta .btn {
+  .hero-cta {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .hero-cta-btn {
     width: 100%;
   }
 }

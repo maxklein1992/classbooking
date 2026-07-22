@@ -72,17 +72,19 @@ export default function HomePage() {
               {t('home.searchButton')}
             </button>
           </form>
-        </div>
-      </section>
 
-      <section className="trainer-cta" aria-label={t('home.trainerCta.title')}>
-        <div className="trainer-cta-text">
-          <h2>{t('home.trainerCta.title')}</h2>
-          <p>{t('home.trainerCta.body')}</p>
+          {/* Trainer-CTA binnen dezelfde hero-achtergrond, direct onder de
+              zoekbalk, zodat zoekbalk en CTA één geheel vormen. */}
+          <div className="hero-cta" aria-label={t('home.trainerCta.title')}>
+            <div className="hero-cta-text">
+              <strong>{t('home.trainerCta.title')}</strong>
+              <span>{t('home.trainerCta.body')}</span>
+            </div>
+            <Link to="/register" className="btn btn-ghost hero-cta-btn">
+              {t('home.trainerCta.button')}
+            </Link>
+          </div>
         </div>
-        <Link to="/register" className="btn btn-primary btn-lg">
-          {t('home.trainerCta.button')}
-        </Link>
       </section>
 
       <section className="what-is">
