@@ -44,6 +44,7 @@
   },
   "trainings": {
     "heading": "Todos los entrenamientos",
+    "filtersTitle": "Filtros",
     "searchLabel": "Buscar entrenamientos",
     "searchPlaceholder": "Busca por título, entrenador o ubicación…",
     "availability": "Disponibilidad",

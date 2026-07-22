@@ -619,6 +619,49 @@ textarea:focus {
   margin: 0 0 1rem;
 }
 
+/* ---------- Trainings sidebar-layout ---------- */
+.trainings-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+/* Filters in een witte card links, sticky zodat ze in beeld blijven. */
+.filters-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  position: sticky;
+  top: 5rem;
+}
+.filters-title {
+  margin: 0;
+  font-size: 1.1rem;
+}
+.filters-card .filter-search {
+  max-width: none;
+  margin-bottom: 0;
+}
+.filters-card .filter-field {
+  width: 100%;
+}
+.filters-card .filter-field select {
+  min-width: 0;
+  width: 100%;
+}
+.trainings-results {
+  min-width: 0;
+}
+/* Op smallere schermen: filters boven de resultaten i.p.v. ernaast. */
+@media (max-width: 768px) {
+  .trainings-layout {
+    grid-template-columns: 1fr;
+  }
+  .filters-card {
+    position: static;
+  }
+}
+
 /* ---------- Alerts ---------- */
 .alert {
   background: var(--accent-soft);
