@@ -154,6 +154,7 @@
   "contact": {
     "title": "Contact",
     "subtitle": "Vragen, feedback of een idee voor samenwerking? Stuur ons een bericht.",
+    "emailLabel": "Mail ons direct op",
     "success": "Bedankt voor je bericht! We nemen snel contact met je op.",
     "fieldName": "Naam",
     "fieldEmail": "E-mailadres",

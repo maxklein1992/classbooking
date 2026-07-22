@@ -9,6 +9,9 @@ interface FormState {
 
 const emptyForm: FormState = { name: '', email: '', message: '' }
 
+// Publiek contact-e-mailadres (zelfde als in de footer).
+const CONTACT_EMAIL = 'hello@classo.pt'
+
 export default function ContactPage() {
   const { t } = useTranslation()
   const [form, setForm] = useState<FormState>(emptyForm)
@@ -36,6 +39,16 @@ export default function ContactPage() {
       </div>
 
       <section className="card contact-card">
+        <p className="contact-email">
+          <span className="contact-email-icon" aria-hidden="true">
+            ✉️
+          </span>
+          <span>
+            {t('contact.emailLabel')}{' '}
+            <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+          </span>
+        </p>
+
         {sent && (
           <div className="alert" role="status">
             {t('contact.success')}

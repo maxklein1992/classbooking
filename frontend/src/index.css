@@ -1447,6 +1447,16 @@ textarea:focus {
 .contact-card {
   max-width: 40rem;
 }
+.contact-email {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 1.1rem;
+  font-weight: 600;
+}
+.contact-email-icon {
+  font-size: 1.1rem;
+}
 
 /* ---------- Blog ---------- */
 .blog-card {

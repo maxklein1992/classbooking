@@ -154,6 +154,7 @@
   "contact": {
     "title": "Contact",
     "subtitle": "Questions, feedback or a partnership idea? Send us a message.",
+    "emailLabel": "Email us directly at",
     "success": "Thanks for your message! We'll get back to you soon.",
     "fieldName": "Name",
     "fieldEmail": "Email address",
