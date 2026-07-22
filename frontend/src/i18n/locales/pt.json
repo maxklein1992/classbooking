@@ -41,6 +41,11 @@
     "loadError": "Não foi possível carregar os treinos. O servidor está acessível?",
     "emptyTitle": "Nenhum treino encontrado",
     "emptyBody": "Ainda não há treinos futuros para este filtro.",
+    "trainerCta": {
+      "title": "És treinador e queres dar aulas?",
+      "body": "Junta-te a nós e enche as tuas aulas com praticantes da tua zona.",
+      "button": "Torna-te treinador"
+    },
     "howItWorks": {
       "title": "Como funciona?",
       "steps": [
