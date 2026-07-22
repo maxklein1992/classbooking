@@ -46,6 +46,11 @@ export default function HomePage() {
     navigate(q ? `/trainingen?q=${encodeURIComponent(q)}` : '/trainingen')
   }
 
+  const faqItems = t('home.faq.items', { returnObjects: true }) as Array<{
+    q: string
+    a: string
+  }>
+
   return (
     <div className="page">
       <section className="hero">
@@ -90,6 +95,19 @@ export default function HomePage() {
         <div className="what-is-content">
           <h2>{t('home.whatTitle')}</h2>
           <p>{t('home.whatBody')}</p>
+        </div>
+      </section>
+
+      <section className="faq" aria-label={t('home.faq.title')}>
+        <h2>{t('home.faq.title')}</h2>
+        <div className="faq-list">
+          {Array.isArray(faqItems) &&
+            faqItems.map((item, i) => (
+              <details key={i} className="faq-item">
+                <summary className="faq-question">{item.q}</summary>
+                <p className="faq-answer">{item.a}</p>
+              </details>
+            ))}
         </div>
       </section>
 

@@ -51,6 +51,31 @@
       "title": "Are you a trainer who wants to teach classes?",
       "body": "Join us and fill your classes with athletes from your area.",
       "button": "Become a trainer"
+    },
+    "faq": {
+      "title": "Frequently asked questions",
+      "items": [
+        {
+          "q": "How do I book a training?",
+          "a": "Find a training you like, open its detail page and click \"Book\". You need to be logged in to book."
+        },
+        {
+          "q": "Can I cancel or change a booking?",
+          "a": "Yes. Go to \"My bookings\" to cancel a booking. To change one, cancel the current booking and book the training you want again."
+        },
+        {
+          "q": "How do I pay for a training?",
+          "a": "The price is shown on each training. Payment is arranged with the trainer according to the stated terms."
+        },
+        {
+          "q": "What happens if a training is full?",
+          "a": "A full training can no longer be booked — you'll see a \"Full\" label. Keep an eye on the page, as a spot may open up after a cancellation."
+        },
+        {
+          "q": "Do I get a confirmation after booking?",
+          "a": "Yes, after a successful booking you'll see a confirmation right away and the training appears under \"My bookings\"."
+        }
+      ]
     }
   },
   "trainings": {

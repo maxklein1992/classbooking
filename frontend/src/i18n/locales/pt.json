@@ -51,6 +51,31 @@
       "title": "És treinador e queres dar aulas?",
       "body": "Junta-te a nós e enche as tuas aulas com praticantes da tua zona.",
       "button": "Torna-te treinador"
+    },
+    "faq": {
+      "title": "Perguntas frequentes",
+      "items": [
+        {
+          "q": "Como reservo um treino?",
+          "a": "Procura um treino que gostes, abre a página de detalhe e clica em \"Reservar\". Tens de ter sessão iniciada para reservar."
+        },
+        {
+          "q": "Posso cancelar ou alterar uma reserva?",
+          "a": "Sim. Vai a \"As minhas reservas\" para cancelar uma reserva. Para alterar, cancela a atual e reserva novamente o treino que pretendes."
+        },
+        {
+          "q": "Como pago um treino?",
+          "a": "O preço é indicado em cada treino. O pagamento é combinado com o treinador de acordo com as condições indicadas."
+        },
+        {
+          "q": "O que acontece se um treino estiver esgotado?",
+          "a": "Um treino esgotado já não pode ser reservado; verás a etiqueta \"Esgotado\". Fica atento à página, pois pode surgir uma vaga após um cancelamento."
+        },
+        {
+          "q": "Recebo uma confirmação depois de reservar?",
+          "a": "Sim, após uma reserva bem-sucedida vês logo uma confirmação e o treino aparece em \"As minhas reservas\"."
+        }
+      ]
     }
   },
   "trainings": {
