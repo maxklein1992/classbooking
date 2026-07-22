@@ -40,7 +40,32 @@
     "loadingTrainings": "Trainingen laden…",
     "loadError": "Kon de trainingen niet laden. Is de server bereikbaar?",
     "emptyTitle": "Geen trainingen gevonden",
-    "emptyBody": "Er zijn nog geen aankomende trainingen voor dit filter."
+    "emptyBody": "Er zijn nog geen aankomende trainingen voor dit filter.",
+    "faq": {
+      "title": "Veelgestelde vragen",
+      "items": [
+        {
+          "q": "Hoe boek ik een training?",
+          "a": "Zoek een training die je aanspreekt, open de detailpagina en klik op \"Boeken\". Je moet ingelogd zijn om te kunnen boeken."
+        },
+        {
+          "q": "Kan ik een boeking annuleren of wijzigen?",
+          "a": "Ja. Ga naar \"Mijn boekingen\" om een boeking te annuleren. Voor een wijziging annuleer je de huidige boeking en boek je de gewenste training opnieuw."
+        },
+        {
+          "q": "Hoe betaal ik voor een training?",
+          "a": "De prijs staat bij elke training vermeld. De betaling regel je met de trainer volgens de aangegeven voorwaarden."
+        },
+        {
+          "q": "Wat gebeurt er als een training vol zit?",
+          "a": "Een volle training kun je niet meer boeken; dat zie je aan het label \"Vol\". Houd de pagina in de gaten, want er kan een plek vrijkomen bij een annulering."
+        },
+        {
+          "q": "Krijg ik een bevestiging na het boeken?",
+          "a": "Ja, na een geslaagde boeking zie je direct een bevestiging in de app en verschijnt de training bij \"Mijn boekingen\"."
+        }
+      ]
+    }
   },
   "trainings": {
     "heading": "Alle trainingen",

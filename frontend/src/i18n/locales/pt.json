@@ -40,7 +40,32 @@
     "loadingTrainings": "A carregar treinos…",
     "loadError": "Não foi possível carregar os treinos. O servidor está acessível?",
     "emptyTitle": "Nenhum treino encontrado",
-    "emptyBody": "Ainda não há treinos futuros para este filtro."
+    "emptyBody": "Ainda não há treinos futuros para este filtro.",
+    "faq": {
+      "title": "Perguntas frequentes",
+      "items": [
+        {
+          "q": "Como reservo um treino?",
+          "a": "Procura um treino que gostes, abre a página de detalhe e clica em \"Reservar\". Tens de ter sessão iniciada para reservar."
+        },
+        {
+          "q": "Posso cancelar ou alterar uma reserva?",
+          "a": "Sim. Vai a \"As minhas reservas\" para cancelar uma reserva. Para alterar, cancela a atual e reserva novamente o treino que pretendes."
+        },
+        {
+          "q": "Como pago um treino?",
+          "a": "O preço é indicado em cada treino. O pagamento é combinado com o treinador de acordo com as condições indicadas."
+        },
+        {
+          "q": "O que acontece se um treino estiver esgotado?",
+          "a": "Um treino esgotado já não pode ser reservado; verás a etiqueta \"Esgotado\". Fica atento à página, pois pode surgir uma vaga após um cancelamento."
+        },
+        {
+          "q": "Recebo uma confirmação depois de reservar?",
+          "a": "Sim, após uma reserva bem-sucedida vês logo uma confirmação e o treino aparece em \"As minhas reservas\"."
+        }
+      ]
+    }
   },
   "trainings": {
     "heading": "Todos os treinos",
