@@ -64,22 +64,23 @@ export default function TrainingsPage() {
 
   return (
     <div className="page trainings-page">
+      {/* Zoekbalk over de volle breedte, boven het resultatengedeelte. */}
+      <div className="search-refine trainings-search" role="search">
+        <span className="hero-search-icon" aria-hidden="true">
+          🔍
+        </span>
+        <input
+          type="search"
+          value={search}
+          aria-label={t('trainings.searchLabel')}
+          placeholder={t('trainings.searchPlaceholder')}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+      </div>
+
       <div className="trainings-layout">
         <aside className="filters-card card" aria-label={t('trainings.filtersTitle')}>
           <h2 className="filters-title">{t('trainings.filtersTitle')}</h2>
-
-          <div className="search-refine filter-search" role="search">
-            <span className="hero-search-icon" aria-hidden="true">
-              🔍
-            </span>
-            <input
-              type="search"
-              value={search}
-              aria-label={t('trainings.searchLabel')}
-              placeholder={t('trainings.searchPlaceholder')}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-          </div>
 
           <label className="filter-field">
             <span>{t('home.sport')}</span>

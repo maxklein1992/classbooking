@@ -635,6 +635,11 @@ textarea:focus {
 }
 
 /* ---------- Trainings sidebar-layout ---------- */
+/* Zoekbalk over de volle breedte, boven het resultatengedeelte. */
+.trainings-search {
+  max-width: none;
+  margin-bottom: 1.25rem;
+}
 .trainings-layout {
   display: grid;
   grid-template-columns: 280px 1fr;
