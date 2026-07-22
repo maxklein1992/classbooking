@@ -1,5 +1,5 @@
 import { useEffect, useState, type FormEvent } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import TrainingBrowser from '../components/TrainingBrowser'
 
@@ -68,6 +68,16 @@ export default function HomePage() {
             </button>
           </form>
         </div>
+      </section>
+
+      <section className="trainer-cta" aria-label={t('home.trainerCta.title')}>
+        <div className="trainer-cta-text">
+          <h2>{t('home.trainerCta.title')}</h2>
+          <p>{t('home.trainerCta.body')}</p>
+        </div>
+        <Link to="/register" className="btn btn-primary btn-lg">
+          {t('home.trainerCta.button')}
+        </Link>
       </section>
 
       <section className="what-is">

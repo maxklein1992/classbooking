@@ -40,7 +40,12 @@
     "loadingTrainings": "Loading trainings…",
     "loadError": "Could not load trainings. Is the server reachable?",
     "emptyTitle": "No trainings found",
-    "emptyBody": "There are no upcoming trainings for this filter yet."
+    "emptyBody": "There are no upcoming trainings for this filter yet.",
+    "trainerCta": {
+      "title": "Are you a trainer who wants to teach classes?",
+      "body": "Join us and fill your classes with athletes from your area.",
+      "button": "Become a trainer"
+    }
   },
   "trainings": {
     "heading": "All trainings",
