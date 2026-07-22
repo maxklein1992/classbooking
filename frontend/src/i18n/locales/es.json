@@ -93,6 +93,7 @@
     "spotsFree": "{{spots}} de {{capacity}} plazas disponibles",
     "freeShort": "{{spots}} libres",
     "full": "Completo",
+    "popular": "Popular",
     "booked": "Reservado",
     "expired": "Caducado",
     "expiredLong": "Este entrenamiento ya ha terminado",

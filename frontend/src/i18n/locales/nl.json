@@ -93,6 +93,7 @@
     "spotsFree": "{{spots}} van {{capacity}} plekken beschikbaar",
     "freeShort": "{{spots}} vrij",
     "full": "Vol",
+    "popular": "Populair",
     "booked": "Geboekt",
     "expired": "Verlopen",
     "expiredLong": "Deze training is al afgelopen",

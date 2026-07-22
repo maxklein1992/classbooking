@@ -93,6 +93,7 @@
     "spotsFree": "{{spots}} of {{capacity}} spots available",
     "freeShort": "{{spots}} free",
     "full": "Full",
+    "popular": "Popular",
     "booked": "Booked",
     "expired": "Expired",
     "expiredLong": "This training has already ended",
