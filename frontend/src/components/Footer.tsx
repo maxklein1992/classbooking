@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { useAuth } from '../auth/AuthContext'
 
 // Contactgegevens van het (demo) platform. Als losse constante zodat ze op
 // één plek staan; de labels eromheen komen uit i18n.
@@ -12,7 +13,31 @@ const CONTACT = {
 
 export default function Footer() {
   const { t } = useTranslation()
+  const { isAuthenticated, isTrainer } = useAuth()
   const year = new Date().getFullYear()
+
+  // Sitelinks consistent met de navigatie-regels (#47/#54):
+  // - trainer: alleen trainer-relevante links;
+  // - gewone gebruiker: Home + Trainingen + Mijn boekingen;
+  // - niet ingelogd: alle publieke pagina's.
+  const links: Array<{ to: string; label: string }> = isTrainer
+    ? [
+        { to: '/trainer', label: t('nav.trainerDashboard') },
+        { to: '/profiel', label: t('profile.title') },
+      ]
+    : isAuthenticated
+      ? [
+          { to: '/', label: t('nav.home') },
+          { to: '/trainingen', label: t('nav.trainings') },
+          { to: '/mijn-boekingen', label: t('nav.myBookings') },
+        ]
+      : [
+          { to: '/', label: t('nav.home') },
+          { to: '/trainingen', label: t('nav.trainings') },
+          { to: '/blog', label: t('nav.blog') },
+          { to: '/over-ons', label: t('nav.about') },
+          { to: '/contact', label: t('nav.contact') },
+        ]
 
   return (
     <footer className="site-footer">
@@ -25,21 +50,11 @@ export default function Footer() {
         <nav className="footer-col" aria-label={t('footer.linksTitle')}>
           <h3 className="footer-title">{t('footer.linksTitle')}</h3>
           <ul>
-            <li>
-              <Link to="/">{t('nav.home')}</Link>
-            </li>
-            <li>
-              <Link to="/trainingen">{t('nav.trainings')}</Link>
-            </li>
-            <li>
-              <Link to="/blog">{t('nav.blog')}</Link>
-            </li>
-            <li>
-              <Link to="/over-ons">{t('nav.about')}</Link>
-            </li>
-            <li>
-              <Link to="/contact">{t('nav.contact')}</Link>
-            </li>
+            {links.map((l) => (
+              <li key={l.to}>
+                <Link to={l.to}>{l.label}</Link>
+              </li>
+            ))}
           </ul>
         </nav>
 
