@@ -7,6 +7,12 @@
     "back": "← Back to overview",
     "footer": "Classo — book sports trainings"
   },
+  "footer": {
+    "tagline": "Discover and book sports classes near you.",
+    "linksTitle": "Navigation",
+    "contactTitle": "Contact",
+    "copyright": "© {{year}} Classo. All rights reserved."
+  },
   "nav": {
     "home": "Home",
     "trainings": "Trainings",

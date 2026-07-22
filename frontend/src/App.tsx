@@ -1,6 +1,6 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
 import NavBar from './components/NavBar'
+import Footer from './components/Footer'
 import ProtectedRoute from './components/ProtectedRoute'
 import HomePage from './pages/HomePage'
 import TrainingsPage from './pages/TrainingsPage'
@@ -15,7 +15,6 @@ import BlogPage from './pages/BlogPage'
 import BlogPostPage from './pages/BlogPostPage'
 
 export default function App() {
-  const { t } = useTranslation()
   return (
     <div className="app">
       <NavBar />
@@ -49,9 +48,7 @@ export default function App() {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
-      <footer className="app-footer">
-        <span>{t('common.footer')}</span>
-      </footer>
+      <Footer />
     </div>
   )
 }

@@ -7,6 +7,12 @@
     "back": "← Terug naar overzicht",
     "footer": "Classo — boek sporttrainingen"
   },
+  "footer": {
+    "tagline": "Ontdek en boek sportlessen bij jou in de buurt.",
+    "linksTitle": "Navigatie",
+    "contactTitle": "Contact",
+    "copyright": "© {{year}} Classo. Alle rechten voorbehouden."
+  },
   "nav": {
     "home": "Home",
     "trainings": "Trainingen",
