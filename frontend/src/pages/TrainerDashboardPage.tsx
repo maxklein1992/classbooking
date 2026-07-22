@@ -18,6 +18,7 @@ import {
   toDatetimeLocalValue,
 } from '../lib/dates'
 import SportBadge from '../components/SportBadge'
+import { useToast } from '../components/ToastProvider'
 
 interface FormState {
   title: string
@@ -52,10 +53,9 @@ const emptyForm: FormState = {
 export default function TrainerDashboardPage() {
   const { t } = useTranslation()
   const queryClient = useQueryClient()
+  const { showToast } = useToast()
   const [form, setForm] = useState<FormState>(emptyForm)
   const [editingId, setEditingId] = useState<string | null>(null)
-  const [feedback, setFeedback] = useState<string | null>(null)
-  const [error, setError] = useState<string | null>(null)
 
   const {
     data: trainings,
@@ -72,20 +72,20 @@ export default function TrainerDashboardPage() {
         ? updateTraining(editingId, payload)
         : createTraining(payload),
     onSuccess: () => {
-      setFeedback(editingId ? t('trainer.updated') : t('trainer.created'))
+      showToast(editingId ? t('trainer.updated') : t('trainer.created'))
       resetForm()
       invalidate()
     },
-    onError: (err) => setError(getErrorMessage(err)),
+    onError: (err) => showToast(getErrorMessage(err), 'error'),
   })
 
   const deleteMutation = useMutation({
     mutationFn: (id: string) => deleteTraining(id),
     onSuccess: () => {
-      setFeedback(t('trainer.deleted'))
+      showToast(t('trainer.deleted'))
       invalidate()
     },
-    onError: (err) => setError(getErrorMessage(err)),
+    onError: (err) => showToast(getErrorMessage(err), 'error'),
   })
 
   function invalidate() {
@@ -99,7 +99,6 @@ export default function TrainerDashboardPage() {
 
   function startEdit(training: Training) {
     setEditingId(training.id)
-    setError(null)
     setForm({
       title: training.title,
       description: training.description,
@@ -119,27 +118,26 @@ export default function TrainerDashboardPage() {
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault()
-    setError(null)
 
     const start = new Date(form.startTime)
     const end = new Date(form.endTime)
     if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime())) {
-      setError(t('trainer.invalidTimes'))
+      showToast(t('trainer.invalidTimes'), 'error')
       return
     }
     if (end <= start) {
-      setError(t('trainer.endAfterStart'))
+      showToast(t('trainer.endAfterStart'), 'error')
       return
     }
     // Alleen bij het aanmaken (niet bewerken) moet de starttijd in de
     // toekomst liggen, net als de backend-check in trainings.service.ts.
     if (!editingId && start <= new Date()) {
-      setError(t('trainer.startInFuture'))
+      showToast(t('trainer.startInFuture'), 'error')
       return
     }
     const capacity = Number(form.capacity)
     if (!Number.isFinite(capacity) || capacity < 1) {
-      setError(t('trainer.capacityMin'))
+      showToast(t('trainer.capacityMin'), 'error')
       return
     }
 
@@ -170,21 +168,11 @@ export default function TrainerDashboardPage() {
         <h1>{t('trainer.title')}</h1>
       </div>
 
-      {feedback && (
-        <div className="alert" role="status">
-          {feedback}
-          <button className="alert-close" onClick={() => setFeedback(null)}>
-            ×
-          </button>
-        </div>
-      )}
-
       <div className="dashboard-layout">
         <section className="card form-card">
           <h2>
             {editingId ? t('trainer.editTraining') : t('trainer.newTraining')}
           </h2>
-          {error && <div className="alert alert-error">{error}</div>}
           <form onSubmit={handleSubmit} className="form">
             <label className="field">
               <span>{t('trainer.fieldTitle')}</span>
