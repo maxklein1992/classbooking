@@ -1,4 +1,5 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
+import { useAuth } from './auth/AuthContext'
 import NavBar from './components/NavBar'
 import Footer from './components/Footer'
 import ProtectedRoute from './components/ProtectedRoute'
@@ -15,13 +16,22 @@ import BlogPage from './pages/BlogPage'
 import BlogPostPage from './pages/BlogPostPage'
 import ProfilePage from './pages/ProfilePage'
 
+// Trainers worden op "/" doorgestuurd naar hun dashboard; anderen zien de
+// homepagina. Tijdens het laden van de auth-status niets tonen om
+// redirect-flikkering te voorkomen.
+function HomeRoute() {
+  const { isTrainer, loading } = useAuth()
+  if (loading) return null
+  return isTrainer ? <Navigate to="/trainer" replace /> : <HomePage />
+}
+
 export default function App() {
   return (
     <div className="app">
       <NavBar />
       <main className="app-main">
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<HomeRoute />} />
           <Route path="/trainingen" element={<TrainingsPage />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/blog/:slug" element={<BlogPostPage />} />
