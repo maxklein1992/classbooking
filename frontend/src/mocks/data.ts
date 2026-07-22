@@ -373,4 +373,18 @@ export const mock = {
     await delay(100)
     return currentUser()
   },
+
+  async updateAvatar(avatarUrl: string): Promise<User> {
+    await delay(150)
+    const user = { ...currentUser(), avatarUrl }
+    localStorage.setItem(USER_KEY, JSON.stringify(user))
+    return user
+  },
+
+  async removeAvatar(): Promise<User> {
+    await delay(150)
+    const user = { ...currentUser(), avatarUrl: null }
+    localStorage.setItem(USER_KEY, JSON.stringify(user))
+    return user
+  },
 }

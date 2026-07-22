@@ -221,6 +221,11 @@ h3 {
   gap: 0.45rem;
   font-weight: 600;
   font-size: 0.9rem;
+  color: var(--text);
+}
+.nav-user:hover {
+  text-decoration: none;
+  color: var(--accent);
 }
 .role-chip {
   background: var(--accent-soft);
@@ -1066,6 +1071,34 @@ textarea:focus {
   color: var(--accent-dark);
   font-weight: 700;
   border-radius: 50%;
+}
+
+/* ---------- Profielpagina ---------- */
+.profile-card {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.profile-avatar {
+  flex-shrink: 0;
+}
+.profile-photo-actions {
+  flex: 1 1 260px;
+}
+.profile-photo-actions h2 {
+  margin: 0 0 0.25rem;
+  font-size: 1.15rem;
+}
+.profile-buttons {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-top: 0.9rem;
+}
+/* De upload-knop is een <label> met verborgen file-input. */
+.profile-buttons label.btn {
+  cursor: pointer;
 }
 
 /* ---------- Sterren ---------- */

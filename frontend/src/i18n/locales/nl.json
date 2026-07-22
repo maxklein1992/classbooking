@@ -159,6 +159,18 @@
     "fieldMessage": "Bericht",
     "submit": "Bericht versturen"
   },
+  "profile": {
+    "title": "Mijn profiel",
+    "subtitle": "Beheer je accountgegevens en profielfoto.",
+    "photoTitle": "Profielfoto",
+    "photoHint": "JPG, PNG of WebP, max. 1 MB.",
+    "upload": "Foto uploaden",
+    "remove": "Verwijderen",
+    "saved": "Je profielfoto is bijgewerkt.",
+    "removed": "Je profielfoto is verwijderd.",
+    "errorType": "Ongeldig bestandstype. Gebruik JPG, PNG of WebP.",
+    "errorSize": "De afbeelding is te groot (max. 1 MB)."
+  },
   "training": {
     "spotsFree": "{{spots}} van {{capacity}} plekken beschikbaar",
     "freeShort": "{{spots}} vrij",

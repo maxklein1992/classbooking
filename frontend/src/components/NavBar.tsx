@@ -2,6 +2,7 @@ import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '../auth/AuthContext'
 import LanguageSwitcher from './LanguageSwitcher'
+import Avatar from './Avatar'
 
 export default function NavBar() {
   const { isAuthenticated, isTrainer, user, logout } = useAuth()
@@ -69,12 +70,17 @@ export default function NavBar() {
           <LanguageSwitcher />
           {isAuthenticated ? (
             <>
-              <span className="nav-user">
-                {user?.name}
+              <Link to="/profiel" className="nav-user" title={t('profile.title')}>
+                <Avatar
+                  src={user?.avatarUrl ?? undefined}
+                  name={user?.name ?? '?'}
+                  size={32}
+                />
+                <span className="nav-user-name">{user?.name}</span>
                 {isTrainer && (
                   <span className="role-chip">{t('nav.trainerChip')}</span>
                 )}
-              </span>
+              </Link>
               <button className="btn btn-ghost" onClick={handleLogout}>
                 {t('nav.logout')}
               </button>

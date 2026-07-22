@@ -13,6 +13,7 @@ import AboutPage from './pages/AboutPage'
 import ContactPage from './pages/ContactPage'
 import BlogPage from './pages/BlogPage'
 import BlogPostPage from './pages/BlogPostPage'
+import ProfilePage from './pages/ProfilePage'
 
 export default function App() {
   return (
@@ -34,6 +35,14 @@ export default function App() {
             element={
               <ProtectedRoute>
                 <MyBookingsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profiel"
+            element={
+              <ProtectedRoute>
+                <ProfilePage />
               </ProtectedRoute>
             }
           />

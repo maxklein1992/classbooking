@@ -22,4 +22,11 @@ export class UsersService {
   }): Promise<User> {
     return this.prisma.user.create({ data });
   }
+
+  updateAvatar(id: string, avatarUrl: string | null): Promise<User> {
+    return this.prisma.user.update({
+      where: { id },
+      data: { avatarUrl },
+    });
+  }
 }
