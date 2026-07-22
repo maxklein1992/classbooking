@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import type { Training } from '../api/types'
 import { formatDateTime, formatPrice } from '../lib/dates'
+import { isPopular } from '../lib/popularity'
 import SportBadge from './SportBadge'
 import StarRating from './StarRating'
 import Avatar from './Avatar'
@@ -26,6 +27,7 @@ export default function TrainingCard({
   const navigate = useNavigate()
   const isFull = training.availableSpots <= 0
   const isPast = new Date(training.startTime).getTime() < Date.now()
+  const popular = isPopular(training)
 
   // Navigate to the detail page when the card is clicked, unless the click
   // originated from an interactive control (button or link) inside the card.
@@ -37,7 +39,14 @@ export default function TrainingCard({
   return (
     <article className="card training-card" onClick={handleCardClick}>
       <div className="card-head">
-        <SportBadge sport={training.sport} />
+        <div className="badge-row">
+          <SportBadge sport={training.sport} />
+          {popular && (
+            <span className="badge badge-popular">
+              <span aria-hidden="true">🔥</span> {t('training.popular')}
+            </span>
+          )}
+        </div>
         <span className="price">{formatPrice(training.price)}</span>
       </div>
 
