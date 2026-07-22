@@ -1153,6 +1153,62 @@ textarea:focus {
   }
 }
 
+/* "Hoe werkt het" stappen-sectie op de homepagina */
+.how-it-works {
+  margin: 1.5rem 0 2.25rem;
+}
+.how-it-works > h2 {
+  margin-bottom: 1.1rem;
+}
+.steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.1rem;
+  counter-reset: step;
+}
+.step {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  box-shadow: var(--shadow-sm);
+}
+.step-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 800;
+  font-size: 1.05rem;
+  margin-bottom: 0.75rem;
+}
+.step-title {
+  margin: 0 0 0.35rem;
+  font-size: 1.05rem;
+}
+.step-body {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+@media (max-width: 900px) {
+  .steps {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 520px) {
+  .steps {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* About & Contact pages */
 .about-card p {
   margin: 0 0 0.9rem;

@@ -40,7 +40,28 @@
     "loadingTrainings": "Cargando entrenamientos…",
     "loadError": "No se pudieron cargar los entrenamientos. ¿El servidor está accesible?",
     "emptyTitle": "No se encontraron entrenamientos",
-    "emptyBody": "Aún no hay entrenamientos próximos para este filtro."
+    "emptyBody": "Aún no hay entrenamientos próximos para este filtro.",
+    "howItWorks": {
+      "title": "¿Cómo funciona?",
+      "steps": [
+        {
+          "title": "Busca un entrenamiento",
+          "body": "Encuentra el entrenamiento que te conviene con la búsqueda y los filtros."
+        },
+        {
+          "title": "Elige un momento",
+          "body": "Selecciona la fecha y la hora que mejor te vengan."
+        },
+        {
+          "title": "Reserva y paga",
+          "body": "Completa tu reserva y recibe una confirmación."
+        },
+        {
+          "title": "Ven y entrena",
+          "body": "Preséntate a la hora acordada y disfruta de tu entrenamiento."
+        }
+      ]
+    }
   },
   "trainings": {
     "heading": "Todos los entrenamientos",

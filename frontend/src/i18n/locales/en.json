@@ -40,7 +40,28 @@
     "loadingTrainings": "Loading trainings…",
     "loadError": "Could not load trainings. Is the server reachable?",
     "emptyTitle": "No trainings found",
-    "emptyBody": "There are no upcoming trainings for this filter yet."
+    "emptyBody": "There are no upcoming trainings for this filter yet.",
+    "howItWorks": {
+      "title": "How does it work?",
+      "steps": [
+        {
+          "title": "Find a training",
+          "body": "Find the training that suits you through search and filters."
+        },
+        {
+          "title": "Pick a moment",
+          "body": "Select a date and time that works for you."
+        },
+        {
+          "title": "Book & pay",
+          "body": "Complete your booking and receive a confirmation."
+        },
+        {
+          "title": "Show up & train",
+          "body": "Turn up at the agreed time and enjoy your training."
+        }
+      ]
+    }
   },
   "trainings": {
     "heading": "All trainings",
