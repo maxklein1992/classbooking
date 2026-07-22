@@ -40,6 +40,10 @@ export default function NavBar() {
             {t('nav.trainings')}
           </NavLink>
 
+          <NavLink to="/blog" className={linkClass}>
+            {t('nav.blog')}
+          </NavLink>
+
           <NavLink to="/over-ons" className={linkClass}>
             {t('nav.about')}
           </NavLink>

@@ -10,6 +10,7 @@
   "nav": {
     "home": "Home",
     "trainings": "Trainingen",
+    "blog": "Blog",
     "about": "Over ons",
     "contact": "Contact",
     "myBookings": "Mijn boekingen",
@@ -55,6 +56,17 @@
     "prevWeek": "← Vorige week",
     "nextWeek": "Volgende week →",
     "thisWeek": "Deze week"
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Tips, inzichten en inspiratie om het meeste uit je trainingen te halen.",
+    "metaDescription": "Lees de Classo-blog: praktische tips en inspiratie over sporten, trainingen kiezen en gemotiveerd blijven.",
+    "readingTime": "{{minutes}} min leestijd",
+    "readMore": "Lees meer",
+    "byAuthor": "Door {{author}}",
+    "backToOverview": "← Terug naar de blog",
+    "notFound": "Dit blogartikel bestaat niet (meer).",
+    "notFoundTitle": "Artikel niet gevonden"
   },
   "about": {
     "title": "Over Classo",
