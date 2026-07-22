@@ -41,6 +41,11 @@
     "loadError": "No se pudieron cargar los entrenamientos. ¿El servidor está accesible?",
     "emptyTitle": "No se encontraron entrenamientos",
     "emptyBody": "Aún no hay entrenamientos próximos para este filtro.",
+    "trainerCta": {
+      "title": "¿Eres entrenador y quieres impartir clases?",
+      "body": "Únete a nosotros y llena tus clases con deportistas de tu zona.",
+      "button": "Hazte entrenador"
+    },
     "faq": {
       "title": "Preguntas frecuentes",
       "items": [
