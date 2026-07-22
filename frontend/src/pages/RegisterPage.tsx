@@ -2,7 +2,7 @@ import { useState, type FormEvent } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '../auth/AuthContext'
-import { getErrorMessage, getValidationDetail } from '../api/client'
+import { getErrorMessage } from '../api/client'
 import type { Role } from '../api/types'
 
 export default function RegisterPage() {
@@ -34,8 +34,7 @@ export default function RegisterPage() {
       await register({ name, email, password, role })
       navigate('/', { replace: true })
     } catch (err) {
-      const detail = getValidationDetail(err)
-      setError(detail ? `${getErrorMessage(err)} (${detail})` : getErrorMessage(err))
+      setError(getErrorMessage(err))
     } finally {
       setSubmitting(false)
     }
