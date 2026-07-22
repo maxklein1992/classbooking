@@ -138,6 +138,18 @@
     "fieldMessage": "Mensaje",
     "submit": "Enviar mensaje"
   },
+  "profile": {
+    "title": "Mi perfil",
+    "subtitle": "Gestiona los datos de tu cuenta y tu foto de perfil.",
+    "photoTitle": "Foto de perfil",
+    "photoHint": "JPG, PNG o WebP, máx. 1 MB.",
+    "upload": "Subir foto",
+    "remove": "Eliminar",
+    "saved": "Tu foto de perfil se ha actualizado.",
+    "removed": "Tu foto de perfil se ha eliminado.",
+    "errorType": "Tipo de archivo no válido. Usa JPG, PNG o WebP.",
+    "errorSize": "La imagen es demasiado grande (máx. 1 MB)."
+  },
   "training": {
     "spotsFree": "{{spots}} de {{capacity}} plazas disponibles",
     "freeShort": "{{spots}} libres",

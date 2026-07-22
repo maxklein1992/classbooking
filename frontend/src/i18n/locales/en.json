@@ -138,6 +138,18 @@
     "fieldMessage": "Message",
     "submit": "Send message"
   },
+  "profile": {
+    "title": "My profile",
+    "subtitle": "Manage your account details and profile photo.",
+    "photoTitle": "Profile photo",
+    "photoHint": "JPG, PNG or WebP, max. 1 MB.",
+    "upload": "Upload photo",
+    "remove": "Remove",
+    "saved": "Your profile photo has been updated.",
+    "removed": "Your profile photo has been removed.",
+    "errorType": "Invalid file type. Use JPG, PNG or WebP.",
+    "errorSize": "The image is too large (max. 1 MB)."
+  },
   "training": {
     "spotsFree": "{{spots}} of {{capacity}} spots available",
     "freeShort": "{{spots}} free",

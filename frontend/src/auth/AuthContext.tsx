@@ -7,6 +7,10 @@ import {
   type ReactNode,
 } from 'react'
 import { getMe, login as apiLogin, register as apiRegister } from '../api/auth'
+import {
+  updateAvatar as apiUpdateAvatar,
+  removeAvatar as apiRemoveAvatar,
+} from '../api/users'
 import { clearToken, getToken, setToken } from '../api/client'
 import type { LoginPayload, RegisterPayload, User } from '../api/types'
 
@@ -18,6 +22,8 @@ interface AuthContextValue {
   isTrainer: boolean
   login: (payload: LoginPayload) => Promise<User>
   register: (payload: RegisterPayload) => Promise<User>
+  updateAvatar: (avatarUrl: string) => Promise<User>
+  removeAvatar: () => Promise<User>
   logout: () => void
 }
 
@@ -71,6 +77,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return res.user
   }
 
+  async function updateAvatar(avatarUrl: string): Promise<User> {
+    const updated = await apiUpdateAvatar(avatarUrl)
+    setUser(updated)
+    return updated
+  }
+
+  async function removeAvatar(): Promise<User> {
+    const updated = await apiRemoveAvatar()
+    setUser(updated)
+    return updated
+  }
+
   function logout(): void {
     clearToken()
     setTokenState(null)
@@ -86,6 +104,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       isTrainer: user?.role === 'TRAINER',
       login,
       register,
+      updateAvatar,
+      removeAvatar,
       logout,
     }),
     [user, token, loading],

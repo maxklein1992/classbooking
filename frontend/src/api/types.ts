@@ -17,6 +17,7 @@ export interface User {
   email: string
   name: string
   role: Role
+  avatarUrl?: string | null
   createdAt: string
 }
 

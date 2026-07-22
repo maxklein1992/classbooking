@@ -5,6 +5,7 @@ export interface PublicUser {
   email: string;
   name: string;
   role: string;
+  avatarUrl: string | null;
   createdAt: Date;
 }
 
@@ -14,6 +15,7 @@ export function toPublicUser(user: User): PublicUser {
     email: user.email,
     name: user.name,
     role: user.role,
+    avatarUrl: user.avatarUrl ?? null,
     createdAt: user.createdAt,
   };
 }
