@@ -515,6 +515,9 @@ h3 {
 .badge-popular {
   background: linear-gradient(100deg, #ff385c, #fc642d);
 }
+.badge-free-trial {
+  background: var(--success);
+}
 .badge-row {
   display: flex;
   align-items: center;
@@ -929,6 +932,18 @@ textarea:focus {
 }
 .field-row .field {
   flex: 1;
+}
+.field-check {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin: 0.25rem 0 0.75rem;
+  cursor: pointer;
+}
+.field-check input {
+  width: auto;
 }
 .form-actions {
   display: flex;

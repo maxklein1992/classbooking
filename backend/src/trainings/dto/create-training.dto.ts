@@ -1,5 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
+  IsBoolean,
   IsDateString,
   IsEnum,
   IsInt,
@@ -63,4 +64,12 @@ export class CreateTrainingDto {
   @IsNumber()
   @Min(0)
   price: number;
+
+  @ApiPropertyOptional({
+    example: false,
+    description: 'Biedt deze training een gratis proefles aan?',
+  })
+  @IsOptional()
+  @IsBoolean()
+  freeTrialAvailable?: boolean;
 }

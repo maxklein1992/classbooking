@@ -50,6 +50,7 @@ export interface Training {
   postalCode?: string | null
   capacity: number
   price: number
+  freeTrialAvailable?: boolean
   trainerId: string
   trainer: TrainerRef
   bookingsCount: number
@@ -100,6 +101,7 @@ export interface CreateTrainingPayload {
   postalCode?: string
   capacity: number
   price: number
+  freeTrialAvailable?: boolean
 }
 
 export type UpdateTrainingPayload = Partial<CreateTrainingPayload>

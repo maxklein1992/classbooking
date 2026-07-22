@@ -52,6 +52,7 @@ model Training {
   postalCode   String?
   capacity     Int
   price       Float     @default(0)
+  freeTrialAvailable Boolean @default(false)
   trainer     User      @relation("TrainerTrainings", fields: [trainerId], references: [id], onDelete: Cascade)
   trainerId   String
   bookings    Booking[]

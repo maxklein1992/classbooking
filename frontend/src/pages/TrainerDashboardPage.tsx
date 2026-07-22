@@ -30,6 +30,7 @@ interface FormState {
   postalCode: string
   capacity: string
   price: string
+  freeTrialAvailable: boolean
 }
 
 const emptyForm: FormState = {
@@ -44,6 +45,7 @@ const emptyForm: FormState = {
   postalCode: '',
   capacity: '10',
   price: '0',
+  freeTrialAvailable: false,
 }
 
 export default function TrainerDashboardPage() {
@@ -109,6 +111,7 @@ export default function TrainerDashboardPage() {
       postalCode: training.postalCode ?? '',
       capacity: String(training.capacity),
       price: String(training.price),
+      freeTrialAvailable: training.freeTrialAvailable ?? false,
     })
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
@@ -145,6 +148,7 @@ export default function TrainerDashboardPage() {
       postalCode: form.postalCode.trim() || undefined,
       capacity,
       price: Number(form.price) || 0,
+      freeTrialAvailable: form.freeTrialAvailable,
     }
     saveMutation.mutate(payload)
   }
@@ -283,6 +287,15 @@ export default function TrainerDashboardPage() {
                 />
               </label>
             </div>
+
+            <label className="field-check">
+              <input
+                type="checkbox"
+                checked={form.freeTrialAvailable}
+                onChange={(e) => set('freeTrialAvailable', e.target.checked)}
+              />
+              <span>{t('trainer.fieldFreeTrial')}</span>
+            </label>
 
             <div className="form-actions">
               <button
