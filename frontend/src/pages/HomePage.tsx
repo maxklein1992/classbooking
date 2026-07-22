@@ -43,7 +43,7 @@ export default function HomePage() {
   function handleSearch(e: FormEvent) {
     e.preventDefault()
     const q = search.trim()
-    navigate(q ? `/zoeken?q=${encodeURIComponent(q)}` : '/zoeken')
+    navigate(q ? `/trainingen?q=${encodeURIComponent(q)}` : '/trainingen')
   }
 
   return (
