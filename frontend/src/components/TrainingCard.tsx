@@ -46,6 +46,11 @@ export default function TrainingCard({
               <span aria-hidden="true">🔥</span> {t('training.popular')}
             </span>
           )}
+          {training.freeTrialAvailable && (
+            <span className="badge badge-free-trial">
+              {t('training.freeTrial')}
+            </span>
+          )}
         </div>
         <span className="price">{formatPrice(training.price)}</span>
       </div>
@@ -143,7 +148,11 @@ export default function TrainingCard({
         onClick={() => onBook?.(training)}
         disabled={booking}
       >
-        {booking ? t('common.busy') : t('training.book')}
+        {booking
+          ? t('common.busy')
+          : training.freeTrialAvailable
+            ? t('training.bookFreeTrial')
+            : t('training.book')}
       </button>
     )
   }

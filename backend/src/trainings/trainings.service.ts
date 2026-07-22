@@ -40,6 +40,7 @@ export class TrainingsService {
       postalCode: training.postalCode,
       capacity: training.capacity,
       price: training.price,
+      freeTrialAvailable: training.freeTrialAvailable,
       trainerId: training.trainerId,
       trainer: training.trainer,
       bookingsCount,
@@ -131,6 +132,7 @@ export class TrainingsService {
         postalCode: dto.postalCode,
         capacity: dto.capacity,
         price: dto.price,
+        freeTrialAvailable: dto.freeTrialAvailable ?? false,
         trainerId,
       },
       include: trainingInclude,
@@ -167,6 +169,7 @@ export class TrainingsService {
         postalCode: dto.postalCode,
         capacity: dto.capacity,
         price: dto.price,
+        freeTrialAvailable: dto.freeTrialAvailable,
       },
       include: trainingInclude,
     });

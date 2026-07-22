@@ -82,7 +82,14 @@ export default function TrainingDetailPage() {
 
       <div className="card detail-card">
         <div className="card-head">
-          <SportBadge sport={training.sport} />
+          <div className="badge-row">
+            <SportBadge sport={training.sport} />
+            {training.freeTrialAvailable && (
+              <span className="badge badge-free-trial">
+                {t('training.freeTrial')}
+              </span>
+            )}
+          </div>
           <span className="price">{formatPrice(training.price)}</span>
         </div>
 
