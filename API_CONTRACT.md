@@ -35,6 +35,7 @@ Wachtwoord/passwordHash wordt NOOIT teruggegeven.
   "location": "Sporthal Noord",
   "capacity": 12,
   "price": 10.0,
+  "photos": ["https://.../foto1.jpg", "data:image/png;base64,..."],
   "trainerId": "uuid",
   "trainer": { "id": "uuid", "name": "Max" },
   "teacherId": "uuid | null",
@@ -52,6 +53,12 @@ daadwerkelijk geeft, los van `trainerId` (de aanmaker/eigenaar, die bewerk- en
 verwijderrechten heeft). Is er geen teacher gekozen, dan toont de UI de aanmaker
 zelf als impliciete teacher. `teacherId` moet, indien opgegeven, het id van een
 bestaande gebruiker met rol `TRAINER` zijn.
+
+`photos`: lijst van foto's van de training, als http(s)-URL of als data-URL
+(image/png, image/jpeg of image/webp). De volgorde van de array bepaalt de
+volgorde waarin de foto's in de carrousel op de detailpagina verschijnen; max.
+8 foto's, elk max. ~4MB. Wordt beheerd via `POST`/`PATCH /trainings/:id`
+(alleen de eigen trainer).
 
 ### Booking
 ```json
@@ -80,7 +87,7 @@ bestaande gebruiker met rol `TRAINER` zijn.
 - `GET /trainings?sport=&level=&from=&to=` (public) → `200 Training[]` (gesorteerd op startTime asc, alleen toekomstige tenzij from opgegeven; trainingen zonder `level` ("alle niveaus") komen ook mee als er op `level` gefilterd wordt)
 - `GET /trainings/mine` (auth, TRAINER) → `200 Training[]` (eigen trainingen)
 - `GET /trainings/:id` (public) → `200 Training`
-- `POST /trainings` (auth, TRAINER) — body `{ title, description, sport, level?, startTime, endTime, location, capacity, price, teacherId? }` → `201 Training`
+- `POST /trainings` (auth, TRAINER) — body `{ title, description, sport, level?, startTime, endTime, location, capacity, price, teacherId?, photos? }` → `201 Training`
 - `PATCH /trainings/:id` (auth, owner TRAINER) — partial body, `teacherId` mag ook expliciet `null` zijn om te wissen → `200 Training`
 - `DELETE /trainings/:id` (auth, owner TRAINER) → `204`
 

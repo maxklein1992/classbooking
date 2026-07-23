@@ -194,7 +194,12 @@
     "noGroups": "Por ahora no hay clases en grupo programadas.",
     "noTeam": "Aún no hay información del equipo.",
     "roleTrainer": "Propietario",
-    "roleTeacher": "Profesor"
+    "roleTeacher": "Profesor",
+    "noPhotos": "Aún no se han añadido fotos",
+    "carouselPrev": "Foto anterior",
+    "carouselNext": "Foto siguiente",
+    "carouselGoTo": "Ir a la foto {{index}}",
+    "photoAlt": "{{title}} — foto {{index}} de {{count}}"
   },
   "training": {
     "spotsFree": "{{spots}} de {{capacity}} plazas disponibles",
@@ -301,7 +306,16 @@
     "invalidTimes": "Introduce una hora de inicio y de fin válidas.",
     "endAfterStart": "La hora de fin debe ser posterior a la de inicio.",
     "startInFuture": "La hora de inicio debe estar en el futuro.",
-    "capacityMin": "La capacidad debe ser de al menos 1."
+    "capacityMin": "La capacidad debe ser de al menos 1.",
+    "fieldPhotos": "Fotos",
+    "photosHint": "Añade hasta {{max}} fotos. Se muestran como carrusel en la página de detalle.",
+    "addPhoto": "Añadir foto",
+    "removePhoto": "Eliminar",
+    "movePhotoUp": "Subir",
+    "movePhotoDown": "Bajar",
+    "tooManyPhotos": "Puedes añadir un máximo de {{max}} fotos.",
+    "photoInvalidType": "Tipo de archivo no válido. Usa JPG, PNG o WebP.",
+    "photoTooLarge": "Esta foto es demasiado grande (máx. 4 MB)."
   },
   "errors": {
     "full": "Este entrenamiento está completo.",

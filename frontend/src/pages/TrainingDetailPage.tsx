@@ -14,6 +14,7 @@ import LevelBadge from '../components/LevelBadge'
 import StarRating from '../components/StarRating'
 import Avatar from '../components/Avatar'
 import AgendaView from '../components/AgendaView'
+import PhotoCarousel from '../components/PhotoCarousel'
 
 const TABS = ['overview', 'groups', 'team', 'reviews'] as const
 type Tab = (typeof TABS)[number]
@@ -118,7 +119,7 @@ export default function TrainingDetailPage() {
 
   const isFull = training.availableSpots <= 0
   const isPast = new Date(training.startTime).getTime() < Date.now()
-  const gallery = training.gallery ?? []
+  const photos = training.photos ?? []
   const team = training.team ?? buildTeamFromTrainerAndTeacher(training, t)
   const groupClasses =
     allTrainings?.filter((x) => x.sport === training.sport) ?? []
@@ -129,19 +130,7 @@ export default function TrainingDetailPage() {
         {t('common.back')}
       </Link>
 
-      {gallery.length > 0 && (
-        <div className="detail-gallery" aria-label={t('detail.galleryLabel')}>
-          {gallery.slice(0, 5).map((img, i) => (
-            <img
-              key={i}
-              src={img.src}
-              alt={img.alt}
-              loading="lazy"
-              className={i === 0 ? 'gallery-main' : 'gallery-thumb'}
-            />
-          ))}
-        </div>
-      )}
+      <PhotoCarousel photos={photos} title={training.title} />
 
       <div className="card detail-card">
         <div className="card-head">

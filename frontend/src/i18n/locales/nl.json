@@ -194,7 +194,12 @@
     "noGroups": "Er zijn momenteel geen groepslessen gepland.",
     "noTeam": "Er is nog geen teaminformatie beschikbaar.",
     "roleTrainer": "Eigenaar",
-    "roleTeacher": "Docent"
+    "roleTeacher": "Docent",
+    "noPhotos": "Nog geen foto's toegevoegd",
+    "carouselPrev": "Vorige foto",
+    "carouselNext": "Volgende foto",
+    "carouselGoTo": "Ga naar foto {{index}}",
+    "photoAlt": "{{title}} — foto {{index}} van {{count}}"
   },
   "training": {
     "spotsFree": "{{spots}} van {{capacity}} plekken beschikbaar",
@@ -301,7 +306,16 @@
     "invalidTimes": "Voer een geldige start- en eindtijd in.",
     "endAfterStart": "De eindtijd moet na de starttijd liggen.",
     "startInFuture": "De starttijd moet in de toekomst liggen.",
-    "capacityMin": "Capaciteit moet minimaal 1 zijn."
+    "capacityMin": "Capaciteit moet minimaal 1 zijn.",
+    "fieldPhotos": "Foto's",
+    "photosHint": "Voeg tot {{max}} foto's toe. Ze verschijnen als carrousel op de detailpagina.",
+    "addPhoto": "Foto toevoegen",
+    "removePhoto": "Verwijderen",
+    "movePhotoUp": "Naar boven",
+    "movePhotoDown": "Naar beneden",
+    "tooManyPhotos": "Je kunt maximaal {{max}} foto's toevoegen.",
+    "photoInvalidType": "Ongeldig bestandstype. Gebruik JPG, PNG of WebP.",
+    "photoTooLarge": "Deze foto is te groot (max. 4 MB)."
   },
   "errors": {
     "full": "Deze training is vol.",

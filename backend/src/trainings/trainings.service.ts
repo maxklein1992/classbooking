@@ -43,6 +43,7 @@ export class TrainingsService {
       capacity: training.capacity,
       price: training.price,
       freeTrialAvailable: training.freeTrialAvailable,
+      photos: training.photos,
       trainerId: training.trainerId,
       trainer: training.trainer,
       teacherId: training.teacherId,
@@ -165,6 +166,7 @@ export class TrainingsService {
         capacity: dto.capacity,
         price: dto.price,
         freeTrialAvailable: dto.freeTrialAvailable ?? false,
+        photos: dto.photos ?? [],
         trainerId,
         teacherId: dto.teacherId,
       },
@@ -207,6 +209,7 @@ export class TrainingsService {
         capacity: dto.capacity,
         price: dto.price,
         freeTrialAvailable: dto.freeTrialAvailable,
+        photos: dto.photos,
         // teacherId === null betekent expliciet wissen; undefined = ongewijzigd.
         teacherId:
           dto.teacherId === null ? null : (dto.teacherId ?? undefined),
