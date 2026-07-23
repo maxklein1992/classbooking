@@ -42,6 +42,7 @@ Wachtwoord/passwordHash wordt NOOIT teruggegeven.
 }
 ```
 `sport` enum: `BOXING`, `FOOTVOLLEY`, `YOGA`, `HIIT`, `SPINNING`, `OTHER`.
+`seriesId` (optioneel) verwijst naar de `TrainingSeries` waaruit deze sessie is gegenereerd (herhalende training); `null`/afwezig voor een eenmalige training.
 
 ### Booking
 ```json
@@ -68,6 +69,7 @@ Wachtwoord/passwordHash wordt NOOIT teruggegeven.
 - `GET /trainings/mine` (auth, TRAINER) → `200 Training[]` (eigen trainingen)
 - `GET /trainings/:id` (public) → `200 Training`
 - `POST /trainings` (auth, TRAINER) — body `{ title, description, sport, startTime, endTime, location, capacity, price }` → `201 Training`
+  - Herhalende training: geef i.p.v. `startTime`/`endTime` een `recurrence` object mee: `{ daysOfWeek: number[] (0=zondag..6=zaterdag), startTime: "HH:mm", endTime: "HH:mm", activeFrom: "YYYY-MM-DD", activeUntil: "YYYY-MM-DD" }`. De backend genereert dan losse, individueel boekbare `Training`-sessies (elk met eigen `seriesId`) voor elke matchende dag tussen `activeFrom` en `activeUntil`, gelimiteerd tot maximaal ~3 maanden vooruit. Response wordt dan `201 { seriesId, trainings: Training[] }` i.p.v. een los `Training`-object.
 - `PATCH /trainings/:id` (auth, owner TRAINER) — partial body → `200 Training`
 - `DELETE /trainings/:id` (auth, owner TRAINER) → `204`
 

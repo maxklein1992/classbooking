@@ -8,6 +8,24 @@ import { formatDate, formatTimeRange, formatPrice } from '../lib/dates'
 import SportBadge from '../components/SportBadge'
 import { useToast } from '../components/ToastProvider'
 
+// Groepeer trainingen die uit dezelfde herhalende reeks (seriesId) komen, zodat
+// de trainer ze bij elkaar ziet in het dashboard i.p.v. als losse rijen.
+function groupBySeries(
+  trainings: Training[],
+): { seriesId: string | null; items: Training[] }[] {
+  const order: (string | null)[] = []
+  const groups = new Map<string | null, Training[]>()
+  for (const training of trainings) {
+    const key = training.seriesId ?? null
+    if (!groups.has(key)) {
+      groups.set(key, [])
+      order.push(key)
+    }
+    groups.get(key)!.push(training)
+  }
+  return order.map((seriesId) => ({ seriesId, items: groups.get(seriesId)! }))
+}
+
 export default function TrainerDashboardPage() {
   const { t } = useTranslation()
   const queryClient = useQueryClient()
@@ -21,6 +39,8 @@ export default function TrainerDashboardPage() {
     queryKey: ['trainings', 'mine'],
     queryFn: getMyTrainings,
   })
+
+  const groups = trainings ? groupBySeries(trainings) : []
 
   const deleteMutation = useMutation({
     mutationFn: (id: string) => deleteTraining(id),
@@ -51,59 +71,78 @@ export default function TrainerDashboardPage() {
         )}
         {trainings && trainings.length > 0 && (
           <div className="booking-list">
-            {trainings.map((tr) => (
-              <article key={tr.id} className="card booking-row">
-                <div className="booking-main">
-                  <div className="booking-head">
-                    <SportBadge sport={tr.sport} />
-                    <span className="booking-title">{tr.title}</span>
+            {groups.map((group) => {
+              const rows = group.items.map((tr) => (
+                <article key={tr.id} className="card booking-row">
+                  <div className="booking-main">
+                    <div className="booking-head">
+                      <SportBadge sport={tr.sport} />
+                      <span className="booking-title">{tr.title}</span>
+                    </div>
+                    <ul className="meta-list compact">
+                      <li>
+                        🕒 {formatDate(tr.startTime)},{' '}
+                        {formatTimeRange(tr.startTime, tr.endTime)}
+                      </li>
+                      <li>
+                        📍{' '}
+                        {[tr.location, tr.neighborhood, tr.city]
+                          .filter(Boolean)
+                          .join(', ')}
+                      </li>
+                      <li>
+                        👥{' '}
+                        {t('trainer.bookedCount', {
+                          booked: tr.bookingsCount,
+                          capacity: tr.capacity,
+                        })}
+                      </li>
+                      <li>💶 {formatPrice(tr.price)}</li>
+                    </ul>
                   </div>
-                  <ul className="meta-list compact">
-                    <li>
-                      🕒 {formatDate(tr.startTime)},{' '}
-                      {formatTimeRange(tr.startTime, tr.endTime)}
-                    </li>
-                    <li>
-                      📍{' '}
-                      {[tr.location, tr.neighborhood, tr.city]
-                        .filter(Boolean)
-                        .join(', ')}
-                    </li>
-                    <li>
-                      👥{' '}
-                      {t('trainer.bookedCount', {
-                        booked: tr.bookingsCount,
-                        capacity: tr.capacity,
-                      })}
-                    </li>
-                    <li>💶 {formatPrice(tr.price)}</li>
-                  </ul>
-                </div>
-                <div className="booking-actions">
-                  <Link
-                    to={`/trainer/trainingen/${tr.id}/bewerken`}
-                    className="btn btn-ghost"
-                  >
-                    {t('trainer.edit')}
-                  </Link>
-                  <button
-                    className="btn btn-danger"
-                    onClick={() => {
-                      if (
-                        window.confirm(
-                          t('trainer.confirmDelete', { title: tr.title }),
-                        )
-                      ) {
-                        deleteMutation.mutate(tr.id)
-                      }
-                    }}
-                    disabled={deleteMutation.isPending}
-                  >
-                    {t('trainer.delete')}
-                  </button>
-                </div>
-              </article>
-            ))}
+                  <div className="booking-actions">
+                    <Link
+                      to={`/trainer/trainingen/${tr.id}/bewerken`}
+                      className="btn btn-ghost"
+                    >
+                      {t('trainer.edit')}
+                    </Link>
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => {
+                        if (
+                          window.confirm(
+                            t('trainer.confirmDelete', { title: tr.title }),
+                          )
+                        ) {
+                          deleteMutation.mutate(tr.id)
+                        }
+                      }}
+                      disabled={deleteMutation.isPending}
+                    >
+                      {t('trainer.delete')}
+                    </button>
+                  </div>
+                </article>
+              ))
+
+              if (!group.seriesId) {
+                return rows
+              }
+
+              const first = group.items[0]
+              return (
+                <details key={group.seriesId} className="card series-group" open>
+                  <summary className="series-summary">
+                    🔁 {first.title} —{' '}
+                    {t('trainer.recurringCreated', {
+                      count: group.items.length,
+                    })}
+                  </summary>
+                  <div className="series-sessions">{rows}</div>
+                </details>
+              )
+            })}
           </div>
         )}
       </section>

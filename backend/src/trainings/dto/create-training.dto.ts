@@ -1,4 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 import {
   IsBoolean,
   IsDateString,
@@ -9,8 +10,11 @@ import {
   IsOptional,
   IsString,
   Min,
+  ValidateIf,
+  ValidateNested,
 } from 'class-validator';
 import { Sport } from '@prisma/client';
+import { CreateRecurrenceDto } from './create-recurrence.dto';
 
 export class CreateTrainingDto {
   @ApiProperty({ example: 'Boksles voor beginners' })
@@ -27,13 +31,21 @@ export class CreateTrainingDto {
   @IsEnum(Sport)
   sport: Sport;
 
-  @ApiProperty({ example: '2026-08-01T18:00:00.000Z' })
+  @ApiPropertyOptional({
+    example: '2026-08-01T18:00:00.000Z',
+    description: 'Verplicht tenzij `recurrence` is opgegeven (eenmalige training).',
+  })
+  @ValidateIf((o: CreateTrainingDto) => !o.recurrence)
   @IsDateString()
-  startTime: string;
+  startTime?: string;
 
-  @ApiProperty({ example: '2026-08-01T19:00:00.000Z' })
+  @ApiPropertyOptional({
+    example: '2026-08-01T19:00:00.000Z',
+    description: 'Verplicht tenzij `recurrence` is opgegeven (eenmalige training).',
+  })
+  @ValidateIf((o: CreateTrainingDto) => !o.recurrence)
   @IsDateString()
-  endTime: string;
+  endTime?: string;
 
   @ApiProperty({ example: 'Sporthal Noord' })
   @IsString()
@@ -72,4 +84,14 @@ export class CreateTrainingDto {
   @IsOptional()
   @IsBoolean()
   freeTrialAvailable?: boolean;
+
+  @ApiPropertyOptional({
+    type: CreateRecurrenceDto,
+    description:
+      'Optioneel: maak een herhalende training. Als dit is opgegeven worden startTime/endTime genegeerd en genereert de backend losse, individueel boekbare sessies volgens deze regel.',
+  })
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => CreateRecurrenceDto)
+  recurrence?: CreateRecurrenceDto;
 }
