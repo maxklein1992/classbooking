@@ -1,4 +1,4 @@
-import { PrismaClient, Role, Sport } from '@prisma/client';
+import { Level, PrismaClient, Role, Sport } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
@@ -40,6 +40,7 @@ async function main() {
       title: 'Boksles voor beginners',
       description: 'Techniek en conditie voor starters.',
       sport: Sport.BOXING,
+      level: Level.BEGINNER,
       startTime: daysFromNow(2, 18),
       endTime: daysFromNow(2, 19),
       location: 'Sporthal Noord',
@@ -53,6 +54,7 @@ async function main() {
       title: 'Footvolley op het strand',
       description: 'Voetbal meets volleybal in het zand.',
       sport: Sport.FOOTVOLLEY,
+      level: null,
       startTime: daysFromNow(3, 17),
       endTime: daysFromNow(3, 18),
       location: 'Strandpaviljoen Zuid',
@@ -66,6 +68,7 @@ async function main() {
       title: 'Ochtend Yoga',
       description: 'Rustige flow om de dag te beginnen.',
       sport: Sport.YOGA,
+      level: Level.INTERMEDIATE,
       startTime: daysFromNow(1, 8),
       endTime: daysFromNow(1, 9),
       location: 'Studio Centrum',
@@ -79,6 +82,7 @@ async function main() {
       title: 'HIIT Bootcamp',
       description: 'Intensieve intervaltraining.',
       sport: Sport.HIIT,
+      level: Level.ADVANCED,
       startTime: daysFromNow(4, 19),
       endTime: daysFromNow(4, 20),
       location: 'Park Oost',

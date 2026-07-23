@@ -11,7 +11,7 @@ import {
   IsUUID,
   Min,
 } from 'class-validator';
-import { Sport } from '@prisma/client';
+import { Level, Sport } from '@prisma/client';
 
 export class CreateTrainingDto {
   @ApiProperty({ example: 'Boksles voor beginners' })
@@ -27,6 +27,15 @@ export class CreateTrainingDto {
   @ApiProperty({ enum: Sport, example: Sport.BOXING })
   @IsEnum(Sport)
   sport: Sport;
+
+  @ApiPropertyOptional({
+    enum: Level,
+    example: Level.BEGINNER,
+    description: 'Niveau van de training. Laat leeg voor "alle niveaus".',
+  })
+  @IsOptional()
+  @IsEnum(Level)
+  level?: Level;
 
   @ApiProperty({ example: '2026-08-01T18:00:00.000Z' })
   @IsDateString()

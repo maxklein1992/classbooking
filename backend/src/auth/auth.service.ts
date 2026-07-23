@@ -25,11 +25,21 @@ export class AuthService {
     }
 
     const passwordHash = await bcrypt.hash(dto.password, 10);
+    const role = dto.role ?? Role.USER;
+    // Teamledennamen zijn alleen relevant voor trainers; voor gewone
+    // gebruikers negeren we het veld ook als het onverhoopt wordt meegestuurd.
+    const teamMembers =
+      role === Role.TRAINER
+        ? (dto.teamMembers ?? [])
+            .map((name) => name.trim())
+            .filter((name) => name.length > 0)
+        : [];
     const user = await this.users.create({
       email: dto.email,
       passwordHash,
       name: dto.name,
-      role: dto.role ?? Role.USER,
+      role,
+      teamMembers,
     });
 
     const publicUser = toPublicUser(user);

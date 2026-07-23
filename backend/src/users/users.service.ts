@@ -19,6 +19,7 @@ export class UsersService {
     passwordHash: string;
     name: string;
     role: Role;
+    teamMembers?: string[];
   }): Promise<User> {
     return this.prisma.user.create({ data });
   }
@@ -35,6 +36,13 @@ export class UsersService {
     return this.prisma.user.findMany({
       where: { role: Role.TRAINER },
       orderBy: { name: 'asc' },
+    });
+  }
+
+  updateTeamMembers(id: string, teamMembers: string[]): Promise<User> {
+    return this.prisma.user.update({
+      where: { id },
+      data: { teamMembers },
     });
   }
 }
