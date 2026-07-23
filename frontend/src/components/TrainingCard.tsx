@@ -28,6 +28,9 @@ export default function TrainingCard({
   const isFull = training.availableSpots <= 0
   const isPast = new Date(training.startTime).getTime() < Date.now()
   const popular = isPopular(training)
+  // Toon de teacher (de trainer die de les daadwerkelijk geeft) als die is
+  // gekozen; anders is de aanmaker impliciet de teacher.
+  const presenter = training.teacher ?? training.trainer
 
   // Navigate to the detail page when the card is clicked, unless the click
   // originated from an interactive control (button or link) inside the card.
@@ -96,10 +99,10 @@ export default function TrainingCard({
       </ul>
 
       <div className="trainer-row">
-        <Avatar src={training.trainer?.avatarUrl} name={training.trainer?.name ?? '?'} size={36} />
+        <Avatar src={presenter?.avatarUrl} name={presenter?.name ?? '?'} size={36} />
         <span className="trainer-name">
           {t('training.withTrainer', {
-            name: training.trainer?.name ?? t('training.unknownTrainer'),
+            name: presenter?.name ?? t('training.unknownTrainer'),
           })}
         </span>
       </div>

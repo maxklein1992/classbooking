@@ -186,7 +186,9 @@
       "reviews": "Reviews"
     },
     "noGroups": "Er zijn momenteel geen groepslessen gepland.",
-    "noTeam": "Er is nog geen teaminformatie beschikbaar."
+    "noTeam": "Er is nog geen teaminformatie beschikbaar.",
+    "roleTrainer": "Eigenaar",
+    "roleTeacher": "Docent"
   },
   "training": {
     "spotsFree": "{{spots}} van {{capacity}} plekken beschikbaar",
@@ -207,6 +209,7 @@
     "time": "Tijd",
     "location": "Locatie",
     "trainer": "Trainer",
+    "teacher": "Gegeven door",
     "availability": "Beschikbaarheid",
     "unknownTrainer": "Onbekend",
     "notFound": "Training niet gevonden.",
@@ -260,6 +263,8 @@
     "fieldTitle": "Titel",
     "fieldDescription": "Beschrijving",
     "fieldSport": "Sport",
+    "fieldTeacher": "Teacher (wie geeft de les)",
+    "fieldTeacherSelf": "Ikzelf (aanmaker)",
     "fieldStart": "Starttijd",
     "fieldEnd": "Eindtijd",
     "fieldLocation": "Locatie / accommodatie",

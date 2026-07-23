@@ -186,7 +186,9 @@
       "reviews": "Reviews"
     },
     "noGroups": "There are no group classes scheduled right now.",
-    "noTeam": "No team information available yet."
+    "noTeam": "No team information available yet.",
+    "roleTrainer": "Owner",
+    "roleTeacher": "Teacher"
   },
   "training": {
     "spotsFree": "{{spots}} of {{capacity}} spots available",
@@ -207,6 +209,7 @@
     "time": "Time",
     "location": "Location",
     "trainer": "Trainer",
+    "teacher": "Taught by",
     "availability": "Availability",
     "unknownTrainer": "Unknown",
     "notFound": "Training not found.",
@@ -260,6 +263,8 @@
     "fieldTitle": "Title",
     "fieldDescription": "Description",
     "fieldSport": "Sport",
+    "fieldTeacher": "Teacher (who teaches the class)",
+    "fieldTeacherSelf": "Myself (creator)",
     "fieldStart": "Start time",
     "fieldEnd": "End time",
     "fieldLocation": "Location / venue",

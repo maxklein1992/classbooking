@@ -186,7 +186,9 @@
       "reviews": "Avaliações"
     },
     "noGroups": "De momento não há aulas em grupo agendadas.",
-    "noTeam": "Ainda não há informação da equipa."
+    "noTeam": "Ainda não há informação da equipa.",
+    "roleTrainer": "Proprietário",
+    "roleTeacher": "Professor"
   },
   "training": {
     "spotsFree": "{{spots}} de {{capacity}} lugares livres",
@@ -207,6 +209,7 @@
     "time": "Hora",
     "location": "Local",
     "trainer": "Treinador",
+    "teacher": "Lecionado por",
     "availability": "Disponibilidade",
     "unknownTrainer": "Desconhecido",
     "notFound": "Treino não encontrado.",
@@ -260,6 +263,8 @@
     "fieldTitle": "Título",
     "fieldDescription": "Descrição",
     "fieldSport": "Modalidade",
+    "fieldTeacher": "Professor (quem dá a aula)",
+    "fieldTeacherSelf": "Eu próprio (criador)",
     "fieldStart": "Hora de início",
     "fieldEnd": "Hora de fim",
     "fieldLocation": "Local / recinto",

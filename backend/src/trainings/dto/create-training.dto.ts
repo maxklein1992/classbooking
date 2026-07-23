@@ -8,6 +8,7 @@ import {
   IsNumber,
   IsOptional,
   IsString,
+  IsUUID,
   Min,
 } from 'class-validator';
 import { Sport } from '@prisma/client';
@@ -72,4 +73,15 @@ export class CreateTrainingDto {
   @IsOptional()
   @IsBoolean()
   freeTrialAvailable?: boolean;
+
+  @ApiPropertyOptional({
+    example: 'b3e1f2a0-....',
+    description:
+      'Id van de trainer die de les daadwerkelijk geeft (puur informatief; ' +
+      'wijzigt niets aan het eigenaarschap van de training). Optioneel — ' +
+      'leeg betekent dat de aanmaker zelf de teacher is.',
+  })
+  @IsOptional()
+  @IsUUID()
+  teacherId?: string;
 }

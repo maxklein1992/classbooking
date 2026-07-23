@@ -27,16 +27,17 @@ enum BookingStatus {
 }
 
 model User {
-  id           String     @id @default(uuid())
-  email        String     @unique
-  passwordHash String
-  name         String
-  avatarUrl    String?
-  role         Role       @default(USER)
-  trainings    Training[] @relation("TrainerTrainings")
-  bookings     Booking[]
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
+  id                String     @id @default(uuid())
+  email             String     @unique
+  passwordHash      String
+  name              String
+  avatarUrl         String?
+  role              Role       @default(USER)
+  trainings         Training[] @relation("TrainerTrainings")
+  teachingTrainings Training[] @relation("TeachingTrainings")
+  bookings          Booking[]
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
 }
 
 model Training {
@@ -55,6 +56,8 @@ model Training {
   freeTrialAvailable Boolean @default(false)
   trainer     User      @relation("TrainerTrainings", fields: [trainerId], references: [id], onDelete: Cascade)
   trainerId   String
+  teacher     User?     @relation("TeachingTrainings", fields: [teacherId], references: [id], onDelete: SetNull)
+  teacherId   String?
   bookings    Booking[]
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
@@ -62,6 +65,7 @@ model Training {
   @@index([startTime])
   @@index([sport])
   @@index([city])
+  @@index([teacherId])
 }
 
 model Booking {

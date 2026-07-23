@@ -36,12 +36,20 @@ Wachtwoord/passwordHash wordt NOOIT teruggegeven.
   "price": 10.0,
   "trainerId": "uuid",
   "trainer": { "id": "uuid", "name": "Max" },
+  "teacherId": "uuid | null",
+  "teacher": { "id": "uuid", "name": "Anna", "avatarUrl": "https://..." },
   "bookingsCount": 3,
   "availableSpots": 9,
   "createdAt": "ISO"
 }
 ```
 `sport` enum: `BOXING`, `FOOTVOLLEY`, `YOGA`, `HIIT`, `SPINNING`, `OTHER`.
+
+`teacherId`/`teacher` zijn optioneel en puur informatief: ze geven aan wie de les
+daadwerkelijk geeft, los van `trainerId` (de aanmaker/eigenaar, die bewerk- en
+verwijderrechten heeft). Is er geen teacher gekozen, dan toont de UI de aanmaker
+zelf als impliciete teacher. `teacherId` moet, indien opgegeven, het id van een
+bestaande gebruiker met rol `TRAINER` zijn.
 
 ### Booking
 ```json
@@ -63,12 +71,15 @@ Wachtwoord/passwordHash wordt NOOIT teruggegeven.
 - `POST /auth/login` — body `{ email, password }` → `200 { accessToken, user }`
 - `GET /auth/me` (auth) → `200 User`
 
+### Users
+- `GET /users/trainers` (public) → `200 PublicUser[]` (alle gebruikers met rol `TRAINER`, gesorteerd op naam) — t.b.v. de teacher-dropdown bij trainingen.
+
 ### Trainings
 - `GET /trainings?sport=&from=&to=` (public) → `200 Training[]` (gesorteerd op startTime asc, alleen toekomstige tenzij from opgegeven)
 - `GET /trainings/mine` (auth, TRAINER) → `200 Training[]` (eigen trainingen)
 - `GET /trainings/:id` (public) → `200 Training`
-- `POST /trainings` (auth, TRAINER) — body `{ title, description, sport, startTime, endTime, location, capacity, price }` → `201 Training`
-- `PATCH /trainings/:id` (auth, owner TRAINER) — partial body → `200 Training`
+- `POST /trainings` (auth, TRAINER) — body `{ title, description, sport, startTime, endTime, location, capacity, price, teacherId? }` → `201 Training`
+- `PATCH /trainings/:id` (auth, owner TRAINER) — partial body, `teacherId` mag ook expliciet `null` zijn om te wissen → `200 Training`
 - `DELETE /trainings/:id` (auth, owner TRAINER) → `204`
 
 ### Bookings
@@ -83,3 +94,4 @@ Standaard NestJS error shape: `{ statusCode, message, error }`.
 ## Validatie-regels
 - email geldig + uniek; password min 6 tekens; name verplicht.
 - Training: endTime > startTime; capacity >= 1; startTime in de toekomst bij aanmaken.
+- Training: `teacherId`, indien opgegeven, moet het id zijn van een bestaande gebruiker met rol `TRAINER`.
