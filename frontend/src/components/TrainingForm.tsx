@@ -1,7 +1,8 @@
 import { useRef, useState, type ChangeEvent, type FormEvent } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { CreateTrainingPayload, Sport, Training } from '../api/types'
+import type { CreateTrainingPayload, Level, Sport, Training } from '../api/types'
 import { SPORTS, sportLabel } from '../lib/sports'
+import { LEVELS, levelLabel } from '../lib/levels'
 import { fromDatetimeLocalValue, toDatetimeLocalValue } from '../lib/dates'
 import { useToast } from './ToastProvider'
 
@@ -26,6 +27,7 @@ interface FormState {
   title: string
   description: string
   sport: Sport
+  level: Level | ''
   startTime: string // datetime-local value
   endTime: string // datetime-local value
   location: string
@@ -42,6 +44,7 @@ const emptyForm: FormState = {
   title: '',
   description: '',
   sport: 'BOXING',
+  level: '',
   startTime: '',
   endTime: '',
   location: '',
@@ -59,6 +62,7 @@ function fromTraining(training: Training): FormState {
     title: training.title,
     description: training.description,
     sport: training.sport,
+    level: training.level ?? '',
     startTime: toDatetimeLocalValue(training.startTime),
     endTime: toDatetimeLocalValue(training.endTime),
     location: training.location,
@@ -170,6 +174,7 @@ export default function TrainingForm({
       title: form.title.trim(),
       description: form.description.trim(),
       sport: form.sport,
+      level: form.level || undefined,
       startTime: fromDatetimeLocalValue(form.startTime),
       endTime: fromDatetimeLocalValue(form.endTime),
       location: form.location.trim(),
@@ -212,6 +217,20 @@ export default function TrainingForm({
           {SPORTS.map((s) => (
             <option key={s} value={s}>
               {sportLabel(s, t)}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label className="field">
+        <span>{t('trainer.fieldLevel')}</span>
+        <select
+          value={form.level}
+          onChange={(e) => set('level', e.target.value as Level | '')}
+        >
+          <option value="">{t('home.allLevels')}</option>
+          {LEVELS.map((l) => (
+            <option key={l} value={l}>
+              {levelLabel(l, t)}
             </option>
           ))}
         </select>

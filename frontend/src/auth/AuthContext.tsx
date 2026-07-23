@@ -10,6 +10,7 @@ import { getMe, login as apiLogin, register as apiRegister } from '../api/auth'
 import {
   updateAvatar as apiUpdateAvatar,
   removeAvatar as apiRemoveAvatar,
+  updateTeamMembers as apiUpdateTeamMembers,
 } from '../api/users'
 import { clearToken, getToken, setToken } from '../api/client'
 import type { LoginPayload, RegisterPayload, User } from '../api/types'
@@ -24,6 +25,7 @@ interface AuthContextValue {
   register: (payload: RegisterPayload) => Promise<User>
   updateAvatar: (avatarUrl: string) => Promise<User>
   removeAvatar: () => Promise<User>
+  updateTeamMembers: (teamMembers: string[]) => Promise<User>
   logout: () => void
 }
 
@@ -89,6 +91,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return updated
   }
 
+  async function updateTeamMembers(teamMembers: string[]): Promise<User> {
+    const updated = await apiUpdateTeamMembers(teamMembers)
+    setUser(updated)
+    return updated
+  }
+
   function logout(): void {
     clearToken()
     setTokenState(null)
@@ -106,6 +114,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       register,
       updateAvatar,
       removeAvatar,
+      updateTeamMembers,
       logout,
     }),
     [user, token, loading],

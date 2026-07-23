@@ -153,6 +153,7 @@ function build(): Training[] {
       description:
         'Aprende os fundamentos do boxe: guarda, jab, direto e trabalho de pés. Aula intensa que combina técnica e condição física num ambiente descontraído.',
       sport: 'BOXING',
+      level: 'BEGINNER',
       startTime: at(1, 18, 30),
       endTime: plusHours(at(1, 18, 30), 1),
       location: 'Ginásio Fight Club',
@@ -205,6 +206,7 @@ function build(): Training[] {
       description:
         'Fluxo dinâmico de Vinyasa para alongar, fortalecer e relaxar. Termina com meditação guiada enquanto o sol se põe.',
       sport: 'YOGA',
+      level: 'INTERMEDIATE',
       startTime: at(3, 19, 0),
       endTime: plusHours(at(3, 19, 0), 1),
       location: 'Estúdio Namaste',
@@ -233,6 +235,7 @@ function build(): Training[] {
       description:
         '45 minutos de treino intervalado de alta intensidade. Queima calorias, ganha força e supera os teus limites com o João.',
       sport: 'HIIT',
+      level: 'ADVANCED',
       startTime: at(1, 7, 30),
       endTime: plusHours(at(1, 7, 30), 0.75),
       location: 'Parque da Cidade',
@@ -258,6 +261,7 @@ function build(): Training[] {
       description:
         'Pedala ao ritmo da música numa aula de spinning cheia de energia. Intervalos, subidas e muita motivação.',
       sport: 'SPINNING',
+      level: 'INTERMEDIATE',
       startTime: at(4, 20, 0),
       endTime: plusHours(at(4, 20, 0), 0.75),
       location: 'Ride Studio',
@@ -368,7 +372,12 @@ export const mock = {
         .filter(Boolean)
         .some((v) => (v as string).toLowerCase().includes(needle))
     return TRAININGS.filter(
-      (t) => (!query.sport || t.sport === query.sport) && matchesLocation(t),
+      (t) =>
+        (!query.sport || t.sport === query.sport) &&
+        // Trainingen zonder niveau ("alle niveaus") blijven ook zichtbaar
+        // wanneer op een specifiek niveau gefilterd wordt.
+        (!query.level || !t.level || t.level === query.level) &&
+        matchesLocation(t),
     ).map(withSpots)
   },
 
@@ -441,11 +450,13 @@ export const mock = {
 
   async register(payload: RegisterPayload): Promise<AuthResponse> {
     await delay()
+    const role = payload.role ?? 'USER'
     const user: User = {
       id: 'demo-user',
       email: payload.email,
       name: payload.name,
-      role: payload.role ?? 'USER',
+      role,
+      teamMembers: role === 'TRAINER' ? (payload.teamMembers ?? []) : [],
       createdAt: new Date().toISOString(),
     }
     localStorage.setItem(USER_KEY, JSON.stringify(user))
@@ -467,6 +478,13 @@ export const mock = {
   async removeAvatar(): Promise<User> {
     await delay(150)
     const user = { ...currentUser(), avatarUrl: null }
+    localStorage.setItem(USER_KEY, JSON.stringify(user))
+    return user
+  },
+
+  async updateTeamMembers(teamMembers: string[]): Promise<User> {
+    await delay(150)
+    const user = { ...currentUser(), teamMembers }
     localStorage.setItem(USER_KEY, JSON.stringify(user))
     return user
   },

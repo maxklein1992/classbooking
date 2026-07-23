@@ -517,6 +517,15 @@ h3 {
 .badge-other {
   background: #b0b0b0;
 }
+.badge-beginner {
+  background: #00a699; /* Babu */
+}
+.badge-intermediate {
+  background: #fc642d; /* Arches */
+}
+.badge-advanced {
+  background: #ff385c; /* Rausch */
+}
 .badge-popular {
   background: linear-gradient(100deg, #ff385c, #fc642d);
 }
@@ -1303,6 +1312,34 @@ input[type='checkbox']:focus-visible {
   font-size: 0.78rem;
 }
 
+.team-members-field {
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.team-members-field legend {
+  font-weight: 600;
+  font-size: 0.88rem;
+  margin-bottom: 0.2rem;
+}
+.team-member-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.team-member-row input {
+  flex: 1;
+  min-width: 0;
+}
+.btn-icon {
+  flex-shrink: 0;
+  padding: 0.5rem 0.7rem;
+  line-height: 1;
+}
+
 /* ---------- Bookings / dashboard lists ---------- */
 .booking-list {
   display: flex;
@@ -1416,6 +1453,16 @@ input[type='checkbox']:focus-visible {
 /* De upload-knop is een <label> met verborgen file-input. */
 .profile-buttons label.btn {
   cursor: pointer;
+}
+.profile-team-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-top: 1.25rem;
+}
+.profile-team-card h2 {
+  margin: 0 0 0.25rem;
+  font-size: 1.15rem;
 }
 
 /* ---------- Sterren ---------- */

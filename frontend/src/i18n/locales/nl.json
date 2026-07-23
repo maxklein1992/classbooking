@@ -37,6 +37,8 @@
     "mapMissing_other": "{{count}} trainingen zonder locatie worden niet op de kaart getoond.",
     "sport": "Sport",
     "allSports": "Alle sporten",
+    "level": "Niveau",
+    "allLevels": "Alle niveaus",
     "nearHeading": "Lessen bij {{place}}",
     "nearYou": "Lessen bij jou in de buurt",
     "upcomingHeading": "Aankomende trainingen",
@@ -174,7 +176,11 @@
     "saved": "Je profielfoto is bijgewerkt.",
     "removed": "Je profielfoto is verwijderd.",
     "errorType": "Ongeldig bestandstype. Gebruik JPG, PNG of WebP.",
-    "errorSize": "De afbeelding is te groot (max. 1 MB)."
+    "errorSize": "De afbeelding is te groot (max. 1 MB).",
+    "teamTitle": "Teamleden",
+    "teamHint": "Beheer de namen van je teamleden. Deze zijn zichtbaar als onderdeel van je trainersprofiel.",
+    "teamSave": "Teamleden opslaan",
+    "teamSaved": "Je teamleden zijn bijgewerkt."
   },
   "detail": {
     "galleryLabel": "Foto's van de les",
@@ -235,6 +241,11 @@
     "roleUserSub": "Deelnemer / sporter",
     "roleTrainer": "Ik ben trainer",
     "roleTrainerSub": "Trainingen aanbieden",
+    "teamMembersLegend": "Teamleden (optioneel)",
+    "teamMembersHint": "Werk je met een team? Voeg de namen van je teamleden toe. Je kunt dit later altijd wijzigen via je profiel.",
+    "teamMemberPlaceholder": "Naam teamlid",
+    "addTeamMember": "Teamlid toevoegen",
+    "removeTeamMember": "Teamlid verwijderen",
     "loginSubmit": "Inloggen",
     "registerSubmit": "Registreren",
     "noAccount": "Nog geen account?",
@@ -265,6 +276,7 @@
     "fieldTitle": "Titel",
     "fieldDescription": "Beschrijving",
     "fieldSport": "Sport",
+    "fieldLevel": "Niveau",
     "fieldStart": "Starttijd",
     "fieldEnd": "Eindtijd",
     "fieldLocation": "Locatie / accommodatie",
@@ -318,5 +330,10 @@
     "HIIT": "HIIT",
     "SPINNING": "Spinning",
     "OTHER": "Overig"
+  },
+  "levels": {
+    "BEGINNER": "Beginner",
+    "INTERMEDIATE": "Gevorderd",
+    "ADVANCED": "Vergevorderd"
   }
 }

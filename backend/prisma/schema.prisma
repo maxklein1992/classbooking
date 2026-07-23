@@ -21,6 +21,14 @@ enum Sport {
   OTHER
 }
 
+// Optioneel: ontbreekt (null) betekent "alle niveaus" (geen indicatie
+// vereist), zodat bestaande trainingen geen migratieprobleem opleveren.
+enum Level {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+}
+
 enum BookingStatus {
   CONFIRMED
   CANCELLED
@@ -33,6 +41,7 @@ model User {
   name         String
   avatarUrl    String?
   role         Role       @default(USER)
+  teamMembers  String[]   @default([])
   trainings    Training[] @relation("TrainerTrainings")
   bookings     Booking[]
   createdAt    DateTime   @default(now())
@@ -40,28 +49,30 @@ model User {
 }
 
 model Training {
-  id          String    @id @default(uuid())
-  title       String
-  description String
-  sport       Sport
-  startTime    DateTime
-  endTime      DateTime
-  location     String
-  city         String
-  neighborhood String?
-  postalCode   String?
-  capacity     Int
-  price       Float     @default(0)
-  freeTrialAvailable Boolean @default(false)
-  photos      String[]  @default([])
-  trainer     User      @relation("TrainerTrainings", fields: [trainerId], references: [id], onDelete: Cascade)
-  trainerId   String
-  bookings    Booking[]
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id                 String    @id @default(uuid())
+  title              String
+  description        String
+  sport              Sport
+  level              Level?
+  startTime          DateTime
+  endTime            DateTime
+  location           String
+  city               String
+  neighborhood       String?
+  postalCode         String?
+  capacity           Int
+  price              Float     @default(0)
+  freeTrialAvailable Boolean   @default(false)
+  photos             String[]  @default([])
+  trainer            User      @relation("TrainerTrainings", fields: [trainerId], references: [id], onDelete: Cascade)
+  trainerId          String
+  bookings           Booking[]
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
 
   @@index([startTime])
   @@index([sport])
+  @@index([level])
   @@index([city])
 }
 

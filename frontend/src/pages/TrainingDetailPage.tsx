@@ -10,6 +10,7 @@ import { formatDate, formatDateTime, formatPrice, formatTimeRange } from '../lib
 import { useAuth } from '../auth/AuthContext'
 import { useMyBookings } from '../hooks/useMyBookings'
 import SportBadge from '../components/SportBadge'
+import LevelBadge from '../components/LevelBadge'
 import StarRating from '../components/StarRating'
 import Avatar from '../components/Avatar'
 import AgendaView from '../components/AgendaView'
@@ -117,6 +118,7 @@ export default function TrainingDetailPage() {
         <div className="card-head">
           <div className="badge-row">
             <SportBadge sport={training.sport} />
+            {training.level && <LevelBadge level={training.level} />}
             {training.freeTrialAvailable && (
               <span className="badge badge-free-trial">
                 {t('training.freeTrial')}

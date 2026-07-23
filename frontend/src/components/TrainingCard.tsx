@@ -5,6 +5,7 @@ import type { Training } from '../api/types'
 import { formatDateTime, formatPrice } from '../lib/dates'
 import { isPopular } from '../lib/popularity'
 import SportBadge from './SportBadge'
+import LevelBadge from './LevelBadge'
 import StarRating from './StarRating'
 import Avatar from './Avatar'
 
@@ -41,6 +42,7 @@ export default function TrainingCard({
       <div className="card-head">
         <div className="badge-row">
           <SportBadge sport={training.sport} />
+          {training.level && <LevelBadge level={training.level} />}
           {popular && (
             <span className="badge badge-popular">
               <span aria-hidden="true">🔥</span> {t('training.popular')}

@@ -1,4 +1,4 @@
-import { useRef, useState, type ChangeEvent } from 'react'
+import { useEffect, useRef, useState, type ChangeEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '../auth/AuthContext'
 import { getErrorMessage } from '../api/client'
@@ -18,13 +18,57 @@ function readAsDataUrl(file: File): Promise<string> {
 
 export default function ProfilePage() {
   const { t } = useTranslation()
-  const { user, updateAvatar, removeAvatar } = useAuth()
+  const { user, isTrainer, updateAvatar, removeAvatar, updateTeamMembers } =
+    useAuth()
   const inputRef = useRef<HTMLInputElement>(null)
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState<string | null>(null)
 
+  const [teamMembers, setTeamMembers] = useState<string[]>(
+    user?.teamMembers ?? [],
+  )
+  const [teamBusy, setTeamBusy] = useState(false)
+  const [teamError, setTeamError] = useState<string | null>(null)
+  const [teamSuccess, setTeamSuccess] = useState<string | null>(null)
+
+  // Lokale lijst opnieuw synchroniseren als de gebruikersdata wijzigt
+  // (bv. na het laden van de sessie).
+  useEffect(() => {
+    setTeamMembers(user?.teamMembers ?? [])
+  }, [user?.teamMembers])
+
   if (!user) return null
+
+  function addTeamMember() {
+    setTeamMembers((prev) => [...prev, ''])
+  }
+
+  function updateTeamMember(index: number, value: string) {
+    setTeamMembers((prev) => prev.map((v, i) => (i === index ? value : v)))
+  }
+
+  function removeTeamMember(index: number) {
+    setTeamMembers((prev) => prev.filter((_, i) => i !== index))
+  }
+
+  async function handleSaveTeamMembers() {
+    setTeamError(null)
+    setTeamSuccess(null)
+    setTeamBusy(true)
+    try {
+      const trimmed = teamMembers
+        .map((name) => name.trim())
+        .filter((name) => name.length > 0)
+      await updateTeamMembers(trimmed)
+      setTeamMembers(trimmed)
+      setTeamSuccess(t('profile.teamSaved'))
+    } catch (err) {
+      setTeamError(getErrorMessage(err))
+    } finally {
+      setTeamBusy(false)
+    }
+  }
 
   async function handleFile(e: ChangeEvent<HTMLInputElement>) {
     setError(null)
@@ -122,6 +166,65 @@ export default function ProfilePage() {
           </div>
         </div>
       </section>
+
+      {isTrainer && (
+        <section className="card profile-team-card">
+          <h2>{t('profile.teamTitle')}</h2>
+          <p className="muted">{t('profile.teamHint')}</p>
+
+          {teamError && (
+            <div className="alert alert-error" role="alert">
+              {teamError}
+            </div>
+          )}
+          {teamSuccess && (
+            <div className="alert" role="status">
+              {teamSuccess}
+            </div>
+          )}
+
+          {teamMembers.map((member, index) => (
+            <div className="team-member-row" key={index}>
+              <input
+                type="text"
+                value={member}
+                onChange={(e) => updateTeamMember(index, e.target.value)}
+                placeholder={t('auth.teamMemberPlaceholder')}
+                aria-label={t('auth.teamMemberPlaceholder')}
+                disabled={teamBusy}
+              />
+              <button
+                type="button"
+                className="btn btn-ghost btn-icon"
+                onClick={() => removeTeamMember(index)}
+                disabled={teamBusy}
+                aria-label={t('auth.removeTeamMember')}
+              >
+                ✕
+              </button>
+            </div>
+          ))}
+
+          <div className="profile-buttons">
+            <button
+              type="button"
+              className="btn btn-ghost"
+              onClick={addTeamMember}
+              disabled={teamBusy}
+            >
+              {t('auth.addTeamMember')}
+            </button>
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={handleSaveTeamMembers}
+              disabled={teamBusy}
+            >
+              {teamBusy ? t('common.busy') : t('profile.teamSave')}
+            </button>
+          </div>
+        </section>
+      )}
     </div>
   )
 }

@@ -3,8 +3,9 @@ import { useQuery } from '@tanstack/react-query'
 import { useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { getTrainings } from '../api/trainings'
-import type { Sport, Training } from '../api/types'
+import type { Level, Sport, Training } from '../api/types'
 import { SPORTS, sportLabel } from '../lib/sports'
+import { LEVELS, levelLabel } from '../lib/levels'
 import TrainingBrowser from '../components/TrainingBrowser'
 
 type Availability = 'all' | 'available'
@@ -17,6 +18,7 @@ export default function TrainingsPage() {
   const queryParam = params.get('q')?.trim() ?? ''
   const [search, setSearch] = useState(queryParam)
   const [sport, setSport] = useState<Sport | ''>('')
+  const [level, setLevel] = useState<Level | ''>('')
   const [availability, setAvailability] = useState<Availability>('all')
 
   // Volg wijzigingen van de URL-zoekterm (bijv. opnieuw zoeken vanaf de home).
@@ -30,6 +32,9 @@ export default function TrainingsPage() {
     const needle = search.trim().toLowerCase()
     return (tr: Training) => {
       if (sport && tr.sport !== sport) return false
+      // Trainingen zonder niveau ("alle niveaus") blijven zichtbaar, ook als
+      // er op een specifiek niveau gefilterd wordt.
+      if (level && tr.level && tr.level !== level) return false
       if (availability === 'available' && tr.availableSpots <= 0) return false
       if (!needle) return true
       const haystack = [
@@ -45,7 +50,7 @@ export default function TrainingsPage() {
         .toLowerCase()
       return haystack.includes(needle)
     }
-  }, [search, sport, availability])
+  }, [search, sport, level, availability])
 
   const { data } = useQuery<Training[]>({
     queryKey: ['trainings', {}],
@@ -54,11 +59,12 @@ export default function TrainingsPage() {
 
   const resultCount = data ? data.filter(predicate).length : null
   const hasFilters =
-    search.trim() !== '' || sport !== '' || availability !== 'all'
+    search.trim() !== '' || sport !== '' || level !== '' || availability !== 'all'
 
   function clearFilters() {
     setSearch('')
     setSport('')
+    setLevel('')
     setAvailability('all')
   }
 
@@ -92,6 +98,21 @@ export default function TrainingsPage() {
               {SPORTS.map((s) => (
                 <option key={s} value={s}>
                   {sportLabel(s, t)}
+                </option>
+              ))}
+            </select>
+          </label>
+
+          <label className="filter-field">
+            <span>{t('home.level')}</span>
+            <select
+              value={level}
+              onChange={(e) => setLevel(e.target.value as Level | '')}
+            >
+              <option value="">{t('home.allLevels')}</option>
+              {LEVELS.map((l) => (
+                <option key={l} value={l}>
+                  {levelLabel(l, t)}
                 </option>
               ))}
             </select>

@@ -32,6 +32,7 @@ export class TrainingsService {
       title: training.title,
       description: training.description,
       sport: training.sport,
+      level: training.level,
       startTime: training.startTime,
       endTime: training.endTime,
       location: training.location,
@@ -57,14 +58,28 @@ export class TrainingsService {
       where.sport = query.sport;
     }
 
+    const and: Prisma.TrainingWhereInput[] = [];
+
+    if (query.level) {
+      // Trainingen zonder niveau ("alle niveaus") blijven ook zichtbaar
+      // wanneer op een specifiek niveau gefilterd wordt.
+      and.push({ OR: [{ level: query.level }, { level: null }] });
+    }
+
     if (query.q) {
       const contains = { contains: query.q, mode: 'insensitive' } as const;
-      where.OR = [
-        { location: contains },
-        { city: contains },
-        { neighborhood: contains },
-        { postalCode: contains },
-      ];
+      and.push({
+        OR: [
+          { location: contains },
+          { city: contains },
+          { neighborhood: contains },
+          { postalCode: contains },
+        ],
+      });
+    }
+
+    if (and.length > 0) {
+      where.AND = and;
     }
 
     if (query.from || query.to) {
@@ -125,6 +140,7 @@ export class TrainingsService {
         title: dto.title,
         description: dto.description,
         sport: dto.sport,
+        level: dto.level,
         startTime: start,
         endTime: end,
         location: dto.location,
@@ -163,6 +179,7 @@ export class TrainingsService {
         title: dto.title,
         description: dto.description,
         sport: dto.sport,
+        level: dto.level,
         startTime: dto.startTime ? start : undefined,
         endTime: dto.endTime ? end : undefined,
         location: dto.location,

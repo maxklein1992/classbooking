@@ -10,6 +10,9 @@ export type Sport =
   | 'SPINNING'
   | 'OTHER'
 
+// Ontbreekt (undefined/null) betekent "alle niveaus".
+export type Level = 'BEGINNER' | 'INTERMEDIATE' | 'ADVANCED'
+
 export type BookingStatus = 'CONFIRMED' | 'CANCELLED'
 
 export interface User {
@@ -18,6 +21,7 @@ export interface User {
   name: string
   role: Role
   avatarUrl?: string | null
+  teamMembers?: string[]
   createdAt: string
 }
 
@@ -43,6 +47,7 @@ export interface Training {
   title: string
   description: string
   sport: Sport
+  level?: Level | null
   startTime: string
   endTime: string
   location: string
@@ -92,6 +97,7 @@ export interface RegisterPayload {
   password: string
   name: string
   role?: Role
+  teamMembers?: string[]
 }
 
 // Trainings
@@ -99,6 +105,7 @@ export interface CreateTrainingPayload {
   title: string
   description: string
   sport: Sport
+  level?: Level
   startTime: string
   endTime: string
   location: string
@@ -115,6 +122,7 @@ export type UpdateTrainingPayload = Partial<CreateTrainingPayload>
 
 export interface TrainingsQuery {
   sport?: Sport
+  level?: Level
   from?: string
   to?: string
   q?: string
