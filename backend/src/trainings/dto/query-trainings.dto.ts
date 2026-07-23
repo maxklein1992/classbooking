@@ -1,12 +1,21 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { IsDateString, IsEnum, IsOptional, IsString } from 'class-validator';
-import { Sport } from '@prisma/client';
+import { Level, Sport } from '@prisma/client';
 
 export class QueryTrainingsDto {
   @ApiPropertyOptional({ enum: Sport })
   @IsOptional()
   @IsEnum(Sport)
   sport?: Sport;
+
+  @ApiPropertyOptional({
+    enum: Level,
+    description:
+      'Filtert op niveau. Trainingen zonder niveau ("alle niveaus") komen altijd mee.',
+  })
+  @IsOptional()
+  @IsEnum(Level)
+  level?: Level;
 
   @ApiPropertyOptional({
     example: 'Amsterdam',

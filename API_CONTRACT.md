@@ -29,6 +29,7 @@ Wachtwoord/passwordHash wordt NOOIT teruggegeven.
   "title": "Boksles voor beginners",
   "description": "Techniek en conditie",
   "sport": "BOXING",
+  "level": "BEGINNER",
   "startTime": "ISO",
   "endTime": "ISO",
   "location": "Sporthal Noord",
@@ -42,6 +43,7 @@ Wachtwoord/passwordHash wordt NOOIT teruggegeven.
 }
 ```
 `sport` enum: `BOXING`, `FOOTVOLLEY`, `YOGA`, `HIIT`, `SPINNING`, `OTHER`.
+`level` enum (optioneel): `BEGINNER`, `INTERMEDIATE`, `ADVANCED`. Ontbreekt (`null`) betekent "alle niveaus".
 
 ### Booking
 ```json
@@ -64,10 +66,10 @@ Wachtwoord/passwordHash wordt NOOIT teruggegeven.
 - `GET /auth/me` (auth) → `200 User`
 
 ### Trainings
-- `GET /trainings?sport=&from=&to=` (public) → `200 Training[]` (gesorteerd op startTime asc, alleen toekomstige tenzij from opgegeven)
+- `GET /trainings?sport=&level=&from=&to=` (public) → `200 Training[]` (gesorteerd op startTime asc, alleen toekomstige tenzij from opgegeven; trainingen zonder `level` ("alle niveaus") komen ook mee als er op `level` gefilterd wordt)
 - `GET /trainings/mine` (auth, TRAINER) → `200 Training[]` (eigen trainingen)
 - `GET /trainings/:id` (public) → `200 Training`
-- `POST /trainings` (auth, TRAINER) — body `{ title, description, sport, startTime, endTime, location, capacity, price }` → `201 Training`
+- `POST /trainings` (auth, TRAINER) — body `{ title, description, sport, level?, startTime, endTime, location, capacity, price }` → `201 Training`
 - `PATCH /trainings/:id` (auth, owner TRAINER) — partial body → `200 Training`
 - `DELETE /trainings/:id` (auth, owner TRAINER) → `204`
 

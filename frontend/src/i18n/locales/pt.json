@@ -37,6 +37,8 @@
     "mapMissing_other": "{{count}} treinos sem localização não são mostrados no mapa.",
     "sport": "Modalidade",
     "allSports": "Todas as modalidades",
+    "level": "Nível",
+    "allLevels": "Todos os níveis",
     "nearHeading": "Aulas perto de {{place}}",
     "nearYou": "Aulas perto de si",
     "upcomingHeading": "Próximos treinos",
@@ -260,6 +262,7 @@
     "fieldTitle": "Título",
     "fieldDescription": "Descrição",
     "fieldSport": "Modalidade",
+    "fieldLevel": "Nível",
     "fieldStart": "Hora de início",
     "fieldEnd": "Hora de fim",
     "fieldLocation": "Local / recinto",
@@ -304,5 +307,10 @@
     "HIIT": "HIIT",
     "SPINNING": "Spinning",
     "OTHER": "Outro"
+  },
+  "levels": {
+    "BEGINNER": "Iniciante",
+    "INTERMEDIATE": "Intermédio",
+    "ADVANCED": "Avançado"
   }
 }
