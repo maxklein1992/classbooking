@@ -276,7 +276,7 @@
     "myTrainings": "Mijn trainingen",
     "loading": "Laden…",
     "loadError": "Kon de trainingen niet laden.",
-    "emptyBody": "Je hebt nog geen trainingen aangemaakt. Gebruik het formulier.",
+    "emptyBody": "Je hebt nog geen trainingen aangemaakt. Klik op \"Nieuwe training\" om te beginnen.",
     "bookedCount": "{{booked}}/{{capacity}} geboekt",
     "edit": "Bewerken",
     "delete": "Verwijderen",
