@@ -31,6 +31,14 @@ export class UsersService {
     });
   }
 
+  /** Publieke lijst van alle trainers, t.b.v. de "teacher"-dropdown bij trainingen. */
+  findTrainers(): Promise<User[]> {
+    return this.prisma.user.findMany({
+      where: { role: Role.TRAINER },
+      orderBy: { name: 'asc' },
+    });
+  }
+
   updateTeamMembers(id: string, teamMembers: string[]): Promise<User> {
     return this.prisma.user.update({
       where: { id },

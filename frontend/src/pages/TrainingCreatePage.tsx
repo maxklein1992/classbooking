@@ -5,7 +5,7 @@ import { createTraining } from '../api/trainings'
 import { getErrorMessage } from '../api/client'
 import { isTrainingSeriesResult, type CreateTrainingPayload } from '../api/types'
 import { useToast } from '../components/ToastProvider'
-import TrainingForm from '../components/TrainingForm'
+import TrainingForm, { type TrainingFormPayload } from '../components/TrainingForm'
 
 export default function TrainingCreatePage() {
   const { t } = useTranslation()
@@ -29,6 +29,15 @@ export default function TrainingCreatePage() {
     onError: (err) => showToast(getErrorMessage(err), 'error'),
   })
 
+  // Bij het aanmaken komt teacherId nooit expliciet `null` binnen (dat is
+  // alleen relevant om een eerder gekozen teacher te wissen bij bewerken).
+  function handleSubmit(payload: TrainingFormPayload) {
+    createMutation.mutate({
+      ...payload,
+      teacherId: payload.teacherId ?? undefined,
+    })
+  }
+
   return (
     <div className="page">
       <div className="page-header">
@@ -36,7 +45,7 @@ export default function TrainingCreatePage() {
       </div>
       <div className="card training-form-card">
         <TrainingForm
-          onSubmit={(payload) => createMutation.mutate(payload)}
+          onSubmit={handleSubmit}
           isSubmitting={createMutation.isPending}
           onCancel={() => navigate('/trainer')}
         />

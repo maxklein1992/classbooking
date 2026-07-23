@@ -291,6 +291,9 @@ function build(): Training[] {
     rating: avg(t.reviews ?? []),
     availableSpots: Math.max(0, t.capacity - t.bookingsCount),
     photos: PHOTOS_BY_SPORT[t.sport] ?? PHOTOS_BY_SPORT.OTHER,
+    // Zonder expliciete teacher is de aanmaker (trainer) impliciet de teacher.
+    teacherId: t.teacherId ?? t.trainer.id,
+    teacher: t.teacher ?? t.trainer,
     team: [
       { id: t.trainer.id, name: t.trainer.name, avatarUrl: t.trainer.avatarUrl, bio: t.trainer.bio, role: 'Hoofdtrainer' },
       ...EXTRA_TEAM,
@@ -391,6 +394,17 @@ export const mock = {
   async getMyTrainings(): Promise<Training[]> {
     await delay()
     return []
+  },
+
+  /** Publieke lijst van alle trainers, t.b.v. de teacher-dropdown. */
+  async getTrainers(): Promise<TrainerRef[]> {
+    await delay(150)
+    return Object.values(trainers).map((tr) => ({
+      id: tr.id,
+      name: tr.name,
+      avatarUrl: tr.avatarUrl,
+      bio: tr.bio,
+    }))
   },
 
   async createBooking(trainingId: string): Promise<Booking> {

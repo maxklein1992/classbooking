@@ -98,6 +98,9 @@ export default function TrainerDashboardPage() {
                         })}
                       </li>
                       <li>💶 {formatPrice(tr.price)}</li>
+                      {tr.teacher && tr.teacher.id !== tr.trainerId && (
+                        <li>🧑‍🏫 {t('training.withTrainer', { name: tr.teacher.name })}</li>
+                      )}
                     </ul>
                   </div>
                   <div className="booking-actions">

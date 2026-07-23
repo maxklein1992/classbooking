@@ -35,18 +35,19 @@ enum BookingStatus {
 }
 
 model User {
-  id             String           @id @default(uuid())
-  email          String           @unique
-  passwordHash   String
-  name           String
-  avatarUrl      String?
-  role           Role             @default(USER)
-  teamMembers    String[]         @default([])
-  trainings      Training[]       @relation("TrainerTrainings")
-  trainingSeries TrainingSeries[] @relation("TrainerTrainingSeries")
-  bookings       Booking[]
-  createdAt      DateTime         @default(now())
-  updatedAt      DateTime         @updatedAt
+  id                String           @id @default(uuid())
+  email             String           @unique
+  passwordHash      String
+  name              String
+  avatarUrl         String?
+  role              Role             @default(USER)
+  teamMembers       String[]         @default([])
+  trainings         Training[]       @relation("TrainerTrainings")
+  teachingTrainings Training[]       @relation("TeachingTrainings")
+  trainingSeries    TrainingSeries[] @relation("TrainerTrainingSeries")
+  bookings          Booking[]
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
 }
 
 model Training {
@@ -67,6 +68,8 @@ model Training {
   photos             String[]        @default([])
   trainer            User            @relation("TrainerTrainings", fields: [trainerId], references: [id], onDelete: Cascade)
   trainerId          String
+  teacher            User?           @relation("TeachingTrainings", fields: [teacherId], references: [id], onDelete: SetNull)
+  teacherId          String?
   series             TrainingSeries? @relation(fields: [seriesId], references: [id], onDelete: Cascade)
   seriesId           String?
   bookings           Booking[]
@@ -78,6 +81,7 @@ model Training {
   @@index([level])
   @@index([city])
   @@index([seriesId])
+  @@index([teacherId])
 }
 
 // Herhaalregel voor een reeks trainingen ("herhalende training"). Bij aanmaken

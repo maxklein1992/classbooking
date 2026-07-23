@@ -4,7 +4,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { BookingStatus, Prisma } from '@prisma/client';
+import { BookingStatus, Prisma, Role } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateTrainingDto } from './dto/create-training.dto';
 import { CreateRecurrenceDto } from './dto/create-recurrence.dto';
@@ -13,6 +13,7 @@ import { QueryTrainingsDto } from './dto/query-trainings.dto';
 
 const trainingInclude = {
   trainer: { select: { id: true, name: true } },
+  teacher: { select: { id: true, name: true, avatarUrl: true } },
   _count: {
     select: { bookings: { where: { status: BookingStatus.CONFIRMED } } },
   },
@@ -64,10 +65,22 @@ export class TrainingsService {
       trainerId: training.trainerId,
       seriesId: training.seriesId,
       trainer: training.trainer,
+      teacherId: training.teacherId,
+      teacher: training.teacher,
       bookingsCount,
       availableSpots: training.capacity - bookingsCount,
       createdAt: training.createdAt,
     };
+  }
+
+  /** Zorgt dat een opgegeven teacherId een bestaande trainer is. */
+  private async assertValidTeacher(teacherId: string) {
+    const teacher = await this.prisma.user.findUnique({
+      where: { id: teacherId },
+    });
+    if (!teacher || teacher.role !== Role.TRAINER) {
+      throw new BadRequestException('teacherId must be an existing trainer');
+    }
   }
 
   async findAll(query: QueryTrainingsDto) {
@@ -160,6 +173,9 @@ export class TrainingsService {
     if (start <= new Date()) {
       throw new BadRequestException('startTime must be in the future');
     }
+    if (dto.teacherId) {
+      await this.assertValidTeacher(dto.teacherId);
+    }
 
     const training = await this.prisma.training.create({
       data: {
@@ -178,6 +194,7 @@ export class TrainingsService {
         freeTrialAvailable: dto.freeTrialAvailable ?? false,
         photos: dto.photos ?? [],
         trainerId,
+        teacherId: dto.teacherId,
       },
       include: trainingInclude,
     });
@@ -317,6 +334,9 @@ export class TrainingsService {
     if (end <= start) {
       throw new BadRequestException('endTime must be after startTime');
     }
+    if (dto.teacherId) {
+      await this.assertValidTeacher(dto.teacherId);
+    }
 
     const training = await this.prisma.training.update({
       where: { id },
@@ -335,6 +355,9 @@ export class TrainingsService {
         price: dto.price,
         freeTrialAvailable: dto.freeTrialAvailable,
         photos: dto.photos,
+        // teacherId === null betekent expliciet wissen; undefined = ongewijzigd.
+        teacherId:
+          dto.teacherId === null ? null : (dto.teacherId ?? undefined),
       },
       include: trainingInclude,
     });

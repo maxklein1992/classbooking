@@ -1,9 +1,11 @@
 import { useRef, useState, type ChangeEvent, type FormEvent } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useQuery } from '@tanstack/react-query'
 import type { CreateTrainingPayload, Level, Sport, Training } from '../api/types'
 import { SPORTS, sportLabel } from '../lib/sports'
 import { LEVELS, levelLabel } from '../lib/levels'
 import { fromDatetimeLocalValue, toDatetimeLocalValue } from '../lib/dates'
+import { getTrainers } from '../api/users'
 import { useToast } from './ToastProvider'
 
 // Dagen van de week in JS Date.getDay()-volgorde (0=zondag..6=zaterdag),
@@ -61,6 +63,7 @@ interface FormState {
   recurEndTime: string // "HH:mm"
   recurActiveFrom: string // "YYYY-MM-DD"
   recurActiveUntil: string // "YYYY-MM-DD"
+  teacherId: string // lege string = geen keuze (aanmaker is impliciet teacher)
   photos: string[]
 }
 
@@ -84,6 +87,7 @@ const emptyForm: FormState = {
   recurEndTime: '19:00',
   recurActiveFrom: todayDateValue(),
   recurActiveUntil: '',
+  teacherId: '',
   photos: [],
 }
 
@@ -103,13 +107,20 @@ function fromTraining(training: Training): FormState {
     capacity: String(training.capacity),
     price: String(training.price),
     freeTrialAvailable: training.freeTrialAvailable ?? false,
+    teacherId: training.teacherId ?? '',
     photos: training.photos ?? [],
   }
 }
 
+// Zelfde vorm als CreateTrainingPayload, maar teacherId mag ook expliciet
+// `null` zijn (teacher wissen bij bewerken; bij aanmaken komt dit niet voor).
+export type TrainingFormPayload = Omit<CreateTrainingPayload, 'teacherId'> & {
+  teacherId?: string | null
+}
+
 interface TrainingFormProps {
   initial?: Training
-  onSubmit: (payload: CreateTrainingPayload) => void
+  onSubmit: (payload: TrainingFormPayload) => void
   isSubmitting: boolean
   onCancel?: () => void
 }
@@ -128,6 +139,11 @@ export default function TrainingForm({
   )
   const [photoBusy, setPhotoBusy] = useState(false)
   const photoInputRef = useRef<HTMLInputElement>(null)
+
+  const { data: trainers } = useQuery({
+    queryKey: ['trainers'],
+    queryFn: getTrainers,
+  })
 
   function set<K extends keyof FormState>(key: K, value: FormState[K]) {
     setForm((f) => ({ ...f, [key]: value }))
@@ -257,10 +273,15 @@ export default function TrainingForm({
       return
     }
 
-    const payload: CreateTrainingPayload = {
+    // Lege selectie betekent: bij bewerken de eerder gekozen teacher wissen
+    // (expliciet null), bij aanmaken gewoon geen teacher meesturen.
+    const teacherId = form.teacherId || (isEditing ? null : undefined)
+
+    const payload: TrainingFormPayload = {
       ...base,
       startTime: fromDatetimeLocalValue(form.startTime),
       endTime: fromDatetimeLocalValue(form.endTime),
+      teacherId,
       photos: form.photos,
     }
     onSubmit(payload)
@@ -339,26 +360,42 @@ export default function TrainingForm({
       )}
 
       {form.mode === 'single' || isEditing ? (
-        <div className="field-row">
+        <>
           <label className="field">
-            <span>{t('trainer.fieldStart')}</span>
-            <input
-              type="datetime-local"
-              value={form.startTime}
-              onChange={(e) => set('startTime', e.target.value)}
-              required
-            />
+            <span>{t('trainer.fieldTeacher')}</span>
+            <select
+              value={form.teacherId}
+              onChange={(e) => set('teacherId', e.target.value)}
+            >
+              <option value="">{t('trainer.fieldTeacherSelf')}</option>
+              {trainers?.map((tr) => (
+                <option key={tr.id} value={tr.id}>
+                  {tr.name}
+                </option>
+              ))}
+            </select>
           </label>
-          <label className="field">
-            <span>{t('trainer.fieldEnd')}</span>
-            <input
-              type="datetime-local"
-              value={form.endTime}
-              onChange={(e) => set('endTime', e.target.value)}
-              required
-            />
-          </label>
-        </div>
+          <div className="field-row">
+            <label className="field">
+              <span>{t('trainer.fieldStart')}</span>
+              <input
+                type="datetime-local"
+                value={form.startTime}
+                onChange={(e) => set('startTime', e.target.value)}
+                required
+              />
+            </label>
+            <label className="field">
+              <span>{t('trainer.fieldEnd')}</span>
+              <input
+                type="datetime-local"
+                value={form.endTime}
+                onChange={(e) => set('endTime', e.target.value)}
+                required
+              />
+            </label>
+          </div>
+        </>
       ) : (
         <div className="recurrence-fields">
           <div className="field">

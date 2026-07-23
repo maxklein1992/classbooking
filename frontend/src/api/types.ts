@@ -62,6 +62,8 @@ export interface Training {
   trainerId: string
   seriesId?: string | null
   trainer: TrainerRef
+  teacherId?: string | null
+  teacher?: TrainerRef | null
   bookingsCount: number
   availableSpots: number
   createdAt: string
@@ -126,12 +128,18 @@ export interface CreateTrainingPayload {
   price: number
   freeTrialAvailable?: boolean
   recurrence?: RecurrencePayload
+  teacherId?: string
   photos?: string[]
 }
 
-export type UpdateTrainingPayload = Partial<
-  Omit<CreateTrainingPayload, 'recurrence'>
->
+export type UpdateTrainingPayload = Omit<
+  Partial<CreateTrainingPayload>,
+  'recurrence' | 'teacherId'
+> & {
+  // Expliciet null toegestaan om de teacher weer te wissen (aanmaker wordt
+  // dan weer de impliciete teacher), naast undefined (= ongewijzigd).
+  teacherId?: string | null
+}
 
 // Response bij het aanmaken van een herhalende training: de backend
 // genereert meerdere losse sessies i.p.v. één Training.
