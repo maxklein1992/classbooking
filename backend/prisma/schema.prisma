@@ -64,6 +64,7 @@ model Training {
   capacity           Int
   price              Float           @default(0)
   freeTrialAvailable Boolean         @default(false)
+  photos             String[]        @default([])
   trainer            User            @relation("TrainerTrainings", fields: [trainerId], references: [id], onDelete: Cascade)
   trainerId          String
   series             TrainingSeries? @relation(fields: [seriesId], references: [id], onDelete: Cascade)

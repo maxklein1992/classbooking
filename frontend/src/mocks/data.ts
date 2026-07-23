@@ -4,7 +4,6 @@
 import type {
   AuthResponse,
   Booking,
-  GalleryImage,
   LoginPayload,
   RegisterPayload,
   Review,
@@ -16,37 +15,36 @@ import type {
   User,
 } from '../api/types'
 
-// Galerijfoto's per sport (SEO-vriendelijke alt-teksten), voor de fotogalerij
-// bovenaan de trainingsdetailpagina.
-const GALLERY_BY_SPORT: Record<Sport, GalleryImage[]> = {
+// Foto's per sport, voor de fotocarrousel bovenaan de trainingsdetailpagina.
+const PHOTOS_BY_SPORT: Record<Sport, string[]> = {
   BOXING: [
-    { src: 'https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=900&q=80', alt: 'Bokser traint met bokszak' },
-    { src: 'https://images.unsplash.com/photo-1517438476312-10d79c077509?auto=format&fit=crop&w=900&q=80', alt: 'Twee mensen sparren met bokshandschoenen' },
-    { src: 'https://images.unsplash.com/photo-1554244933-d876deb6b2ff?auto=format&fit=crop&w=900&q=80', alt: 'Bokshandschoenen in de ring' },
+    'https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=900&q=80',
+    'https://images.unsplash.com/photo-1517438476312-10d79c077509?auto=format&fit=crop&w=900&q=80',
+    'https://images.unsplash.com/photo-1554244933-d876deb6b2ff?auto=format&fit=crop&w=900&q=80',
   ],
   FOOTVOLLEY: [
-    { src: 'https://images.unsplash.com/photo-1592656094267-764a45160876?auto=format&fit=crop&w=900&q=80', alt: 'Beachvolleybal op het strand' },
-    { src: 'https://images.unsplash.com/photo-1520138422717-6f6b3c9c7f8e?auto=format&fit=crop&w=900&q=80', alt: 'Speler slaat een bal op het strand' },
-    { src: 'https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?auto=format&fit=crop&w=900&q=80', alt: 'Zonsondergang boven een strandveld' },
+    'https://images.unsplash.com/photo-1592656094267-764a45160876?auto=format&fit=crop&w=900&q=80',
+    'https://images.unsplash.com/photo-1520138422717-6f6b3c9c7f8e?auto=format&fit=crop&w=900&q=80',
+    'https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?auto=format&fit=crop&w=900&q=80',
   ],
   YOGA: [
-    { src: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=900&q=80', alt: 'Vrouw in een yogahouding' },
-    { src: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=900&q=80', alt: 'Groep doet yoga in een studio' },
-    { src: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=900&q=80', alt: 'Meditatie bij zonsondergang' },
+    'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=900&q=80',
+    'https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=900&q=80',
+    'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=900&q=80',
   ],
   HIIT: [
-    { src: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=900&q=80', alt: 'Groepsles high-intensity training' },
-    { src: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=900&q=80', alt: 'Sporter doet een work-out in de zaal' },
-    { src: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=900&q=80', alt: 'Man traint met gewichten' },
+    'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=900&q=80',
+    'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=900&q=80',
+    'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=900&q=80',
   ],
   SPINNING: [
-    { src: 'https://images.unsplash.com/photo-1534258936925-c58bed479fcb?auto=format&fit=crop&w=900&q=80', alt: 'Indoor cycling studio met fietsen' },
-    { src: 'https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=900&q=80', alt: 'Spinning-les in actie' },
-    { src: 'https://images.unsplash.com/photo-1594737625785-a6cbdabd333c?auto=format&fit=crop&w=900&q=80', alt: 'Hometrainer van dichtbij' },
+    'https://images.unsplash.com/photo-1534258936925-c58bed479fcb?auto=format&fit=crop&w=900&q=80',
+    'https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=900&q=80',
+    'https://images.unsplash.com/photo-1594737625785-a6cbdabd333c?auto=format&fit=crop&w=900&q=80',
   ],
   OTHER: [
-    { src: 'https://images.unsplash.com/photo-1521804906057-1df8fdb718b7?auto=format&fit=crop&w=900&q=80', alt: 'Groep sporters in een zaal' },
-    { src: 'https://images.unsplash.com/photo-1517963879433-6ad2b056d712?auto=format&fit=crop&w=900&q=80', alt: 'Trainingsmateriaal in de sportschool' },
+    'https://images.unsplash.com/photo-1521804906057-1df8fdb718b7?auto=format&fit=crop&w=900&q=80',
+    'https://images.unsplash.com/photo-1517963879433-6ad2b056d712?auto=format&fit=crop&w=900&q=80',
   ],
 }
 
@@ -292,7 +290,7 @@ function build(): Training[] {
     reviewsCount: t.reviews?.length ?? 0,
     rating: avg(t.reviews ?? []),
     availableSpots: Math.max(0, t.capacity - t.bookingsCount),
-    gallery: GALLERY_BY_SPORT[t.sport] ?? GALLERY_BY_SPORT.OTHER,
+    photos: PHOTOS_BY_SPORT[t.sport] ?? PHOTOS_BY_SPORT.OTHER,
     team: [
       { id: t.trainer.id, name: t.trainer.name, avatarUrl: t.trainer.avatarUrl, bio: t.trainer.bio, role: 'Hoofdtrainer' },
       ...EXTRA_TEAM,

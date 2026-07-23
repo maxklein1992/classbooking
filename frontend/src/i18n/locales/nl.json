@@ -192,7 +192,12 @@
       "reviews": "Reviews"
     },
     "noGroups": "Er zijn momenteel geen groepslessen gepland.",
-    "noTeam": "Er is nog geen teaminformatie beschikbaar."
+    "noTeam": "Er is nog geen teaminformatie beschikbaar.",
+    "noPhotos": "Nog geen foto's toegevoegd",
+    "carouselPrev": "Vorige foto",
+    "carouselNext": "Volgende foto",
+    "carouselGoTo": "Ga naar foto {{index}}",
+    "photoAlt": "{{title}} — foto {{index}} van {{count}}"
   },
   "training": {
     "spotsFree": "{{spots}} van {{capacity}} plekken beschikbaar",
@@ -318,7 +323,16 @@
     "dayThu": "do",
     "dayFri": "vr",
     "daySat": "za",
-    "daySun": "zo"
+    "daySun": "zo",
+    "fieldPhotos": "Foto's",
+    "photosHint": "Voeg tot {{max}} foto's toe. Ze verschijnen als carrousel op de detailpagina.",
+    "addPhoto": "Foto toevoegen",
+    "removePhoto": "Verwijderen",
+    "movePhotoUp": "Naar boven",
+    "movePhotoDown": "Naar beneden",
+    "tooManyPhotos": "Je kunt maximaal {{max}} foto's toevoegen.",
+    "photoInvalidType": "Ongeldig bestandstype. Gebruik JPG, PNG of WebP.",
+    "photoTooLarge": "Deze foto is te groot (max. 4 MB)."
   },
   "errors": {
     "full": "Deze training is vol.",

@@ -401,6 +401,11 @@ h3 {
   font-size: 1rem;
   border-radius: 14px;
 }
+.btn-sm {
+  padding: 0.3rem 0.6rem;
+  font-size: 0.8rem;
+  border-radius: var(--radius-sm);
+}
 .btn-block {
   width: 100%;
 }
@@ -983,33 +988,98 @@ input[type='checkbox']:focus-visible {
   margin-top: 0.5rem;
 }
 
-/* Fotogalerij bovenaan de detailpagina */
-.detail-gallery {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
-  grid-auto-rows: 110px;
-  gap: 0.5rem;
+/* Fotocarrousel bovenaan de detailpagina */
+.photo-carousel {
+  position: relative;
   margin-bottom: 1.25rem;
   border-radius: var(--radius);
   overflow: hidden;
+  outline: none;
 }
-.detail-gallery img {
+.photo-carousel-viewport {
+  position: relative;
+  width: 100%;
+  height: 320px;
+  background: var(--bg);
+}
+.photo-carousel-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+  animation: photo-carousel-fade 0.2s ease;
 }
-.detail-gallery .gallery-main {
-  grid-row: span 2;
-  grid-column: 1;
+@keyframes photo-carousel-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.photo-carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.45);
+  color: #fff;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.photo-carousel-arrow:hover {
+  background: rgba(0, 0, 0, 0.65);
+}
+.photo-carousel-prev {
+  left: 0.6rem;
+}
+.photo-carousel-next {
+  right: 0.6rem;
+}
+.photo-carousel-dots {
+  position: absolute;
+  bottom: 0.6rem;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 0.4rem;
+}
+.photo-carousel-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+}
+.photo-carousel-dot.active {
+  background: #fff;
+}
+.photo-carousel-empty {
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: var(--bg);
+  border: 1px dashed var(--border);
+}
+.photo-carousel-placeholder-icon {
+  font-size: 2rem;
 }
 @media (max-width: 560px) {
-  .detail-gallery {
-    grid-template-columns: 1fr 1fr;
-    grid-auto-rows: 90px;
-  }
-  .detail-gallery .gallery-main {
-    grid-column: span 2;
+  .photo-carousel-viewport {
+    height: 220px;
   }
 }
 
@@ -1192,6 +1262,47 @@ input[type='checkbox']:focus-visible {
 .recurrence-hint {
   font-size: 0.8rem;
   margin: 0;
+}
+
+/* Fotobeheer in het trainingsformulier */
+.photo-manager-field {
+  gap: 0.5rem;
+}
+.photo-manager-hint {
+  margin: 0;
+  font-size: 0.85rem;
+}
+.photo-manager-list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+}
+.photo-manager-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  width: 96px;
+}
+.photo-manager-thumb {
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+.photo-manager-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  justify-content: center;
+}
+.photo-manager-add {
+  align-self: flex-start;
+  cursor: pointer;
 }
 
 .role-choice {

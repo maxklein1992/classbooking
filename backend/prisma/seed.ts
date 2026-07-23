@@ -49,6 +49,10 @@ async function main() {
       postalCode: '1031 KN',
       capacity: 12,
       price: 10.0,
+      photos: [
+        'https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=900&q=80',
+        'https://images.unsplash.com/photo-1517438476312-10d79c077509?auto=format&fit=crop&w=900&q=80',
+      ],
     },
     {
       title: 'Footvolley op het strand',

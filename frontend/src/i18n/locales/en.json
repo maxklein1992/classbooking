@@ -192,7 +192,12 @@
       "reviews": "Reviews"
     },
     "noGroups": "There are no group classes scheduled right now.",
-    "noTeam": "No team information available yet."
+    "noTeam": "No team information available yet.",
+    "noPhotos": "No photos added yet",
+    "carouselPrev": "Previous photo",
+    "carouselNext": "Next photo",
+    "carouselGoTo": "Go to photo {{index}}",
+    "photoAlt": "{{title}} — photo {{index}} of {{count}}"
   },
   "training": {
     "spotsFree": "{{spots}} of {{capacity}} spots available",
@@ -318,7 +323,16 @@
     "dayThu": "Thu",
     "dayFri": "Fri",
     "daySat": "Sat",
-    "daySun": "Sun"
+    "daySun": "Sun",
+    "fieldPhotos": "Photos",
+    "photosHint": "Add up to {{max}} photos. They appear as a carousel on the detail page.",
+    "addPhoto": "Add photo",
+    "removePhoto": "Remove",
+    "movePhotoUp": "Move up",
+    "movePhotoDown": "Move down",
+    "tooManyPhotos": "You can add a maximum of {{max}} photos.",
+    "photoInvalidType": "Invalid file type. Use JPG, PNG or WebP.",
+    "photoTooLarge": "This photo is too large (max. 4 MB)."
   },
   "errors": {
     "full": "This training is full.",

@@ -1,6 +1,8 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {
+  ArrayMaxSize,
+  IsArray,
   IsBoolean,
   IsDateString,
   IsEnum,
@@ -9,12 +11,24 @@ import {
   IsNumber,
   IsOptional,
   IsString,
+  Matches,
+  MaxLength,
   Min,
   ValidateIf,
   ValidateNested,
 } from 'class-validator';
 import { Level, Sport } from '@prisma/client';
 import { CreateRecurrenceDto } from './create-recurrence.dto';
+
+export const MAX_TRAINING_PHOTOS = 8;
+
+// Zelfde patroon als bij de profielfoto van een gebruiker (zie
+// users/dto/update-avatar.dto.ts): een gewone http(s)-URL, of een data-URL
+// met een toegestaan beeldtype (jpeg/jpg, png, webp). Elke foto is begrensd
+// op ~4MB base64 en het aantal foto's per training is begrensd, zodat de
+// payload beheersbaar blijft; de frontend valideert grootte/type vooraf.
+const TRAINING_PHOTO_PATTERN =
+  /^(https?:\/\/.+|data:image\/(png|jpe?g|webp);base64,[A-Za-z0-9+/=]+)$/;
 
 export class CreateTrainingDto {
   @ApiProperty({ example: 'Boksles voor beginners' })
@@ -103,4 +117,24 @@ export class CreateTrainingDto {
   @ValidateNested()
   @Type(() => CreateRecurrenceDto)
   recurrence?: CreateRecurrenceDto;
+
+  @ApiPropertyOptional({
+    type: [String],
+    description: `Foto's van de training (max ${MAX_TRAINING_PHOTOS}), als http(s)-URL of data-URL (image/png, image/jpeg of image/webp). De volgorde bepaalt de volgorde in de carrousel.`,
+    example: ['data:image/png;base64,iVBORw0KGgo...'],
+  })
+  @IsOptional()
+  @IsArray()
+  @ArrayMaxSize(MAX_TRAINING_PHOTOS, {
+    message: `Je kunt maximaal ${MAX_TRAINING_PHOTOS} foto's toevoegen.`,
+  })
+  @MaxLength(5_500_000, {
+    each: true,
+    message: 'Een van de foto\'s is te groot.',
+  })
+  @Matches(TRAINING_PHOTO_PATTERN, {
+    each: true,
+    message: 'Ongeldige foto: gebruik een jpg-, png- of webp-bestand.',
+  })
+  photos?: string[];
 }

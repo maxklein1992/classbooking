@@ -60,6 +60,7 @@ export class TrainingsService {
       capacity: training.capacity,
       price: training.price,
       freeTrialAvailable: training.freeTrialAvailable,
+      photos: training.photos,
       trainerId: training.trainerId,
       seriesId: training.seriesId,
       trainer: training.trainer,
@@ -175,6 +176,7 @@ export class TrainingsService {
         capacity: dto.capacity,
         price: dto.price,
         freeTrialAvailable: dto.freeTrialAvailable ?? false,
+        photos: dto.photos ?? [],
         trainerId,
       },
       include: trainingInclude,
@@ -332,6 +334,7 @@ export class TrainingsService {
         capacity: dto.capacity,
         price: dto.price,
         freeTrialAvailable: dto.freeTrialAvailable,
+        photos: dto.photos,
       },
       include: trainingInclude,
     });
