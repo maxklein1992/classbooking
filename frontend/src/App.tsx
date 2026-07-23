@@ -10,6 +10,8 @@ import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import MyBookingsPage from './pages/MyBookingsPage'
 import TrainerDashboardPage from './pages/TrainerDashboardPage'
+import TrainingCreatePage from './pages/TrainingCreatePage'
+import TrainingEditPage from './pages/TrainingEditPage'
 import AboutPage from './pages/AboutPage'
 import ContactPage from './pages/ContactPage'
 import BlogPage from './pages/BlogPage'
@@ -61,6 +63,22 @@ export default function App() {
             element={
               <ProtectedRoute requireTrainer>
                 <TrainerDashboardPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/trainer/trainingen/nieuw"
+            element={
+              <ProtectedRoute requireTrainer>
+                <TrainingCreatePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/trainer/trainingen/:id/bewerken"
+            element={
+              <ProtectedRoute requireTrainer>
+                <TrainingEditPage />
               </ProtectedRoute>
             }
           />

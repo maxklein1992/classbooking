@@ -276,7 +276,7 @@
     "myTrainings": "Mis entrenamientos",
     "loading": "Cargando…",
     "loadError": "No se pudieron cargar los entrenamientos.",
-    "emptyBody": "Aún no has creado entrenamientos. Utiliza el formulario.",
+    "emptyBody": "Aún no has creado entrenamientos. Haz clic en \"Nuevo entrenamiento\" para empezar.",
     "bookedCount": "{{booked}}/{{capacity}} reservados",
     "edit": "Editar",
     "delete": "Eliminar",

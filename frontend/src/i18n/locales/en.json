@@ -276,7 +276,7 @@
     "myTrainings": "My trainings",
     "loading": "Loading…",
     "loadError": "Could not load trainings.",
-    "emptyBody": "You haven't created any trainings yet. Use the form.",
+    "emptyBody": "You haven't created any trainings yet. Click \"New training\" to get started.",
     "bookedCount": "{{booked}}/{{capacity}} booked",
     "edit": "Edit",
     "delete": "Delete",

@@ -1239,25 +1239,12 @@ input[type='checkbox']:focus-visible {
   letter-spacing: 0.04em;
 }
 
-.dashboard-layout {
-  display: grid;
-  grid-template-columns: minmax(320px, 400px) 1fr;
-  gap: 1.5rem;
-  align-items: start;
-}
-.form-card {
-  position: sticky;
-  top: 5rem;
+.training-form-card {
+  max-width: 640px;
 }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 860px) {
-  .dashboard-layout {
-    grid-template-columns: 1fr;
-  }
-  .form-card {
-    position: static;
-  }
   .nav-links {
     display: none;
   }
