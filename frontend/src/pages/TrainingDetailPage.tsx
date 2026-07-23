@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { getTraining, getTrainings } from '../api/trainings'
 import { createBooking, deleteBooking } from '../api/bookings'
 import { getErrorMessage } from '../api/client'
-import type { Booking, Training } from '../api/types'
+import type { Booking, Training, TrainerRef } from '../api/types'
 import { formatDate, formatDateTime, formatPrice, formatTimeRange } from '../lib/dates'
 import { useAuth } from '../auth/AuthContext'
 import { useMyBookings } from '../hooks/useMyBookings'
@@ -18,6 +18,24 @@ import PhotoCarousel from '../components/PhotoCarousel'
 
 const TABS = ['overview', 'groups', 'team', 'reviews'] as const
 type Tab = (typeof TABS)[number]
+
+/**
+ * Team-lijst afgeleid van trainer + (optionele) teacher, voor trainingen
+ * zonder expliciete `team` (mock-only veld). Toont de teacher apart van de
+ * aanmaker/eigenaar (trainer) wanneer die verschillen.
+ */
+function buildTeamFromTrainerAndTeacher(
+  training: Training,
+  t: (key: string) => string,
+): TrainerRef[] {
+  const members: TrainerRef[] = [
+    { ...training.trainer, role: t('detail.roleTrainer') },
+  ]
+  if (training.teacher && training.teacher.id !== training.trainerId) {
+    members.push({ ...training.teacher, role: t('detail.roleTeacher') })
+  }
+  return members
+}
 
 export default function TrainingDetailPage() {
   const { t } = useTranslation()
@@ -102,7 +120,7 @@ export default function TrainingDetailPage() {
   const isFull = training.availableSpots <= 0
   const isPast = new Date(training.startTime).getTime() < Date.now()
   const photos = training.photos ?? []
-  const team = training.team ?? []
+  const team = training.team ?? buildTeamFromTrainerAndTeacher(training, t)
   const groupClasses =
     allTrainings?.filter((x) => x.sport === training.sport) ?? []
 
@@ -217,6 +235,10 @@ export default function TrainingDetailPage() {
                     })
                   )}
                 </span>
+              </div>
+              <div className="detail-item">
+                <span className="detail-label">{t('training.teacher')}</span>
+                <span>{training.teacher?.name ?? training.trainer.name}</span>
               </div>
             </div>
 

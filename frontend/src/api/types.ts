@@ -61,6 +61,8 @@ export interface Training {
   freeTrialAvailable?: boolean
   trainerId: string
   trainer: TrainerRef
+  teacherId?: string | null
+  teacher?: TrainerRef | null
   bookingsCount: number
   availableSpots: number
   createdAt: string
@@ -115,10 +117,18 @@ export interface CreateTrainingPayload {
   capacity: number
   price: number
   freeTrialAvailable?: boolean
+  teacherId?: string
   photos?: string[]
 }
 
-export type UpdateTrainingPayload = Partial<CreateTrainingPayload>
+export type UpdateTrainingPayload = Omit<
+  Partial<CreateTrainingPayload>,
+  'teacherId'
+> & {
+  // Expliciet null toegestaan om de teacher weer te wissen (aanmaker wordt
+  // dan weer de impliciete teacher), naast undefined (= ongewijzigd).
+  teacherId?: string | null
+}
 
 export interface TrainingsQuery {
   sport?: Sport
