@@ -19,8 +19,22 @@ export default function RegisterPage() {
   const [role, setRole] = useState<Role>(
     params.get('role') === 'trainer' ? 'TRAINER' : 'USER',
   )
+  // Teamledennamen, alleen relevant/zichtbaar wanneer role === 'TRAINER'.
+  const [teamMembers, setTeamMembers] = useState<string[]>([])
   const [error, setError] = useState<string | null>(null)
   const [submitting, setSubmitting] = useState(false)
+
+  function addTeamMember() {
+    setTeamMembers((prev) => [...prev, ''])
+  }
+
+  function updateTeamMember(index: number, value: string) {
+    setTeamMembers((prev) => prev.map((v, i) => (i === index ? value : v)))
+  }
+
+  function removeTeamMember(index: number) {
+    setTeamMembers((prev) => prev.filter((_, i) => i !== index))
+  }
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
@@ -31,7 +45,16 @@ export default function RegisterPage() {
     }
     setSubmitting(true)
     try {
-      await register({ name, email, password, role })
+      const trimmedTeamMembers = teamMembers
+        .map((name) => name.trim())
+        .filter((name) => name.length > 0)
+      await register({
+        name,
+        email,
+        password,
+        role,
+        ...(role === 'TRAINER' ? { teamMembers: trimmedTeamMembers } : {}),
+      })
       navigate('/', { replace: true })
     } catch (err) {
       const detail = getValidationDetail(err)
@@ -112,6 +135,41 @@ export default function RegisterPage() {
               <span className="role-sub muted">{t('auth.roleTrainerSub')}</span>
             </label>
           </fieldset>
+
+          {role === 'TRAINER' && (
+            <fieldset className="team-members-field">
+              <legend>{t('auth.teamMembersLegend')}</legend>
+              <p className="muted">{t('auth.teamMembersHint')}</p>
+
+              {teamMembers.map((member, index) => (
+                <div className="team-member-row" key={index}>
+                  <input
+                    type="text"
+                    value={member}
+                    onChange={(e) => updateTeamMember(index, e.target.value)}
+                    placeholder={t('auth.teamMemberPlaceholder')}
+                    aria-label={t('auth.teamMemberPlaceholder')}
+                  />
+                  <button
+                    type="button"
+                    className="btn btn-ghost btn-icon"
+                    onClick={() => removeTeamMember(index)}
+                    aria-label={t('auth.removeTeamMember')}
+                  >
+                    ✕
+                  </button>
+                </div>
+              ))}
+
+              <button
+                type="button"
+                className="btn btn-ghost"
+                onClick={addTeamMember}
+              >
+                {t('auth.addTeamMember')}
+              </button>
+            </fieldset>
+          )}
 
           <button
             type="submit"

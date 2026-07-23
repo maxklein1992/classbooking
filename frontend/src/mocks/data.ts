@@ -443,11 +443,13 @@ export const mock = {
 
   async register(payload: RegisterPayload): Promise<AuthResponse> {
     await delay()
+    const role = payload.role ?? 'USER'
     const user: User = {
       id: 'demo-user',
       email: payload.email,
       name: payload.name,
-      role: payload.role ?? 'USER',
+      role,
+      teamMembers: role === 'TRAINER' ? (payload.teamMembers ?? []) : [],
       createdAt: new Date().toISOString(),
     }
     localStorage.setItem(USER_KEY, JSON.stringify(user))
@@ -469,6 +471,13 @@ export const mock = {
   async removeAvatar(): Promise<User> {
     await delay(150)
     const user = { ...currentUser(), avatarUrl: null }
+    localStorage.setItem(USER_KEY, JSON.stringify(user))
+    return user
+  },
+
+  async updateTeamMembers(teamMembers: string[]): Promise<User> {
+    await delay(150)
+    const user = { ...currentUser(), teamMembers }
     localStorage.setItem(USER_KEY, JSON.stringify(user))
     return user
   },

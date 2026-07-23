@@ -18,6 +18,7 @@ export interface User {
   name: string
   role: Role
   avatarUrl?: string | null
+  teamMembers?: string[]
   createdAt: string
 }
 
@@ -96,6 +97,7 @@ export interface RegisterPayload {
   password: string
   name: string
   role?: Role
+  teamMembers?: string[]
 }
 
 // Trainings

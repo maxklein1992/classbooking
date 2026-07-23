@@ -15,3 +15,10 @@ export async function removeAvatar(): Promise<User> {
   const { data } = await api.delete<User>('/users/me/avatar')
   return data
 }
+
+/** Vervang de lijst met teamledennamen van de ingelogde trainer. */
+export async function updateTeamMembers(teamMembers: string[]): Promise<User> {
+  if (USE_MOCKS) return mock.updateTeamMembers(teamMembers)
+  const { data } = await api.patch<User>('/users/me/team', { teamMembers })
+  return data
+}

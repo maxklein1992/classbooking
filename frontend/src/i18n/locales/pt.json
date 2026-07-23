@@ -174,7 +174,11 @@
     "saved": "A tua foto de perfil foi atualizada.",
     "removed": "A tua foto de perfil foi removida.",
     "errorType": "Tipo de ficheiro inválido. Usa JPG, PNG ou WebP.",
-    "errorSize": "A imagem é demasiado grande (máx. 1 MB)."
+    "errorSize": "A imagem é demasiado grande (máx. 1 MB).",
+    "teamTitle": "Membros da equipa",
+    "teamHint": "Gere os nomes dos membros da tua equipa. São apresentados como parte do teu perfil de treinador.",
+    "teamSave": "Guardar membros da equipa",
+    "teamSaved": "Os membros da tua equipa foram atualizados."
   },
   "detail": {
     "galleryLabel": "Fotos da aula",
@@ -230,6 +234,11 @@
     "roleUserSub": "Participante / praticante",
     "roleTrainer": "Sou treinador",
     "roleTrainerSub": "Oferecer treinos",
+    "teamMembersLegend": "Membros da equipa (opcional)",
+    "teamMembersHint": "Trabalhas com uma equipa? Adiciona os nomes dos teus colegas de equipa. Podes sempre alterar isto mais tarde no teu perfil.",
+    "teamMemberPlaceholder": "Nome do membro da equipa",
+    "addTeamMember": "Adicionar membro da equipa",
+    "removeTeamMember": "Remover membro da equipa",
     "loginSubmit": "Entrar",
     "registerSubmit": "Registar",
     "noAccount": "Ainda não tem conta?",
