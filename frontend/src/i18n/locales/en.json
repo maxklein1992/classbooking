@@ -174,7 +174,11 @@
     "saved": "Your profile photo has been updated.",
     "removed": "Your profile photo has been removed.",
     "errorType": "Invalid file type. Use JPG, PNG or WebP.",
-    "errorSize": "The image is too large (max. 1 MB)."
+    "errorSize": "The image is too large (max. 1 MB).",
+    "teamTitle": "Team members",
+    "teamHint": "Manage the names of your team members. These are shown as part of your trainer profile.",
+    "teamSave": "Save team members",
+    "teamSaved": "Your team members have been updated."
   },
   "detail": {
     "galleryLabel": "Class photos",
@@ -230,6 +234,11 @@
     "roleUserSub": "Participant / athlete",
     "roleTrainer": "I am a trainer",
     "roleTrainerSub": "Offer trainings",
+    "teamMembersLegend": "Team members (optional)",
+    "teamMembersHint": "Do you work with a team? Add your team members' names. You can always change this later from your profile.",
+    "teamMemberPlaceholder": "Team member name",
+    "addTeamMember": "Add team member",
+    "removeTeamMember": "Remove team member",
     "loginSubmit": "Log in",
     "registerSubmit": "Register",
     "noAccount": "No account yet?",
