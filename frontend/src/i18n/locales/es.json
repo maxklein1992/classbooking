@@ -37,6 +37,8 @@
     "mapMissing_other": "{{count}} entrenamientos sin ubicación no se muestran en el mapa.",
     "sport": "Deporte",
     "allSports": "Todos los deportes",
+    "level": "Nivel",
+    "allLevels": "Todos los niveles",
     "nearHeading": "Clases cerca de {{place}}",
     "nearYou": "Clases cerca de ti",
     "upcomingHeading": "Próximos entrenamientos",
@@ -174,7 +176,11 @@
     "saved": "Tu foto de perfil se ha actualizado.",
     "removed": "Tu foto de perfil se ha eliminado.",
     "errorType": "Tipo de archivo no válido. Usa JPG, PNG o WebP.",
-    "errorSize": "La imagen es demasiado grande (máx. 1 MB)."
+    "errorSize": "La imagen es demasiado grande (máx. 1 MB).",
+    "teamTitle": "Miembros del equipo",
+    "teamHint": "Gestiona los nombres de los miembros de tu equipo. Se muestran como parte de tu perfil de entrenador.",
+    "teamSave": "Guardar miembros del equipo",
+    "teamSaved": "Los miembros de tu equipo se han actualizado."
   },
   "detail": {
     "galleryLabel": "Fotos de la clase",
@@ -230,6 +236,11 @@
     "roleUserSub": "Participante / deportista",
     "roleTrainer": "Soy entrenador",
     "roleTrainerSub": "Ofrecer entrenamientos",
+    "teamMembersLegend": "Miembros del equipo (opcional)",
+    "teamMembersHint": "¿Trabajas con un equipo? Añade los nombres de tus compañeros. Siempre puedes cambiarlo más tarde desde tu perfil.",
+    "teamMemberPlaceholder": "Nombre del miembro del equipo",
+    "addTeamMember": "Añadir miembro del equipo",
+    "removeTeamMember": "Eliminar miembro del equipo",
     "loginSubmit": "Iniciar sesión",
     "registerSubmit": "Registrarse",
     "noAccount": "¿Aún no tienes cuenta?",
@@ -260,6 +271,7 @@
     "fieldTitle": "Título",
     "fieldDescription": "Descripción",
     "fieldSport": "Deporte",
+    "fieldLevel": "Nivel",
     "fieldStart": "Hora de inicio",
     "fieldEnd": "Hora de fin",
     "fieldLocation": "Ubicación / recinto",
@@ -325,5 +337,10 @@
     "HIIT": "HIIT",
     "SPINNING": "Spinning",
     "OTHER": "Otro"
+  },
+  "levels": {
+    "BEGINNER": "Principiante",
+    "INTERMEDIATE": "Intermedio",
+    "ADVANCED": "Avanzado"
   }
 }

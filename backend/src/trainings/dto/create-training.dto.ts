@@ -13,7 +13,7 @@ import {
   ValidateIf,
   ValidateNested,
 } from 'class-validator';
-import { Sport } from '@prisma/client';
+import { Level, Sport } from '@prisma/client';
 import { CreateRecurrenceDto } from './create-recurrence.dto';
 
 export class CreateTrainingDto {
@@ -30,6 +30,15 @@ export class CreateTrainingDto {
   @ApiProperty({ enum: Sport, example: Sport.BOXING })
   @IsEnum(Sport)
   sport: Sport;
+
+  @ApiPropertyOptional({
+    enum: Level,
+    example: Level.BEGINNER,
+    description: 'Niveau van de training. Laat leeg voor "alle niveaus".',
+  })
+  @IsOptional()
+  @IsEnum(Level)
+  level?: Level;
 
   @ApiPropertyOptional({
     example: '2026-08-01T18:00:00.000Z',
