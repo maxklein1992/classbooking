@@ -37,6 +37,8 @@
     "mapMissing_other": "{{count}} trainingen zonder locatie worden niet op de kaart getoond.",
     "sport": "Sport",
     "allSports": "Alle sporten",
+    "level": "Niveau",
+    "allLevels": "Alle niveaus",
     "nearHeading": "Lessen bij {{place}}",
     "nearYou": "Lessen bij jou in de buurt",
     "upcomingHeading": "Aankomende trainingen",
@@ -269,6 +271,7 @@
     "fieldTitle": "Titel",
     "fieldDescription": "Beschrijving",
     "fieldSport": "Sport",
+    "fieldLevel": "Niveau",
     "fieldStart": "Starttijd",
     "fieldEnd": "Eindtijd",
     "fieldLocation": "Locatie / accommodatie",
@@ -313,5 +316,10 @@
     "HIIT": "HIIT",
     "SPINNING": "Spinning",
     "OTHER": "Overig"
+  },
+  "levels": {
+    "BEGINNER": "Beginner",
+    "INTERMEDIATE": "Gevorderd",
+    "ADVANCED": "Vergevorderd"
   }
 }

@@ -37,6 +37,8 @@
     "mapMissing_other": "{{count}} trainings without a location are not shown on the map.",
     "sport": "Sport",
     "allSports": "All sports",
+    "level": "Level",
+    "allLevels": "All levels",
     "nearHeading": "Classes near {{place}}",
     "nearYou": "Classes near you",
     "upcomingHeading": "Upcoming trainings",
@@ -269,6 +271,7 @@
     "fieldTitle": "Title",
     "fieldDescription": "Description",
     "fieldSport": "Sport",
+    "fieldLevel": "Level",
     "fieldStart": "Start time",
     "fieldEnd": "End time",
     "fieldLocation": "Location / venue",
@@ -313,5 +316,10 @@
     "HIIT": "HIIT",
     "SPINNING": "Spinning",
     "OTHER": "Other"
+  },
+  "levels": {
+    "BEGINNER": "Beginner",
+    "INTERMEDIATE": "Intermediate",
+    "ADVANCED": "Advanced"
   }
 }

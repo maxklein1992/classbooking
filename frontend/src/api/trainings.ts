@@ -13,6 +13,7 @@ export async function getTrainings(
   if (USE_MOCKS) return mock.getTrainings(query)
   const params: Record<string, string> = {}
   if (query.sport) params.sport = query.sport
+  if (query.level) params.level = query.level
   if (query.from) params.from = query.from
   if (query.to) params.to = query.to
   if (query.q) params.q = query.q
