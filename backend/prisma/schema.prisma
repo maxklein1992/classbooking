@@ -49,25 +49,26 @@ model User {
 }
 
 model Training {
-  id          String    @id @default(uuid())
-  title       String
-  description String
-  sport       Sport
-  level       Level?
-  startTime    DateTime
-  endTime      DateTime
-  location     String
-  city         String
-  neighborhood String?
-  postalCode   String?
-  capacity     Int
-  price       Float     @default(0)
-  freeTrialAvailable Boolean @default(false)
-  trainer     User      @relation("TrainerTrainings", fields: [trainerId], references: [id], onDelete: Cascade)
-  trainerId   String
-  bookings    Booking[]
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id                 String    @id @default(uuid())
+  title              String
+  description        String
+  sport              Sport
+  level              Level?
+  startTime          DateTime
+  endTime            DateTime
+  location           String
+  city               String
+  neighborhood       String?
+  postalCode         String?
+  capacity           Int
+  price              Float     @default(0)
+  freeTrialAvailable Boolean   @default(false)
+  photos             String[]  @default([])
+  trainer            User      @relation("TrainerTrainings", fields: [trainerId], references: [id], onDelete: Cascade)
+  trainerId          String
+  bookings           Booking[]
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
 
   @@index([startTime])
   @@index([sport])

@@ -1,10 +1,27 @@
-import { useState, type FormEvent } from 'react'
+import { useRef, useState, type ChangeEvent, type FormEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { CreateTrainingPayload, Level, Sport, Training } from '../api/types'
 import { SPORTS, sportLabel } from '../lib/sports'
 import { LEVELS, levelLabel } from '../lib/levels'
 import { fromDatetimeLocalValue, toDatetimeLocalValue } from '../lib/dates'
 import { useToast } from './ToastProvider'
+
+// Zelfde grenzen als bij het beheren van foto's op de backend (zie
+// backend/src/trainings/dto/create-training.dto.ts): max. aantal foto's en
+// max. bestandsgrootte per foto. Wordt hier vooraf gecontroleerd zodat de
+// gebruiker meteen feedback krijgt i.p.v. pas na een mislukte serverrequest.
+const MAX_PHOTOS = 8
+const MAX_PHOTO_BYTES = 4_000_000 // 4 MB
+const ALLOWED_PHOTO_TYPES = ['image/jpeg', 'image/png', 'image/webp']
+
+function readAsDataUrl(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onload = () => resolve(reader.result as string)
+    reader.onerror = () => reject(new Error('read-error'))
+    reader.readAsDataURL(file)
+  })
+}
 
 interface FormState {
   title: string
@@ -20,6 +37,7 @@ interface FormState {
   capacity: string
   price: string
   freeTrialAvailable: boolean
+  photos: string[]
 }
 
 const emptyForm: FormState = {
@@ -36,6 +54,7 @@ const emptyForm: FormState = {
   capacity: '10',
   price: '0',
   freeTrialAvailable: false,
+  photos: [],
 }
 
 function fromTraining(training: Training): FormState {
@@ -53,6 +72,7 @@ function fromTraining(training: Training): FormState {
     capacity: String(training.capacity),
     price: String(training.price),
     freeTrialAvailable: training.freeTrialAvailable ?? false,
+    photos: training.photos ?? [],
   }
 }
 
@@ -75,9 +95,54 @@ export default function TrainingForm({
   const [form, setForm] = useState<FormState>(
     initial ? fromTraining(initial) : emptyForm,
   )
+  const [photoBusy, setPhotoBusy] = useState(false)
+  const photoInputRef = useRef<HTMLInputElement>(null)
 
   function set<K extends keyof FormState>(key: K, value: FormState[K]) {
     setForm((f) => ({ ...f, [key]: value }))
+  }
+
+  async function handleAddPhoto(e: ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (photoInputRef.current) photoInputRef.current.value = '' // sta herselectie toe
+    if (!file) return
+
+    if (form.photos.length >= MAX_PHOTOS) {
+      showToast(t('trainer.tooManyPhotos', { max: MAX_PHOTOS }), 'error')
+      return
+    }
+    if (!ALLOWED_PHOTO_TYPES.includes(file.type)) {
+      showToast(t('trainer.photoInvalidType'), 'error')
+      return
+    }
+    if (file.size > MAX_PHOTO_BYTES) {
+      showToast(t('trainer.photoTooLarge'), 'error')
+      return
+    }
+
+    setPhotoBusy(true)
+    try {
+      const dataUrl = await readAsDataUrl(file)
+      setForm((f) => ({ ...f, photos: [...f.photos, dataUrl] }))
+    } catch {
+      showToast(t('trainer.photoInvalidType'), 'error')
+    } finally {
+      setPhotoBusy(false)
+    }
+  }
+
+  function handleRemovePhoto(index: number) {
+    setForm((f) => ({ ...f, photos: f.photos.filter((_, i) => i !== index) }))
+  }
+
+  function handleMovePhoto(index: number, direction: -1 | 1) {
+    setForm((f) => {
+      const target = index + direction
+      if (target < 0 || target >= f.photos.length) return f
+      const photos = [...f.photos]
+      ;[photos[index], photos[target]] = [photos[target], photos[index]]
+      return { ...f, photos }
+    })
   }
 
   function handleSubmit(e: FormEvent) {
@@ -119,6 +184,7 @@ export default function TrainingForm({
       capacity,
       price: Number(form.price) || 0,
       freeTrialAvailable: form.freeTrialAvailable,
+      photos: form.photos,
     }
     onSubmit(payload)
   }
@@ -256,6 +322,65 @@ export default function TrainingForm({
         />
         <span>{t('trainer.fieldFreeTrial')}</span>
       </label>
+
+      <div className="field photo-manager-field">
+        <span>{t('trainer.fieldPhotos')}</span>
+        <p className="muted photo-manager-hint">
+          {t('trainer.photosHint', { max: MAX_PHOTOS })}
+        </p>
+
+        {form.photos.length > 0 && (
+          <ul className="photo-manager-list">
+            {form.photos.map((photo, i) => (
+              <li key={i} className="photo-manager-item">
+                <img src={photo} alt="" className="photo-manager-thumb" />
+                <div className="photo-manager-actions">
+                  <button
+                    type="button"
+                    className="btn btn-ghost btn-sm"
+                    onClick={() => handleMovePhoto(i, -1)}
+                    disabled={i === 0}
+                    aria-label={t('trainer.movePhotoUp')}
+                  >
+                    ↑
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-ghost btn-sm"
+                    onClick={() => handleMovePhoto(i, 1)}
+                    disabled={i === form.photos.length - 1}
+                    aria-label={t('trainer.movePhotoDown')}
+                  >
+                    ↓
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-ghost btn-sm"
+                    onClick={() => handleRemovePhoto(i)}
+                    aria-label={t('trainer.removePhoto')}
+                  >
+                    {t('trainer.removePhoto')}
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+
+        {form.photos.length < MAX_PHOTOS && (
+          <label className="btn btn-ghost photo-manager-add">
+            {photoBusy ? t('common.busy') : t('trainer.addPhoto')}
+            <input
+              ref={photoInputRef}
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+              onChange={handleAddPhoto}
+              disabled={photoBusy}
+              hidden
+            />
+          </label>
+        )}
+      </div>
 
       <div className="form-actions">
         <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
