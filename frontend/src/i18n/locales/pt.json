@@ -186,7 +186,12 @@
       "reviews": "Avaliações"
     },
     "noGroups": "De momento não há aulas em grupo agendadas.",
-    "noTeam": "Ainda não há informação da equipa."
+    "noTeam": "Ainda não há informação da equipa.",
+    "noPhotos": "Ainda não há fotos adicionadas",
+    "carouselPrev": "Foto anterior",
+    "carouselNext": "Foto seguinte",
+    "carouselGoTo": "Ir para a foto {{index}}",
+    "photoAlt": "{{title}} — foto {{index}} de {{count}}"
   },
   "training": {
     "spotsFree": "{{spots}} de {{capacity}} lugares livres",
@@ -284,7 +289,16 @@
     "invalidTimes": "Introduza uma hora de início e de fim válidas.",
     "endAfterStart": "A hora de fim deve ser posterior à de início.",
     "startInFuture": "A hora de início deve estar no futuro.",
-    "capacityMin": "A capacidade deve ser de pelo menos 1."
+    "capacityMin": "A capacidade deve ser de pelo menos 1.",
+    "fieldPhotos": "Fotos",
+    "photosHint": "Adicione até {{max}} fotos. Aparecem como carrossel na página de detalhe.",
+    "addPhoto": "Adicionar foto",
+    "removePhoto": "Remover",
+    "movePhotoUp": "Mover para cima",
+    "movePhotoDown": "Mover para baixo",
+    "tooManyPhotos": "Podes adicionar no máximo {{max}} fotos.",
+    "photoInvalidType": "Tipo de ficheiro inválido. Usa JPG, PNG ou WebP.",
+    "photoTooLarge": "Esta foto é demasiado grande (máx. 4 MB)."
   },
   "errors": {
     "full": "Este treino está esgotado.",

@@ -29,11 +29,6 @@ export interface TrainerRef {
   role?: string
 }
 
-export interface GalleryImage {
-  src: string
-  alt: string
-}
-
 export interface Review {
   id: string
   author: string
@@ -67,7 +62,8 @@ export interface Training {
   rating?: number // gemiddelde 1..5
   reviewsCount?: number
   reviews?: Review[]
-  gallery?: GalleryImage[]
+  /** Foto's van de training, getoond als carrousel op de detailpagina. Volgorde = weergavevolgorde. */
+  photos?: string[]
   team?: TrainerRef[]
 }
 
@@ -112,6 +108,7 @@ export interface CreateTrainingPayload {
   capacity: number
   price: number
   freeTrialAvailable?: boolean
+  photos?: string[]
 }
 
 export type UpdateTrainingPayload = Partial<CreateTrainingPayload>
