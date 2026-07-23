@@ -2,6 +2,7 @@ import { api, USE_MOCKS } from './client'
 import { mock } from '../mocks/data'
 import type {
   CreateTrainingPayload,
+  CreateTrainingResult,
   Training,
   TrainingsQuery,
   UpdateTrainingPayload,
@@ -35,8 +36,8 @@ export async function getTraining(id: string): Promise<Training> {
 
 export async function createTraining(
   payload: CreateTrainingPayload,
-): Promise<Training> {
-  const { data } = await api.post<Training>('/trainings', payload)
+): Promise<CreateTrainingResult> {
+  const { data } = await api.post<CreateTrainingResult>('/trainings', payload)
   return data
 }
 

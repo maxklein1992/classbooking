@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { createTraining } from '../api/trainings'
 import { getErrorMessage } from '../api/client'
-import type { CreateTrainingPayload } from '../api/types'
+import { isTrainingSeriesResult, type CreateTrainingPayload } from '../api/types'
 import { useToast } from '../components/ToastProvider'
 import TrainingForm, { type TrainingFormPayload } from '../components/TrainingForm'
 
@@ -15,8 +15,14 @@ export default function TrainingCreatePage() {
 
   const createMutation = useMutation({
     mutationFn: (payload: CreateTrainingPayload) => createTraining(payload),
-    onSuccess: () => {
-      showToast(t('trainer.created'))
+    onSuccess: (result) => {
+      if (isTrainingSeriesResult(result)) {
+        showToast(
+          t('trainer.recurringCreated', { count: result.trainings.length }),
+        )
+      } else {
+        showToast(t('trainer.created'))
+      }
       queryClient.invalidateQueries({ queryKey: ['trainings'] })
       navigate('/trainer')
     },

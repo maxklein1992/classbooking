@@ -35,22 +35,23 @@ enum BookingStatus {
 }
 
 model User {
-  id                String     @id @default(uuid())
-  email             String     @unique
+  id                String           @id @default(uuid())
+  email             String           @unique
   passwordHash      String
   name              String
   avatarUrl         String?
-  role              Role       @default(USER)
-  teamMembers       String[]   @default([])
-  trainings         Training[] @relation("TrainerTrainings")
-  teachingTrainings Training[] @relation("TeachingTrainings")
+  role              Role             @default(USER)
+  teamMembers       String[]         @default([])
+  trainings         Training[]       @relation("TrainerTrainings")
+  teachingTrainings Training[]       @relation("TeachingTrainings")
+  trainingSeries    TrainingSeries[] @relation("TrainerTrainingSeries")
   bookings          Booking[]
-  createdAt         DateTime   @default(now())
-  updatedAt         DateTime   @updatedAt
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
 }
 
 model Training {
-  id                 String    @id @default(uuid())
+  id                 String          @id @default(uuid())
   title              String
   description        String
   sport              Sport
@@ -62,22 +63,57 @@ model Training {
   neighborhood       String?
   postalCode         String?
   capacity           Int
-  price              Float     @default(0)
-  freeTrialAvailable Boolean   @default(false)
-  photos             String[]  @default([])
-  trainer            User      @relation("TrainerTrainings", fields: [trainerId], references: [id], onDelete: Cascade)
+  price              Float           @default(0)
+  freeTrialAvailable Boolean         @default(false)
+  photos             String[]        @default([])
+  trainer            User            @relation("TrainerTrainings", fields: [trainerId], references: [id], onDelete: Cascade)
   trainerId          String
-  teacher            User?     @relation("TeachingTrainings", fields: [teacherId], references: [id], onDelete: SetNull)
+  teacher            User?           @relation("TeachingTrainings", fields: [teacherId], references: [id], onDelete: SetNull)
   teacherId          String?
+  series             TrainingSeries? @relation(fields: [seriesId], references: [id], onDelete: Cascade)
+  seriesId           String?
   bookings           Booking[]
-  createdAt          DateTime  @default(now())
-  updatedAt          DateTime  @updatedAt
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
 
   @@index([startTime])
   @@index([sport])
   @@index([level])
   @@index([city])
+  @@index([seriesId])
   @@index([teacherId])
+}
+
+// Herhaalregel voor een reeks trainingen ("herhalende training"). Bij aanmaken
+// worden hieruit losse Training-rijen gegenereerd (elk gewoon los boekbaar,
+// zie Training.seriesId). Dit model bewaart alleen de regel zelf, niet de
+// losse sessies.
+model TrainingSeries {
+  id                 String     @id @default(uuid())
+  title              String
+  description        String
+  sport              Sport
+  location           String
+  city               String
+  neighborhood       String?
+  postalCode         String?
+  capacity           Int
+  price              Float      @default(0)
+  freeTrialAvailable Boolean    @default(false)
+  // Dagen van de week waarop een sessie plaatsvindt (0=zondag .. 6=zaterdag,
+  // zie Date.getDay()).
+  daysOfWeek         Int[]
+  // Tijdstip van de dag, los van een specifieke datum, formaat "HH:mm".
+  startTime          String
+  endTime            String
+  // Periode waarbinnen sessies gegenereerd worden.
+  activeFrom         DateTime
+  activeUntil        DateTime
+  trainer            User       @relation("TrainerTrainingSeries", fields: [trainerId], references: [id], onDelete: Cascade)
+  trainerId          String
+  trainings          Training[]
+  createdAt          DateTime   @default(now())
+  updatedAt          DateTime   @updatedAt
 }
 
 model Booking {

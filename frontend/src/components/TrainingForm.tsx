@@ -8,6 +8,24 @@ import { fromDatetimeLocalValue, toDatetimeLocalValue } from '../lib/dates'
 import { getTrainers } from '../api/users'
 import { useToast } from './ToastProvider'
 
+// Dagen van de week in JS Date.getDay()-volgorde (0=zondag..6=zaterdag),
+// weergegeven in de gebruikelijke Europese volgorde (maandag eerst).
+const WEEKDAYS: { value: number; labelKey: string }[] = [
+  { value: 1, labelKey: 'trainer.dayMon' },
+  { value: 2, labelKey: 'trainer.dayTue' },
+  { value: 3, labelKey: 'trainer.dayWed' },
+  { value: 4, labelKey: 'trainer.dayThu' },
+  { value: 5, labelKey: 'trainer.dayFri' },
+  { value: 6, labelKey: 'trainer.daySat' },
+  { value: 0, labelKey: 'trainer.daySun' },
+]
+
+function todayDateValue(): string {
+  const d = new Date()
+  const pad = (n: number) => String(n).padStart(2, '0')
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`
+}
+
 // Zelfde grenzen als bij het beheren van foto's op de backend (zie
 // backend/src/trainings/dto/create-training.dto.ts): max. aantal foto's en
 // max. bestandsgrootte per foto. Wordt hier vooraf gecontroleerd zodat de
@@ -39,6 +57,12 @@ interface FormState {
   capacity: string
   price: string
   freeTrialAvailable: boolean
+  mode: 'single' | 'recurring'
+  recurDaysOfWeek: number[]
+  recurStartTime: string // "HH:mm"
+  recurEndTime: string // "HH:mm"
+  recurActiveFrom: string // "YYYY-MM-DD"
+  recurActiveUntil: string // "YYYY-MM-DD"
   teacherId: string // lege string = geen keuze (aanmaker is impliciet teacher)
   photos: string[]
 }
@@ -57,12 +81,19 @@ const emptyForm: FormState = {
   capacity: '10',
   price: '0',
   freeTrialAvailable: false,
+  mode: 'single',
+  recurDaysOfWeek: [],
+  recurStartTime: '18:00',
+  recurEndTime: '19:00',
+  recurActiveFrom: todayDateValue(),
+  recurActiveUntil: '',
   teacherId: '',
   photos: [],
 }
 
 function fromTraining(training: Training): FormState {
   return {
+    ...emptyForm,
     title: training.title,
     description: training.description,
     sport: training.sport,
@@ -164,6 +195,67 @@ export default function TrainingForm({
   function handleSubmit(e: FormEvent) {
     e.preventDefault()
 
+    const capacity = Number(form.capacity)
+    if (!Number.isFinite(capacity) || capacity < 1) {
+      showToast(t('trainer.capacityMin'), 'error')
+      return
+    }
+
+    const isRecurring = !isEditing && form.mode === 'recurring'
+    const base = {
+      title: form.title.trim(),
+      description: form.description.trim(),
+      sport: form.sport,
+      level: form.level || undefined,
+      location: form.location.trim(),
+      city: form.city.trim(),
+      neighborhood: form.neighborhood.trim() || undefined,
+      postalCode: form.postalCode.trim() || undefined,
+      capacity,
+      price: Number(form.price) || 0,
+      freeTrialAvailable: form.freeTrialAvailable,
+    }
+
+    if (isRecurring) {
+      if (form.recurDaysOfWeek.length === 0) {
+        showToast(t('trainer.recurrenceDaysRequired'), 'error')
+        return
+      }
+      const timePattern = /^([01]\d|2[0-3]):([0-5]\d)$/
+      if (
+        !timePattern.test(form.recurStartTime) ||
+        !timePattern.test(form.recurEndTime)
+      ) {
+        showToast(t('trainer.recurrenceInvalidTimes'), 'error')
+        return
+      }
+      if (form.recurEndTime <= form.recurStartTime) {
+        showToast(t('trainer.recurrenceEndAfterStart'), 'error')
+        return
+      }
+      if (!form.recurActiveFrom || !form.recurActiveUntil) {
+        showToast(t('trainer.recurrenceInvalidDates'), 'error')
+        return
+      }
+      if (form.recurActiveUntil < form.recurActiveFrom) {
+        showToast(t('trainer.recurrenceUntilAfterFrom'), 'error')
+        return
+      }
+
+      const payload: CreateTrainingPayload = {
+        ...base,
+        recurrence: {
+          daysOfWeek: form.recurDaysOfWeek,
+          startTime: form.recurStartTime,
+          endTime: form.recurEndTime,
+          activeFrom: form.recurActiveFrom,
+          activeUntil: form.recurActiveUntil,
+        },
+      }
+      onSubmit(payload)
+      return
+    }
+
     const start = new Date(form.startTime)
     const end = new Date(form.endTime)
     if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime())) {
@@ -180,34 +272,28 @@ export default function TrainingForm({
       showToast(t('trainer.startInFuture'), 'error')
       return
     }
-    const capacity = Number(form.capacity)
-    if (!Number.isFinite(capacity) || capacity < 1) {
-      showToast(t('trainer.capacityMin'), 'error')
-      return
-    }
 
     // Lege selectie betekent: bij bewerken de eerder gekozen teacher wissen
     // (expliciet null), bij aanmaken gewoon geen teacher meesturen.
     const teacherId = form.teacherId || (isEditing ? null : undefined)
 
     const payload: TrainingFormPayload = {
-      title: form.title.trim(),
-      description: form.description.trim(),
-      sport: form.sport,
-      level: form.level || undefined,
+      ...base,
       startTime: fromDatetimeLocalValue(form.startTime),
       endTime: fromDatetimeLocalValue(form.endTime),
-      location: form.location.trim(),
-      city: form.city.trim(),
-      neighborhood: form.neighborhood.trim() || undefined,
-      postalCode: form.postalCode.trim() || undefined,
-      capacity,
-      price: Number(form.price) || 0,
-      freeTrialAvailable: form.freeTrialAvailable,
       teacherId,
       photos: form.photos,
     }
     onSubmit(payload)
+  }
+
+  function toggleDay(day: number) {
+    setForm((f) => ({
+      ...f,
+      recurDaysOfWeek: f.recurDaysOfWeek.includes(day)
+        ? f.recurDaysOfWeek.filter((d) => d !== day)
+        : [...f.recurDaysOfWeek, day],
+    }))
   }
 
   return (
@@ -256,40 +342,120 @@ export default function TrainingForm({
           ))}
         </select>
       </label>
-      <label className="field">
-        <span>{t('trainer.fieldTeacher')}</span>
-        <select
-          value={form.teacherId}
-          onChange={(e) => set('teacherId', e.target.value)}
-        >
-          <option value="">{t('trainer.fieldTeacherSelf')}</option>
-          {trainers?.map((tr) => (
-            <option key={tr.id} value={tr.id}>
-              {tr.name}
-            </option>
-          ))}
-        </select>
-      </label>
-      <div className="field-row">
-        <label className="field">
-          <span>{t('trainer.fieldStart')}</span>
-          <input
-            type="datetime-local"
-            value={form.startTime}
-            onChange={(e) => set('startTime', e.target.value)}
-            required
-          />
-        </label>
-        <label className="field">
-          <span>{t('trainer.fieldEnd')}</span>
-          <input
-            type="datetime-local"
-            value={form.endTime}
-            onChange={(e) => set('endTime', e.target.value)}
-            required
-          />
-        </label>
-      </div>
+      {!isEditing && (
+        <div className="field-row">
+          <label className="field">
+            <span>{t('trainer.recurringMode')}</span>
+            <select
+              value={form.mode}
+              onChange={(e) =>
+                set('mode', e.target.value as FormState['mode'])
+              }
+            >
+              <option value="single">{t('trainer.modeSingle')}</option>
+              <option value="recurring">{t('trainer.modeRecurring')}</option>
+            </select>
+          </label>
+        </div>
+      )}
+
+      {form.mode === 'single' || isEditing ? (
+        <>
+          <label className="field">
+            <span>{t('trainer.fieldTeacher')}</span>
+            <select
+              value={form.teacherId}
+              onChange={(e) => set('teacherId', e.target.value)}
+            >
+              <option value="">{t('trainer.fieldTeacherSelf')}</option>
+              {trainers?.map((tr) => (
+                <option key={tr.id} value={tr.id}>
+                  {tr.name}
+                </option>
+              ))}
+            </select>
+          </label>
+          <div className="field-row">
+            <label className="field">
+              <span>{t('trainer.fieldStart')}</span>
+              <input
+                type="datetime-local"
+                value={form.startTime}
+                onChange={(e) => set('startTime', e.target.value)}
+                required
+              />
+            </label>
+            <label className="field">
+              <span>{t('trainer.fieldEnd')}</span>
+              <input
+                type="datetime-local"
+                value={form.endTime}
+                onChange={(e) => set('endTime', e.target.value)}
+                required
+              />
+            </label>
+          </div>
+        </>
+      ) : (
+        <div className="recurrence-fields">
+          <div className="field">
+            <span>{t('trainer.recurrenceDays')}</span>
+            <div className="weekday-picker">
+              {WEEKDAYS.map((day) => (
+                <label key={day.value} className="weekday-check">
+                  <input
+                    type="checkbox"
+                    checked={form.recurDaysOfWeek.includes(day.value)}
+                    onChange={() => toggleDay(day.value)}
+                  />
+                  <span>{t(day.labelKey)}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+          <div className="field-row">
+            <label className="field">
+              <span>{t('trainer.recurrenceStart')}</span>
+              <input
+                type="time"
+                value={form.recurStartTime}
+                onChange={(e) => set('recurStartTime', e.target.value)}
+                required
+              />
+            </label>
+            <label className="field">
+              <span>{t('trainer.recurrenceEnd')}</span>
+              <input
+                type="time"
+                value={form.recurEndTime}
+                onChange={(e) => set('recurEndTime', e.target.value)}
+                required
+              />
+            </label>
+          </div>
+          <div className="field-row">
+            <label className="field">
+              <span>{t('trainer.recurrenceFrom')}</span>
+              <input
+                type="date"
+                value={form.recurActiveFrom}
+                onChange={(e) => set('recurActiveFrom', e.target.value)}
+                required
+              />
+            </label>
+            <label className="field">
+              <span>{t('trainer.recurrenceUntil')}</span>
+              <input
+                type="date"
+                value={form.recurActiveUntil}
+                onChange={(e) => set('recurActiveUntil', e.target.value)}
+                required
+              />
+            </label>
+          </div>
+          <p className="muted recurrence-hint">{t('trainer.recurrenceHint')}</p>
+        </div>
+      )}
       <label className="field">
         <span>{t('trainer.fieldLocation')}</span>
         <input

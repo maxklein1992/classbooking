@@ -60,6 +60,7 @@ export interface Training {
   price: number
   freeTrialAvailable?: boolean
   trainerId: string
+  seriesId?: string | null
   trainer: TrainerRef
   teacherId?: string | null
   teacher?: TrainerRef | null
@@ -103,13 +104,22 @@ export interface RegisterPayload {
 }
 
 // Trainings
+export interface RecurrencePayload {
+  daysOfWeek: number[] // 0=zondag .. 6=zaterdag
+  startTime: string // "HH:mm"
+  endTime: string // "HH:mm"
+  activeFrom: string // "YYYY-MM-DD"
+  activeUntil: string // "YYYY-MM-DD"
+}
+
 export interface CreateTrainingPayload {
   title: string
   description: string
   sport: Sport
   level?: Level
-  startTime: string
-  endTime: string
+  // Verplicht tenzij `recurrence` is opgegeven.
+  startTime?: string
+  endTime?: string
   location: string
   city: string
   neighborhood?: string
@@ -117,17 +127,38 @@ export interface CreateTrainingPayload {
   capacity: number
   price: number
   freeTrialAvailable?: boolean
+  recurrence?: RecurrencePayload
   teacherId?: string
   photos?: string[]
 }
 
 export type UpdateTrainingPayload = Omit<
   Partial<CreateTrainingPayload>,
-  'teacherId'
+  'recurrence' | 'teacherId'
 > & {
   // Expliciet null toegestaan om de teacher weer te wissen (aanmaker wordt
   // dan weer de impliciete teacher), naast undefined (= ongewijzigd).
   teacherId?: string | null
+}
+
+// Response bij het aanmaken van een herhalende training: de backend
+// genereert meerdere losse sessies i.p.v. één Training.
+export interface CreateTrainingSeriesResult {
+  seriesId: string
+  trainings: Training[]
+}
+
+export type CreateTrainingResult = Training | CreateTrainingSeriesResult
+
+export function isTrainingSeriesResult(
+  result: CreateTrainingResult,
+): result is CreateTrainingSeriesResult {
+  return (
+    typeof result === 'object' &&
+    result !== null &&
+    'trainings' in result &&
+    Array.isArray((result as CreateTrainingSeriesResult).trainings)
+  )
 }
 
 export interface TrainingsQuery {
