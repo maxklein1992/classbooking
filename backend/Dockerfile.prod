@@ -1,0 +1,29 @@
+# Productie-image voor de backend. Build-context = repo-root (npm workspaces,
+# één package-lock.json in de root). Zie docker-compose.prod.yml.
+
+########## Stage 1: build ##########
+FROM node:20-slim AS build
+RUN apt-get update -y && apt-get install -y openssl && rm -rf /var/lib/apt/lists/*
+WORKDIR /app
+COPY package.json package-lock.json ./
+COPY backend/package.json backend/
+COPY frontend/package.json frontend/
+RUN npm ci -w backend --include-workspace-root=false
+COPY backend backend
+WORKDIR /app/backend
+RUN npx prisma generate && npm run build
+
+########## Stage 2: runtime ##########
+FROM node:20-slim AS runtime
+RUN apt-get update -y && apt-get install -y openssl && rm -rf /var/lib/apt/lists/*
+WORKDIR /app
+# node_modules uit de build-stage (incl. prisma-CLI, nodig voor `migrate deploy`
+# bij het opstarten, en de gegenereerde Prisma-client).
+COPY --from=build /app/node_modules ./node_modules
+COPY --from=build /app/backend/package.json ./backend/package.json
+WORKDIR /app/backend
+COPY backend/prisma ./prisma
+COPY --from=build /app/backend/dist ./dist
+ENV NODE_ENV=production PORT=3001
+EXPOSE 3001
+CMD ["sh", "-c", "npx prisma migrate deploy && node dist/main.js"]
