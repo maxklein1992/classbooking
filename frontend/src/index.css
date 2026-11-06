@@ -661,8 +661,10 @@ textarea {
   background: #fff;
   color: var(--text);
 }
+/* :where() houdt de specificiteit laag (0,1,1), zodat component-regels zoals
+   .hero-search input:focus deze globale focus-stijl kunnen overschrijven. */
 select:focus,
-input:focus:not([type='radio']):not([type='checkbox']),
+input:focus:where(:not([type='radio'], [type='checkbox'])),
 textarea:focus {
   outline: none;
   border-color: var(--ink);
