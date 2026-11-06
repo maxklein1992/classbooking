@@ -22,10 +22,6 @@ npm run prisma:migrate    # create/apply migrations (dev)
 npm run db:seed           # seed demo users + trainings (idempotent)
 ```
 
-Seed credentials:
-- Trainer: `trainer@demo.com` / `password123`
-- User: `user@demo.com` / `password123`
-
 ## Run
 
 ```bash

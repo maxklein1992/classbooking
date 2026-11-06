@@ -65,13 +65,6 @@ docker compose down               # stoppen
 
 De frontend blijft je lokaal starten met `npm run dev:frontend` (of `npm run dev` voor beide, dan draait de backend dubbel — gebruik in dat geval `npm run dev:frontend` samen met `docker compose up -d backend`).
 
-## Demo-accounts (na seed)
-
-| Rol | E-mail | Wachtwoord |
-|-----|--------|-----------|
-| Trainer | trainer@demo.com | password123 |
-| Gebruiker | user@demo.com | password123 |
-
 ## Handige scripts (root)
 
 | Commando | Doet |
