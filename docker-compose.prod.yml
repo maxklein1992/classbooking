@@ -1,0 +1,47 @@
+# Productie-stack (Hetzner). Gebruik:
+#   cp .env.prod.example .env   # en vul echte waarden in
+#   docker compose -f docker-compose.prod.yml up -d --build
+# De app is bereikbaar op poort ${WEB_PORT:-8080} (poort 80 is in gebruik door tennis-bot).
+name: classbooking-prod
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: classbooking
+      POSTGRES_USER: classbooking
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD ontbreekt}
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U classbooking -d classbooking"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile.prod
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://classbooking:${POSTGRES_PASSWORD}@db:5432/classbooking?schema=public
+      JWT_SECRET: ${JWT_SECRET:?JWT_SECRET ontbreekt}
+      PORT: 3001
+
+  web:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile.prod
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "${WEB_PORT:-8080}:80"
+
+volumes:
+  db-data:

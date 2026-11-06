@@ -82,3 +82,22 @@ De frontend blijft je lokaal starten met `npm run dev:frontend` (of `npm run dev
 - Boeken is geblokkeerd bij volle klas (409), dubbele boeking (409) of training in het verleden (400).
 
 Zie [API_CONTRACT.md](API_CONTRACT.md) voor alle endpoints en datastructuren.
+
+## Productie
+
+| Onderdeel | Waar |
+|-----------|------|
+| Frontend | Vercel — https://classo-booking.vercel.app (`frontend/vercel.json` stuurt `/api` door naar Hetzner) |
+| Backend + DB | Hetzner VPS, Docker-stack in `/opt/classbooking` (poort 8080, naast tennis-bot op 80) |
+
+**Backend deployen (Hetzner):**
+
+```bash
+rsync -az --delete --exclude node_modules --exclude dist --exclude .git --exclude .claude --exclude .env \
+  ./ root@<server>:/opt/classbooking/
+ssh root@<server> 'cd /opt/classbooking && docker compose -f docker-compose.prod.yml up -d --build'
+```
+
+Eerste keer: `.env.prod.example` → `.env` op de server met sterke `POSTGRES_PASSWORD` en `JWT_SECRET`. Migraties draaien automatisch bij het opstarten van de backend.
+
+**Frontend deployen (Vercel):** `cd frontend && npx vercel deploy --prod`
