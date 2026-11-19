@@ -11,6 +11,9 @@ COPY frontend frontend
 WORKDIR /app/frontend
 # Same-origin: nginx proxyt /api naar de backend.
 ENV VITE_API_URL=/api VITE_USE_MOCKS=false
+# Optioneel: DSN van het Sentry-frontendproject (publiek, komt in de bundle).
+ARG VITE_SENTRY_DSN=
+ENV VITE_SENTRY_DSN=$VITE_SENTRY_DSN
 RUN npm run build
 
 FROM nginx:1.27-alpine

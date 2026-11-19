@@ -5,7 +5,9 @@
     "busy": "Espere…",
     "details": "Detalles",
     "back": "← Volver al resumen",
-    "footer": "Classo — reserva entrenamientos deportivos"
+    "footer": "Classo — reserva entrenamientos deportivos",
+    "errorTitle": "Algo salió mal",
+    "reload": "Recargar la página"
   },
   "footer": {
     "tagline": "Descubre y reserva clases de deporte cerca de ti.",

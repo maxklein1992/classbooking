@@ -5,7 +5,9 @@
     "busy": "Please wait…",
     "details": "Details",
     "back": "← Back to overview",
-    "footer": "Classo — book sports trainings"
+    "footer": "Classo — book sports trainings",
+    "errorTitle": "Something went wrong",
+    "reload": "Reload the page"
   },
   "footer": {
     "tagline": "Discover and book sports classes near you.",
