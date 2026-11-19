@@ -32,11 +32,15 @@ services:
       DATABASE_URL: postgresql://classbooking:${POSTGRES_PASSWORD}@db:5432/classbooking?schema=public
       JWT_SECRET: ${JWT_SECRET:?JWT_SECRET ontbreekt}
       PORT: 3001
+      SENTRY_DSN: ${SENTRY_DSN:-}
+      SENTRY_ENVIRONMENT: production
 
   web:
     build:
       context: .
       dockerfile: frontend/Dockerfile.prod
+      args:
+        VITE_SENTRY_DSN: ${VITE_SENTRY_DSN:-}
     restart: unless-stopped
     depends_on:
       - backend

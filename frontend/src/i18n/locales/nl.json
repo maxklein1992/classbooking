@@ -5,7 +5,9 @@
     "busy": "Even geduld…",
     "details": "Details",
     "back": "← Terug naar overzicht",
-    "footer": "Classo — boek sporttrainingen"
+    "footer": "Classo — boek sporttrainingen",
+    "errorTitle": "Er ging iets mis",
+    "reload": "Pagina opnieuw laden"
   },
   "footer": {
     "tagline": "Ontdek en boek sportlessen bij jou in de buurt.",
