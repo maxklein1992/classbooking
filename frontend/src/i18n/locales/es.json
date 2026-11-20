@@ -27,7 +27,9 @@
     "register": "Registrarse",
     "logout": "Cerrar sesión",
     "trainerChip": "Entrenador",
-    "language": "Idioma"
+    "language": "Idioma",
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú"
   },
   "home": {
     "title": "Reserva tu clase",

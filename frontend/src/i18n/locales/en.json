@@ -27,7 +27,9 @@
     "register": "Register",
     "logout": "Log out",
     "trainerChip": "Trainer",
-    "language": "Language"
+    "language": "Language",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
   },
   "home": {
     "title": "Book your class",

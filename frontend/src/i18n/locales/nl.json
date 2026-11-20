@@ -27,7 +27,9 @@
     "register": "Registreren",
     "logout": "Uitloggen",
     "trainerChip": "Trainer",
-    "language": "Taal"
+    "language": "Taal",
+    "openMenu": "Menu openen",
+    "closeMenu": "Menu sluiten"
   },
   "home": {
     "title": "Boek je les",

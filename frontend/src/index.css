@@ -1448,9 +1448,106 @@ input[type='checkbox']:focus-visible {
 }
 
 /* ---------- Responsive ---------- */
+/* Hamburgerknop: alleen zichtbaar op smalle schermen. */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  width: 40px;
+  height: 40px;
+  padding: 0 10px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.nav-toggle-bar {
+  display: block;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--text);
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+.navbar.menu-open .nav-toggle-bar:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+.navbar.menu-open .nav-toggle-bar:nth-child(2) {
+  opacity: 0;
+}
+.navbar.menu-open .nav-toggle-bar:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+.nav-account-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
 @media (max-width: 860px) {
-  .nav-links {
+  .navbar-inner {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding: 0.6rem 1rem;
+  }
+  .brand {
+    flex: 1;
+  }
+  .nav-toggle {
+    display: flex;
+  }
+  /* Menulinks en account-acties klappen uit onder de balk. */
+  .nav-links,
+  .nav-account-actions {
     display: none;
+  }
+  .navbar.menu-open .nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    order: 3;
+    flex: 1 1 100%;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .navbar.menu-open .nav-link {
+    padding: 0.7rem 0.8rem;
+  }
+  .navbar.menu-open .nav-account {
+    display: contents;
+  }
+  .navbar.menu-open .nav-account-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+    order: 4;
+    flex: 1 1 100%;
+    padding: 0.5rem 0 0.25rem;
+    border-top: 1px solid var(--border);
+  }
+  .navbar.menu-open .nav-account-actions .btn {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+  .navbar.menu-open .nav-user {
+    padding: 0.4rem 0.8rem;
+  }
+}
+
+/* Zoekbalk op de homepage: invoerveld mag krimpen, knop compacter. */
+.hero-search input {
+  min-width: 0;
+}
+@media (max-width: 480px) {
+  .hero-search {
+    padding-left: 0.75rem;
+  }
+  .hero-search-btn {
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 }
 @media (max-width: 560px) {
