@@ -27,7 +27,9 @@
     "register": "Registar",
     "logout": "Terminar sessão",
     "trainerChip": "Treinador",
-    "language": "Idioma"
+    "language": "Idioma",
+    "openMenu": "Abrir menu",
+    "closeMenu": "Fechar menu"
   },
   "home": {
     "title": "Reserve a sua aula",
