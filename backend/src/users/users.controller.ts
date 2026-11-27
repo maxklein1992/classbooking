@@ -16,7 +16,7 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { CurrentUser } from '../auth/decorators/current-user.decorator';
-import { toPublicUser } from './user.serializer';
+import { toPublicUser, toPublicTrainer } from './user.serializer';
 
 @ApiTags('users')
 @Controller('users')
@@ -30,7 +30,7 @@ export class UsersController {
   })
   async findTrainers() {
     const trainers = await this.usersService.findTrainers();
-    return trainers.map(toPublicUser);
+    return trainers.map(toPublicTrainer);
   }
 
   @Patch('me/avatar')
