@@ -1,4 +1,5 @@
 import { Body, Controller, Get, HttpCode, Post, UseGuards } from '@nestjs/common';
+import { Throttle } from '@nestjs/throttler';
 import {
   ApiBearerAuth,
   ApiOperation,
@@ -15,12 +16,16 @@ import { CurrentUser } from './decorators/current-user.decorator';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  // Strak gelimiteerd: beschermt de dure bcrypt-hash tegen floods en
+  // brute-force. Max 5 pogingen per minuut per IP; daarboven volgt HTTP 429.
+  @Throttle({ default: { ttl: 60_000, limit: 5 } })
   @Post('register')
   @ApiOperation({ summary: 'Register a new account' })
   register(@Body() dto: RegisterDto) {
     return this.authService.register(dto);
   }
 
+  @Throttle({ default: { ttl: 60_000, limit: 5 } })
   @Post('login')
   @HttpCode(200)
   @ApiOperation({ summary: 'Log in and receive an access token' })

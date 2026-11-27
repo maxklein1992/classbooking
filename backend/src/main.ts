@@ -8,6 +8,10 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  // Achter de nginx-proxy: vertrouw X-Forwarded-For zodat rate-limiting het
+  // echte client-IP ziet i.p.v. dat van de proxy.
+  app.getHttpAdapter().getInstance().set('trust proxy', 1);
+
   app.setGlobalPrefix('api');
 
   // Ruimere body-limiet zodat een profielfoto (data-URL) past.
