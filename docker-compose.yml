@@ -19,6 +19,10 @@ services:
     restart: unless-stopped
     depends_on:
       - db
+    # Regenereer de Prisma Client bij elke container-start. Zonder dit blijft na
+    # een schemawijziging een verouderde client in het node_modules-volume staan,
+    # waardoor nest de laatste geslaagde build blijft draaien (stille 404's).
+    command: sh -c "npx prisma generate && npm run dev"
     environment:
       DATABASE_URL: "postgresql://classbooking:classbooking@db:5432/classbooking?schema=public"
       JWT_SECRET: "change-me-in-production"
